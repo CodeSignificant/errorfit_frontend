@@ -1,0 +1,1 @@
+enum Flavours { dev, pro, uat, qc }
