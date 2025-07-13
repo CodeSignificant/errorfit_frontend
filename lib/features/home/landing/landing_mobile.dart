@@ -12,6 +12,12 @@ class LandingMobile extends StatefulWidget {
 }
 
 class _LandingMobileState extends State<LandingMobile> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Column(
