@@ -5,10 +5,9 @@ import 'package:error_fit/config/routes/routers.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:http_parser/http_parser.dart';
-
-import '../../core/resources/actions.dart';
-import '../../core/resources/data_response.dart';
-import '../services/auth.dart';
+import '../../../config/services/auth.dart';
+import '../../resources/actions.dart';
+import '../../resources/data_response.dart';
 import 'api_sheet.dart';
 
 class SecureCall {

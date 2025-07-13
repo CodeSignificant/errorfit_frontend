@@ -1,5 +1,4 @@
-import '../environments/config.dart';
-
+import '../../../config/environments/config.dart';
 class ApiSheet {
   static final auth = AuthApi();
 }
