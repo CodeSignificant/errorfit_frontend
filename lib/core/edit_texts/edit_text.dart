@@ -105,7 +105,7 @@ class _EditTextState extends State<EditText> {
             decoration: BoxDecoration(
               color: AppColors.white,
               border: Border.all(
-                color: hasError ? AppColors.error : AppColors.etYellow,
+                color: hasError ? AppColors.error : AppColors.primary,
               ),
               borderRadius: BorderRadius.circular(widget.radius),
             ),

@@ -1,6 +1,8 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'config/enums/flavours.dart';
 import 'config/environments/config.dart';
 import 'config/routes/app_router.dart';
@@ -32,7 +34,7 @@ void main() async {
       scrollBehavior: const MaterialScrollBehavior().copyWith(
         dragDevices: {
           PointerDeviceKind.touch,
-          PointerDeviceKind.mouse, // Enables mouse scrolling globally
+          PointerDeviceKind.mouse,
           PointerDeviceKind.trackpad,
         },
       ),

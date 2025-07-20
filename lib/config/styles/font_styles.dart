@@ -240,16 +240,16 @@ class FontStyles {
   );
 
   static const s16Black = TextStyle(fontSize: 16, color: AppColors.black);
-  static const s16DarkYellow4 = TextStyle(
-    color: AppColors.darkYellow,
-    fontSize: 16,
-    fontWeight: FontWeight.w400,
-  );
-  static const s20Yellow6 = TextStyle(
-    color: AppColors.yellow,
-    fontSize: 20,
-    fontWeight: FontWeight.w600,
-  );
+  // static const s16DarkYellow4 = TextStyle(
+  //   color: AppColors.darkYellow,
+  //   fontSize: 16,
+  //   fontWeight: FontWeight.w400,
+  // );
+  // static const s20Yellow6 = TextStyle(
+  //   color: AppColors.yellow,
+  //   fontSize: 20,
+  //   fontWeight: FontWeight.w600,
+  // );
 
   static const s16White = TextStyle(fontSize: 16, color: AppColors.white);
   static const s16White6 = TextStyle(
@@ -394,11 +394,11 @@ class FontStyles {
     color: AppColors.white,
     fontWeight: FontWeight.w600,
   );
-  static const s25Yellow6 = TextStyle(
-    fontSize: 25,
-    color: AppColors.yellow,
-    fontWeight: FontWeight.w600,
-  );
+  // static const s25Yellow6 = TextStyle(
+  //   fontSize: 25,
+  //   color: AppColors.yellow,
+  //   fontWeight: FontWeight.w600,
+  // );
 
   static const s32RBlack = TextStyle(fontSize: 32, color: AppColors.black);
   static const s32SWhite = TextStyle(
@@ -411,11 +411,11 @@ class FontStyles {
     color: AppColors.text,
     fontWeight: FontWeight.w600,
   );
-  static const s30Yellow5 = TextStyle(
-    fontSize: 30,
-    color: AppColors.darkYellow,
-    fontWeight: FontWeight.w500,
-  );
+  // static const s30Yellow5 = TextStyle(
+  //   fontSize: 30,
+  //   color: AppColors.darkYellow,
+  //   fontWeight: FontWeight.w500,
+  // );
   static const s30White5 = TextStyle(
     fontSize: 30,
     color: AppColors.white,

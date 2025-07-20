@@ -21,7 +21,7 @@ class Toast {
     _show(
       title: title,
       message: message,
-      backgroundColor: AppColors.bgYellow,
+      backgroundColor: AppColors.transparent,
       borderColor: AppColors.snackYellow,
       iconPath: "ic_info",
     );
@@ -31,8 +31,8 @@ class Toast {
     _show(
       title: title,
       message: message,
-      backgroundColor: AppColors.bgRed,
-      borderColor: AppColors.snackRed,
+      backgroundColor: AppColors.transparent,
+      borderColor: AppColors.error,
       iconPath: "ic_error",
     );
   }

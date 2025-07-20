@@ -26,15 +26,15 @@ class Decorations {
     );
   }
 
-  static BoxDecoration get gradient {
-    return BoxDecoration(
-      gradient: LinearGradient(
-        colors: [AppColors.g1, AppColors.g2],
-        begin: Alignment.bottomLeft,
-        end: Alignment.topRight,
-      ),
-    );
-  }
+  // static BoxDecoration get gradient {
+  //   return BoxDecoration(
+  //     gradient: LinearGradient(
+  //       colors: [AppColors.g1, AppColors.g2],
+  //       begin: Alignment.bottomLeft,
+  //       end: Alignment.topRight,
+  //     ),
+  //   );
+  // }
 
   static BoxDecoration get gradientYellow {
     return BoxDecoration(
@@ -46,15 +46,15 @@ class Decorations {
     );
   }
 
-  static BoxDecoration get gradient2 {
-    return BoxDecoration(
-      gradient: LinearGradient(
-        colors: [AppColors.g3, AppColors.g4],
-        begin: Alignment.bottomLeft,
-        end: Alignment.topRight,
-      ),
-    );
-  }
+  // static BoxDecoration get gradient2 {
+  //   return BoxDecoration(
+  //     gradient: LinearGradient(
+  //       colors: [AppColors.g3, AppColors.g4],
+  //       begin: Alignment.bottomLeft,
+  //       end: Alignment.topRight,
+  //     ),
+  //   );
+  // }
 
   static BoxDecoration get gradient3 {
     return BoxDecoration(
@@ -108,12 +108,12 @@ class Decorations {
       borderRadius: BorderRadius.circular(48),
     );
   }
-  static BoxDecoration get orangeChip {
-    return BoxDecoration(
-      color: AppColors.g4,
-      borderRadius: BorderRadius.circular(48),
-    );
-  }
+  // static BoxDecoration get orangeChip {
+  //   return BoxDecoration(
+  //     color: AppColors.g4,
+  //     borderRadius: BorderRadius.circular(48),
+  //   );
+  // }
   static BoxDecoration get primaryChip {
     return BoxDecoration(
       color: AppColors.primary,
@@ -212,24 +212,24 @@ class Decorations {
     );
   }
 
-  static BoxDecoration get gradient2BorderCard {
-    return BoxDecoration(
-      color: AppColors.white,
-      border: Border.all(color: AppColors.g2, width: 2),
-      borderRadius: BorderRadius.circular(16),
-      gradient: LinearGradient(colors: [
-        AppColors.white, AppColors.bgRed
-      ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-      boxShadow: [
-        BoxShadow(
-          color: AppColors.light.withAlpha(10),
-          offset: Offset(4, 0),
-          spreadRadius: 1,
-          blurRadius: 7,
-        ),
-      ],
-    );
-  }
+  // static BoxDecoration get gradient2BorderCard {
+  //   return BoxDecoration(
+  //     color: AppColors.white,
+  //     border: Border.all(color: AppColors.g2, width: 2),
+  //     borderRadius: BorderRadius.circular(16),
+  //     gradient: LinearGradient(colors: [
+  //       AppColors.white, AppColors.bgRed
+  //     ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+  //     boxShadow: [
+  //       BoxShadow(
+  //         color: AppColors.light.withAlpha(10),
+  //         offset: Offset(4, 0),
+  //         spreadRadius: 1,
+  //         blurRadius: 7,
+  //       ),
+  //     ],
+  //   );
+  // }
 
   static BoxDecoration get greenBorderCard {
     return BoxDecoration(

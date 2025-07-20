@@ -34,7 +34,7 @@ void main() async {
       scrollBehavior: const MaterialScrollBehavior().copyWith(
         dragDevices: {
           PointerDeviceKind.touch,
-          PointerDeviceKind.mouse, // Enables mouse scrolling globally
+          PointerDeviceKind.mouse,
           PointerDeviceKind.trackpad,
         },
       ),
