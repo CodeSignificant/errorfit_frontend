@@ -263,7 +263,7 @@ class _SearchableDropDownState<T> extends State<SearchableDropDown<T>> {
               padding:
               widget.padding ?? const EdgeInsets.symmetric(horizontal: 12),
               decoration: BoxDecoration(
-                border: Border.all(color: AppColors.etYellow),
+                border: Border.all(color: AppColors.primary),
                 borderRadius: BorderRadius.circular(50),
               ),
               child: TextField(

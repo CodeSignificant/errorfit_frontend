@@ -11,7 +11,6 @@ class ScreenView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return mobile??Placeholder();
     final screenWidth = MediaQuery.of(context).size.width;
     if (screenWidth < minScreen) return mobile ?? Container();
     if (screenWidth < tabScreen) return mobile ?? Container();

@@ -67,7 +67,7 @@ class ImageLoader extends StatelessWidget {
           borderRadius: BorderRadius.circular(radius ?? 10),
         ),
         child: const Center(
-          child: SvgIcon(path: "ic_aurum", size: 48, color: AppColors.grey),
+          child: SvgIcon(path: "ic_image_placeholder", size: 48, color: AppColors.grey),
         ),
       ),
     );
@@ -124,7 +124,7 @@ class _BlinkingPlaceholderState extends State<BlinkingPlaceholder>
           borderRadius: BorderRadius.circular(widget.radius ?? 10),
         ),
         child: const Center(
-          child: SvgIcon(path: "ic_aurum", size: 48, color: AppColors.grey),
+          child: SvgIcon(path: "ic_image_placeholder", size: 48, color: AppColors.grey),
         ),
       ),
     );
