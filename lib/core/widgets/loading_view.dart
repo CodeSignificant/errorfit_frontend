@@ -1,6 +1,6 @@
+import 'package:error_fit/config/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 
 import '../../config/styles/font_styles.dart';
 
@@ -41,8 +41,11 @@ class LoadingView extends StatelessWidget {
     return Obx(() {
       if (controller.isLoading.value) {
         return Center(
-          child: Lottie.asset(
-              "assets/anim/anim_loading.json"),
+          child: SizedBox(
+            height: 24,
+            width: 24,
+            child: CircularProgressIndicator(color: AppColors.primary),
+          ),
         );
       }
 

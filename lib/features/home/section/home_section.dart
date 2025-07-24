@@ -1,8 +1,8 @@
+import 'package:error_fit/config/extensions/string_extensions.dart';
 import 'package:error_fit/features/home/models/category_model.dart';
 import 'package:error_fit/features/home/section/home_section_controller.dart';
 import 'package:flutter/material.dart';
 
-import '../../../config/environments/config.dart';
 import '../../../config/styles/app_colors.dart';
 import '../../../core/app_bars/main_app_bar.dart';
 import '../../../core/images/ImageLoader.dart';
@@ -39,7 +39,7 @@ class _HomeSectionState extends State<HomeSection> {
                 _categories(),
                 const SizedBox(height: 26),
                 ImageLoader(
-                  url: "https://${Config.domain}${dummyImages[2]}",
+                  url: dummyImages[2].autoUrl,
                   height: 200,
                   radius: 0,
                 ),
@@ -48,7 +48,10 @@ class _HomeSectionState extends State<HomeSection> {
             ),
           ),
         ),
-        Positioned(left: 0, right: 0, top: 0, child: MainAppBar()),
+        Positioned(left: 0,
+            right: 0,
+            top: 0,
+            child: MainAppBar(background: AppColors.transparent,)),
       ],
     );
   }
@@ -64,23 +67,23 @@ class _HomeSectionState extends State<HomeSection> {
               autoScrollDuration: Duration(seconds: 3),
               items: [
                 ImageLoader(
-                  url: "https://${Config.domain}${dummyImages[1]}",
+                  url: dummyImages[1].autoUrl,
                   radius: 0,
                 ),
                 ImageLoader(
-                  url: "https://${Config.domain}${dummyImages[1]}",
+                  url: dummyImages[1].autoUrl,
                   radius: 0,
                 ),
                 ImageLoader(
-                  url: "https://${Config.domain}${dummyImages[1]}",
+                  url: dummyImages[1].autoUrl,
                   radius: 0,
                 ),
                 ImageLoader(
-                  url: "https://${Config.domain}${dummyImages[1]}",
+                  url: dummyImages[1].autoUrl,
                   radius: 0,
                 ),
                 ImageLoader(
-                  url: "https://${Config.domain}${dummyImages[1]}",
+                  url: dummyImages[1].autoUrl,
                   radius: 0,
                 ),
               ],
@@ -155,7 +158,8 @@ class _HomeSectionState extends State<HomeSection> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          ImageLoader(url: model.image, radius: 48, height: 140, width: 100),
+          ImageLoader(
+              url: model.image.autoUrl, radius: 48, height: 140, width: 100),
           const SizedBox(height: 12),
           Text(model.title, textAlign: TextAlign.center),
         ],

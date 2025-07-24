@@ -1,4 +1,4 @@
-import 'package:error_fit/config/environments/config.dart';
+import 'package:error_fit/config/extensions/string_extensions.dart';
 import 'package:error_fit/config/styles/app_colors.dart';
 import 'package:error_fit/core/images/ImageLoader.dart';
 import 'package:error_fit/core/resources/constants.dart';
@@ -33,11 +33,11 @@ class _LandingMobileState extends State<LandingMobile> {
                   autoScrollDuration: Duration(seconds: 4),
                   items: [
                     ImageLoader(
-                        url: "https://${Config.domain}${dummyImages[0]}"),
+                        url: dummyImages[0].autoUrl),
                     ImageLoader(
-                        url: "https://${Config.domain}${dummyImages[0]}"),
+                        url: dummyImages[0].autoUrl),
                     ImageLoader(
-                        url: "https://${Config.domain}${dummyImages[0]}"),
+                        url: dummyImages[0].autoUrl),
                   ],
                 ),
               ),

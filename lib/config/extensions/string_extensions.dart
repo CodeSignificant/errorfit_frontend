@@ -1,3 +1,4 @@
+import 'package:error_fit/config/environments/config.dart';
 import 'package:intl/intl.dart';
 
 import '../../core/resources/actions.dart';
@@ -11,6 +12,11 @@ extension StringExtensions on String {
     } catch (e) {
       return 'NA';
     }
+  }
+
+  String get autoUrl {
+    if (startsWith("http")) return this;
+    return "${Config.imageBaseUrl}$this";
   }
   String get formatStateShortCut {
     switch(this){

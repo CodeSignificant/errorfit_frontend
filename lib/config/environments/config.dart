@@ -33,6 +33,10 @@ class Config {
     return dotenv.env['BASE_URL'] ?? "https://codesignificant.com";
   }
 
+  static String get imageBaseUrl {
+    return dotenv.env['IMAGE_BASE_URL'] ?? "https://codesignificant.com/storage";
+  }
+
   // static String get contactMail {
   //   return dotenv.env['CONTACT_MAIL'] ?? "";
   // }

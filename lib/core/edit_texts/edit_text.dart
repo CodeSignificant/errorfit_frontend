@@ -121,7 +121,7 @@ class _EditTextState extends State<EditText> {
                     child: TextFormField(
                       controller: widget.controller,
                       obscureText: widget.isPassword ? !passVisible : false,
-                      style: widget.style ?? FontStyles.s14RBlack,
+                      style: widget.style ?? FontStyles.s14Black4,
                       keyboardType: widget.keyboardType,
                       autofillHints: widget.autofillHints,
                       enabled: !widget.isDisable,
@@ -135,7 +135,7 @@ class _EditTextState extends State<EditText> {
                         isCollapsed: true,
                         border: InputBorder.none,
                         hintText: widget.hint,
-                        hintStyle: widget.hintStyle ?? FontStyles.s12Grey,
+                        hintStyle: widget.hintStyle ?? FontStyles.s12Grey4,
                         contentPadding: const EdgeInsets.symmetric(
                           vertical: 12,
                         ),
@@ -160,7 +160,7 @@ class _EditTextState extends State<EditText> {
           if (hasError)
             Padding(
               padding: const EdgeInsets.only(left: 4.0, top: 4.0),
-              child: Text(widget.error, style: FontStyles.error),
+              child: Text(widget.error, style: FontStyles.s12Error4),
             ),
         ],
       ),
