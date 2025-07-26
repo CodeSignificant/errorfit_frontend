@@ -8,6 +8,7 @@ class CartModel {
   final double price;
   final String image;
   final int maxLimit;
+  final String id;
 
   RxBool isSelect;
   RxInt count;
@@ -19,6 +20,7 @@ class CartModel {
     required this.price,
     required this.maxLimit,
     required this.image,
+    required this.id,
     bool isSelect = true,
     int count = 1,
   }) : isSelect = isSelect.obs,
@@ -58,6 +60,7 @@ class CartModel {
       isSelect: json['isSelect'] ?? false,
       image: json['image'] ?? "",
       count: json['count'] ?? 1,
+      id: json['id'] ?? "0",
     );
   }
 
@@ -86,6 +89,7 @@ class CartModel {
     price: 2300.0,
     maxLimit: 10,
     image: dummyImages[0],
+    id: "test"
   );
 
   /// Convert to JSON

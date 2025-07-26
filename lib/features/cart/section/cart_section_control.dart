@@ -1,4 +1,5 @@
 import 'package:error_fit/config/extensions/double_extensions.dart';
+import 'package:error_fit/config/routes/routers.dart';
 import 'package:error_fit/core/resources/actions.dart';
 import 'package:error_fit/core/widgets/loading_view.dart';
 import 'package:error_fit/features/cart/models/cart_model.dart';
@@ -24,7 +25,9 @@ class CartSectionControl extends GetxController{
     loadingControl.setLoading(false);
   }
 
-  onItemClick(CartModel model) {}
+  onItemClick(CartModel model) {
+    productDetailsRoute.param(model.id).navigate;
+  }
 
   onItemChangeListener(CartModel model) {
     _calculateCheckout();

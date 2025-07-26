@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:error_fit/core/resources/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -32,6 +33,55 @@ class DotListener extends StatelessWidget {
     );
   }
 }
+
+class MyCarouselModel {
+  final String image;
+  final String id;
+  final String route;
+
+  MyCarouselModel({
+    required this.image,
+    required this.id,
+    required this.route,
+  });
+
+  factory MyCarouselModel.fromJson(Map<String, dynamic> json) {
+    return MyCarouselModel(
+      image: json['image'] ?? '',
+      id: json['id'] ?? '',
+      route: json['route'] ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'image': image,
+      'id': id,
+      'route': route,
+    };
+  }
+
+  static List<MyCarouselModel> fromJsonList(List<dynamic> list) {
+    final result = <MyCarouselModel>[];
+    for (var item in list) {
+      try {
+        result.add(MyCarouselModel.fromJson(item));
+      } catch (_) {
+        continue;
+      }
+    }
+    return result;
+  }
+
+  factory MyCarouselModel.initial() {
+    return MyCarouselModel(
+      image: dummyImages[0],
+      id: 'test',
+      route: '',
+    );
+  }
+}
+
 
 class MyCarouselController extends GetxController {
   static const String dotListenerId = 'dot_listener';
@@ -86,12 +136,13 @@ class MyCarousel extends StatefulWidget {
   final MyCarouselController control;
   final List<Widget> items;
   final Duration? autoScrollDuration;
+  final double? height;
 
   const MyCarousel({
     super.key,
     required this.control,
     required this.items,
-    this.autoScrollDuration,
+    this.autoScrollDuration, this.height,
   });
 
   @override
@@ -117,7 +168,7 @@ class _MyCarouselState extends State<MyCarousel> {
       init: widget.control,
       builder: (_) {
         return SizedBox(
-          height: 200,
+          height: widget.height,
           child: PageView.builder(
             controller: widget.control.pageController,
             itemCount: widget.items.length,

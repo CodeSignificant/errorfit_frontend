@@ -29,6 +29,16 @@ class FontStyles {
     color: AppColors.text,
     fontWeight: FontWeight.w400,
   );
+  static const s14Green4 = TextStyle(
+    fontSize: 14,
+    color: AppColors.green,
+    fontWeight: FontWeight.w400,
+  );
+  static const s14Green6 = TextStyle(
+    fontSize: 14,
+    color: AppColors.green,
+    fontWeight: FontWeight.w600,
+  );
   static const s14Primary6 = TextStyle(
     fontSize: 14,
     color: AppColors.primary,
@@ -49,10 +59,25 @@ class FontStyles {
     color: AppColors.primary,
     fontWeight: FontWeight.w500,
   );
+  static const s14Primary704 = TextStyle(
+    fontSize: 14,
+    color: AppColors.primary70,
+    fontWeight: FontWeight.w400,
+  );
   static const s14Primary705 = TextStyle(
     fontSize: 14,
     color: AppColors.primary70,
     fontWeight: FontWeight.w500,
+  );
+  static const s14Primary706 = TextStyle(
+    fontSize: 14,
+    color: AppColors.primary70,
+    fontWeight: FontWeight.w600,
+  );
+  static const s16Primary704 = TextStyle(
+    fontSize: 16,
+    color: AppColors.primary70,
+    fontWeight: FontWeight.w400,
   );
   static const s16Primary707 = TextStyle(
     fontSize: 16,
@@ -68,6 +93,16 @@ class FontStyles {
     fontSize: 18,
     color: AppColors.primary,
     fontWeight: FontWeight.w500,
+  );
+  static const s20Black4 = TextStyle(
+    fontSize: 20,
+    color: AppColors.black,
+    fontWeight: FontWeight.w400,
+  );
+  static const s20Black6 = TextStyle(
+    fontSize: 20,
+    color: AppColors.black,
+    fontWeight: FontWeight.w600,
   );
   static const s20Black7 = TextStyle(
     fontSize: 20,

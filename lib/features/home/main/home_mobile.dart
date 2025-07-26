@@ -1,8 +1,10 @@
 import 'package:error_fit/config/enums/bottom_nav_types.dart';
 import 'package:error_fit/core/app_bars/my_bottom_nav_bar.dart';
+import 'package:error_fit/features/auth/profile_section/profile_section.dart';
 import 'package:error_fit/features/cart/section/cart_section.dart';
 import 'package:error_fit/features/home/main/home_controller.dart';
 import 'package:error_fit/features/home/section/home_section.dart';
+import 'package:error_fit/features/search/main/search_section.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -28,8 +30,12 @@ class _HomeMobileState extends State<HomeMobile> {
               children: [
                 if(activeTab == BottomNavTypes.home) Expanded(
                     child: HomeSection()),
+                if(activeTab == BottomNavTypes.search) Expanded(
+                    child: SearchSection()),
                 if(activeTab == BottomNavTypes.cart) Expanded(
                     child: CartSection()),
+                if(activeTab == BottomNavTypes.profile) Expanded(
+                    child: ProfileSection()),
               ],
             );
           }),
