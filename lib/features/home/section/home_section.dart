@@ -1,4 +1,5 @@
 import 'package:error_fit/config/extensions/string_extensions.dart';
+import 'package:error_fit/core/buttons/anim_button.dart';
 import 'package:error_fit/features/home/models/category_model.dart';
 import 'package:error_fit/features/home/section/home_section_controller.dart';
 import 'package:flutter/material.dart';
@@ -153,16 +154,19 @@ class _HomeSectionState extends State<HomeSection> {
   }
 
   Widget _categoryTile({required CategoryModel model}) {
-    return SizedBox(
-      width: 100,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ImageLoader(
-              url: model.image.autoUrl, radius: 48, height: 140, width: 100),
-          const SizedBox(height: 12),
-          Text(model.title, textAlign: TextAlign.center),
-        ],
+    return AnimButton(
+      onClick: () => control.onCategoryClick(model),
+      child: SizedBox(
+        width: 100,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ImageLoader(
+                url: model.image.autoUrl, radius: 48, height: 140, width: 100),
+            const SizedBox(height: 12),
+            Text(model.title, textAlign: TextAlign.center),
+          ],
+        ),
       ),
     );
   }

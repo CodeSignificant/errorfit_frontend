@@ -20,7 +20,7 @@ class MyBackButton extends StatelessWidget {
         ),
         padding: const EdgeInsets.all(10),
         child: SvgIcon(
-          path: "ic_ios_arrow",
+          path: "ic_ios_left",
           size: 14,
           color: AppColors.primary,
         ),
