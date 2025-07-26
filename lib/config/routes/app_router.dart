@@ -1,6 +1,7 @@
 import 'package:error_fit/features/home/landing/landing_page.dart';
 import 'package:error_fit/features/home/main/home_page.dart';
 import 'package:error_fit/features/products/details/product_details_page.dart';
+import 'package:error_fit/features/search/products/products_search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,6 +23,13 @@ class AppRouter {
     GetPage(
       name: productDetailsRoute.key("id").route,
       page: () => ProductDetailsPage(id: Get.parameters['id'] ?? "0"),
+      middlewares: [PretendAuthMiddleware()],
+    ),
+
+    // ------------------------------------------------------------------------ SEARCH
+    GetPage(
+      name: productsSearchRoute.route,
+      page: () => ProductsSearchPage(queryParams: Get.parameters),
       middlewares: [PretendAuthMiddleware()],
     ),
 

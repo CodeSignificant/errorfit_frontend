@@ -10,6 +10,7 @@ class MainAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       // constraints: BoxConstraints(minHeight: 70),
+      height: kToolbarHeight,
       color: background,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       child: Row(

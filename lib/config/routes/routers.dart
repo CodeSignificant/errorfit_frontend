@@ -10,7 +10,8 @@ GenerateRoute get homeRoute => GenerateRoute("/home");
 // -----------------------------------------------------------------------------PRODUCTS
 GenerateRoute get productDetailsRoute => GenerateRoute("/product_details");
 
-
+// -----------------------------------------------------------------------------SEARCH
+GenerateRoute get productsSearchRoute => GenerateRoute("/products_search");
 
 // ---------------------------------------------------------------------------- AUTH
 
