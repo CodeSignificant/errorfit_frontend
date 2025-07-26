@@ -1,8 +1,11 @@
 import 'package:error_fit/config/extensions/string_extensions.dart';
+import 'package:error_fit/config/styles/font_styles.dart';
 import 'package:error_fit/core/buttons/anim_button.dart';
 import 'package:error_fit/features/home/models/category_model.dart';
 import 'package:error_fit/features/home/section/home_section_controller.dart';
+import 'package:error_fit/features/products/widgets/product_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../config/styles/app_colors.dart';
 import '../../../core/app_bars/main_app_bar.dart';
@@ -32,12 +35,37 @@ class _HomeSectionState extends State<HomeSection> {
       children: [
         Positioned.fill(
           child: SingleChildScrollView(
+            controller: control.scrollControl,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 _carousel(),
                 const SizedBox(height: 26),
                 _categories(),
+                const SizedBox(height: 26),
+                ImageLoader(
+                  url: dummyImages[2].autoUrl,
+                  height: 200,
+                  radius: 0,
+                ),
+                const SizedBox(height: 26),
+                _grid3Add(),
+                const SizedBox(height: 26),
+                ImageLoader(
+                  url: dummyImages[2].autoUrl,
+                  height: 200,
+                  radius: 0,
+                ),
+                const SizedBox(height: 26),
+                _grid2Add(),
+                const SizedBox(height: 26),
+                ImageLoader(
+                  url: dummyImages[2].autoUrl,
+                  height: 200,
+                  radius: 0,
+                ),
+                const SizedBox(height: 26),
+                _recentlyViewed(),
                 const SizedBox(height: 26),
                 ImageLoader(
                   url: dummyImages[2].autoUrl,
@@ -52,7 +80,11 @@ class _HomeSectionState extends State<HomeSection> {
         Positioned(left: 0,
             right: 0,
             top: 0,
-            child: MainAppBar(background: AppColors.transparent,)),
+            child: Obx(() {
+              return MainAppBar(
+                background: control.showAppbarBackground.value ? AppColors
+                    .white : AppColors.transparent,);
+            })),
       ],
     );
   }
@@ -97,39 +129,41 @@ class _HomeSectionState extends State<HomeSection> {
             child: Center(
               child: DotListener(
                 control: control.carouselControl,
-                builder: (index, length, goToPage) => Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color: AppColors.black.withAlpha(100),
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                  margin: const EdgeInsets.symmetric(vertical: 10),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: List.generate(
-                        length,
-                        (i) => Container(
-                          width: index == i ? 24 : 6,
-                          height: 6,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(48),
-                            color: AppColors.white,
-                          ),
-                          margin: const EdgeInsets.symmetric(
-                            horizontal: 3,
-                            vertical: 4,
+                builder: (index, length, goToPage) =>
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        color: AppColors.black.withAlpha(100),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: List.generate(
+                            length,
+                                (i) =>
+                                Container(
+                                  width: index == i ? 24 : 6,
+                                  height: 6,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(48),
+                                    color: AppColors.white,
+                                  ),
+                                  margin: const EdgeInsets.symmetric(
+                                    horizontal: 3,
+                                    vertical: 4,
+                                  ),
+                                ),
+                            // Text(" O ",
+                            //   style: TextStyle(color: index == i ? Colors
+                            //       .white : Colors.black),),
                           ),
                         ),
-                        // Text(" O ",
-                        //   style: TextStyle(color: index == i ? Colors
-                        //       .white : Colors.black),),
                       ),
                     ),
-                  ),
-                ),
               ),
             ),
           ),
@@ -167,6 +201,69 @@ class _HomeSectionState extends State<HomeSection> {
             Text(model.title, textAlign: TextAlign.center),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _recentlyViewed() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          child: Text("Recently Viewed", style: FontStyles.s16Primary7,),
+        ),
+        const SizedBox(height: 10,),
+        Obx(() {
+          final list = control.recentlyViewedProducts.value;
+          return SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: Row(
+                spacing: 10,
+                children: List.generate(list.length, (index) =>
+                    ProductTile(model: list[index],
+                        onClick: control.onProductClick,
+                        onLikeClick: control.onProductLikeClick),),
+              ),
+            ),
+          );
+        })
+      ],
+    );
+  }
+
+  Widget _grid2Add() {
+    return SizedBox(
+      height: 200,
+      child: Row(
+        children: [
+          Expanded(child: ImageLoader(url: dummyImages[3].autoUrl, radius: 0,)),
+          Expanded(child: ImageLoader(url: dummyImages[4].autoUrl, radius: 0,))
+        ],
+      ),
+    );
+  }
+
+  Widget _grid3Add() {
+    return SizedBox(
+      height: 200,
+      child: Row(
+        children: [
+          Expanded(child: ImageLoader(url: dummyImages[3].autoUrl, radius: 0,)),
+          Expanded(child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(child: ImageLoader(
+                url: dummyImages[4].autoUrl,
+                radius: 0,)),
+              Expanded(child: ImageLoader(
+                url: dummyImages[5].autoUrl,
+                radius: 0,)),
+            ],
+          ))
+        ],
       ),
     );
   }

@@ -29,19 +29,22 @@ class _SearchSectionState extends State<SearchSection> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         MainAppBar(),
-        Container(
-          color: AppColors.primary20.withAlpha(100),
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-          child: Row(
-            children: [
-              SvgIcon(
-                path: "ic_location", size: 12, color: AppColors.primary70,),
-              const SizedBox(width: 10,),
-              Expanded(child: Text(
-                "Thurpu cheruvu center, veeravasaram, 534245", maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: FontStyles.s14Primary705,))
-            ],
+        AnimButton(
+          onClick: control.onLocationClick,
+          child: Container(
+            color: AppColors.primary20.withAlpha(100),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            child: Row(
+              children: [
+                SvgIcon(
+                  path: "ic_location", size: 12, color: AppColors.primary70,),
+                const SizedBox(width: 10,),
+                Expanded(child: Text(
+                  "Thurpu cheruvu center, veeravasaram, 534245", maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: FontStyles.s14Primary705,))
+              ],
+            ),
           ),
         ),
         Expanded(child: SingleChildScrollView(
