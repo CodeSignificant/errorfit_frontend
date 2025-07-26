@@ -7,6 +7,9 @@ GenerateRoute get landingRoute => GenerateRoute("/landing");
 
 GenerateRoute get homeRoute => GenerateRoute("/home");
 
+// -----------------------------------------------------------------------------PRODUCTS
+GenerateRoute get productDetailsRoute => GenerateRoute("/product_details");
+
 
 
 // ---------------------------------------------------------------------------- AUTH

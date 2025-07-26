@@ -80,6 +80,25 @@ class Decorations {
       ],
     );
   }
+
+  static BoxDecoration get bottomBorder {
+    return BoxDecoration(
+        color: Colors.white,
+        border: const Border(
+          left: BorderSide(color: AppColors.primary25),
+          right: BorderSide(color: AppColors.primary25),
+          bottom: BorderSide(color: AppColors.primary25),
+        ),
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(10),
+          bottomRight: Radius.circular(10),
+        ));
+  }
+
+  static BoxDecoration dot({Color color = AppColors.primary}) {
+    return BoxDecoration(color: color, shape: BoxShape.circle);
+  }
+
   // static BoxDecoration get greyChip {
   //   return BoxDecoration(
   //     color: AppColors.lightGrey,
