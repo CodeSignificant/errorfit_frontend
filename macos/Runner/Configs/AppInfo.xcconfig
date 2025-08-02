@@ -8,7 +8,7 @@
 PRODUCT_NAME = error_fit
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.codesignificant.errorFit
+PRODUCT_BUNDLE_IDENTIFIER = com.codesignificant.errorfit
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2025 com.codesignificant. All rights reserved.

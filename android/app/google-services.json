@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "764684738213",
+    "project_id": "errorfit-dev-b8930",
+    "storage_bucket": "errorfit-dev-b8930.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:764684738213:android:59b050b2fb4c08cd01374c",
+        "android_client_info": {
+          "package_name": "com.codesignificant.error_fit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "764684738213-9a4pbqcrcmkbvkjvikm5sdu41ol04gpv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnWw_TjRNZ1rVxkodm8K6iRZHJ7b9_d6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "764684738213-9a4pbqcrcmkbvkjvikm5sdu41ol04gpv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
