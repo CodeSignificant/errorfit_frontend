@@ -1,3 +1,4 @@
+import 'package:error_fit/config/services/auth.dart';
 import 'package:error_fit/config/styles/app_colors.dart';
 import 'package:error_fit/config/styles/decorations.dart';
 import 'package:error_fit/config/styles/font_styles.dart';
@@ -48,17 +49,17 @@ class _ProfileSectionState extends State<ProfileSection> {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 Text(
-                                  "Adi Sai Subrahmanyam Vaskuri",
+                                  Auth.name,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: FontStyles.s20Black6,
                                 ),
                                 Text(
-                                  "vsaisubbu.office@gmail.com",
+                                  Auth.mail,
                                   style: FontStyles.s14Primary705,
                                 ),
                                 Text(
-                                  "7569260120",
+                                  Auth.phone,
                                   style: FontStyles.s14Primary705,
                                 ),
                               ],

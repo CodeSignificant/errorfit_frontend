@@ -4,7 +4,9 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../config/environments/config.dart';
 
@@ -44,6 +46,11 @@ openBrowser(String url) async {
 delay({int milliSeconds = 200}) async =>
     await Future.delayed(Duration(milliseconds: milliSeconds));
 
+closeDialog(){
+  if(Get.isBottomSheetOpen??false) Get.back();
+  if(Get.isDialogOpen??false) Get.back();
+}
+
 Future<String> getUserAgent() async {
   // return "AurumApp";
   final deviceInfo = DeviceInfoPlugin();
@@ -69,5 +76,55 @@ Future<String> getUserAgent() async {
     return "Windows ${windowsInfo.computerName}";
   } else {
     return "Unknown Platform";
+  }
+}
+
+Future<String> getAppVersion() async {
+  final info = await PackageInfo.fromPlatform();
+  return '${info.version}+${info.buildNumber}';
+}
+
+Future<String> getUniqueDeviceName() async {
+  final deviceInfo = DeviceInfoPlugin();
+
+  if (kIsWeb) {
+    final info = await deviceInfo.webBrowserInfo;
+    final deviceName =
+        '${info.browserName.name}_${info.userAgent}_${info.hardwareConcurrency}';
+    return deviceName;
+  } else if (Platform.isAndroid) {
+    final info = await deviceInfo.androidInfo;
+    return '${info.model}_${info.id}';
+  } else if (Platform.isIOS) {
+    final info = await deviceInfo.iosInfo;
+    return '${info.name}_${info.identifierForVendor}';
+  } else {
+    return 'UnknownDevice_${const Uuid().v4()}';
+  }
+}
+
+Future<String> getDeviceOSVersion() async {
+  final deviceInfo = DeviceInfoPlugin();
+
+  if (kIsWeb) {
+    final info = await deviceInfo.webBrowserInfo;
+    return '${info.platform} - ${info.userAgent}';
+  } else if (Platform.isAndroid) {
+    final info = await deviceInfo.androidInfo;
+    return 'Android ${info.version.release} (SDK ${info.version.sdkInt})';
+  } else if (Platform.isIOS) {
+    final info = await deviceInfo.iosInfo;
+    return '${info.systemName} ${info.systemVersion}';
+  } else if (Platform.isWindows) {
+    final info = await deviceInfo.windowsInfo;
+    return 'Windows ${info.displayVersion} (Build ${info.buildNumber})';
+  } else if (Platform.isMacOS) {
+    final info = await deviceInfo.macOsInfo;
+    return 'macOS ${info.osRelease}';
+  } else if (Platform.isLinux) {
+    final info = await deviceInfo.linuxInfo;
+    return 'Linux ${info.version}';
+  } else {
+    return 'Unknown OS';
   }
 }

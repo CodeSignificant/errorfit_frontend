@@ -1,5 +1,6 @@
 import 'package:error_fit/config/styles/app_colors.dart';
 import 'package:error_fit/core/images/svg_icon.dart';
+import 'package:error_fit/core/resources/actions.dart';
 import 'package:flutter/material.dart';
 
 class MainAppBar extends StatelessWidget {
@@ -10,14 +11,22 @@ class MainAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       // constraints: BoxConstraints(minHeight: 70),
-      height: kToolbarHeight,
+      height: kToolbarHeight + kStatusBarHeight,
       color: background,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SvgIcon(path: "ic_menu"),
-          SvgIcon(path: "ic_notification"),
+          SizedBox(height: kStatusBarHeight,),
+          Row(
+            children: [
+              const SizedBox(width: 12,),
+              Image.asset("assets/logos/img_ef_banner.png", width: 80, height: 36,),
+              const Spacer(),
+              SvgIcon(path: "ic_notification"),
+              const SizedBox(width: 16,)
+            ],
+          ),
         ],
       ),
     );

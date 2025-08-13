@@ -21,14 +21,9 @@ class SecureCall {
   static Future<Response> get(Uri url, {Map<String, String>? headers}) async {
     await _waitUntilRefresh();
     var res = await http.get(url, headers: headers ?? getHeaders());
-
-    // final validRefreshToken =
-    //     (res.headers['x-custom-http-status'] ?? 1004) == 1004;
-    // trace("Headers ${res.headers['x-custom-http-status']}");
     if (res.statusCode == 401) { //&& validRefreshToken
       if ((await _refreshToken()) is DataFailed) {
-        await Auth.logout;
-        trace(url.toString());
+        await Auth.clearAuth();
         landingRoute.sweepNavigate;
         await delay(milliSeconds: 1000);
         return Response("{}", 401);
@@ -53,14 +48,10 @@ class SecureCall {
       encoding: encoding,
     );
 
-    // final validRefreshToken =
-    //     int.tryParse(res.headers['x-custom-http-status'] ?? '') == 1003;
-
-    if (res.statusCode == 401) { // && validRefreshToken
+    if (res.statusCode == 401) {
       if (await _refreshToken() is DataFailed) {
-        await Auth.logout;
+        await Auth.clearAuth();
         landingRoute.sweepNavigate;
-        trace(url.toString());
         await delay(milliSeconds: 1000);
         return Response("{}", 401);
       }
@@ -88,12 +79,9 @@ class SecureCall {
       encoding: encoding,
     );
 
-    // final validRefreshToken =
-    //     int.tryParse(res.headers['x-custom-http-status'] ?? '') == 1003;
-
     if (res.statusCode == 401) { // && validRefreshToken
       if (await _refreshToken() is DataFailed) {
-        await Auth.logout;
+        await Auth.clearAuth();
         landingRoute.sweepNavigate;
         trace(url.toString());
         await delay(milliSeconds: 1000);
@@ -125,7 +113,7 @@ class SecureCall {
 
     if (res.statusCode == 401) {
       if (await _refreshToken() is DataFailed) {
-        await Auth.logout;
+        await Auth.clearAuth();
         landingRoute.sweepNavigate;
         await delay(milliSeconds: 1000);
         return Response("{}", 401);
@@ -140,66 +128,51 @@ class SecureCall {
     return res;
   }
 
-//
-// // Imports needed
-//   import 'package:http/http.dart' as http;
-//   import 'package:http_parser/http_parser.dart'; // Required for MediaType
-
   static Future<http.Response> uploadImage(Uri url,
       String keyName,
-      Uint8List file, // ✅ Changed: Stronger typing instead of generic List<int>
+      Uint8List file,
       String fileName, {
         Map<String, String>? headers,
         Map<String, String>? body,
       }) async {
-    await _waitUntilRefresh(); // ✅ Keeps flow paused until refresh is complete
+    await _waitUntilRefresh();
 
-    // ✅ Extracted request logic into function so we can reuse it after token refresh
     Future<http.Response> _send() async {
       final request = http.MultipartRequest('POST', url);
 
-      // ✅ Added proper headers including optional ones
       request.headers.addAll({
         'Authorization': 'Bearer ${Auth.token}',
         if (headers != null) ...headers,
       });
 
-      // ✅ Add optional form fields
       if (body != null) request.fields.addAll(body);
 
-      // ✅ Added proper contentType using MediaType (required for server-side parsing)
       request.files.add(
         http.MultipartFile.fromBytes(
           keyName,
           file,
           filename: fileName,
           contentType: MediaType('image',
-              'jpeg'), // ⚠️ You can use 'application/octet-stream' for generic files
+              'jpeg'),
         ),
       );
 
-      // ✅ Convert streamed response into normal response
       final streamedResponse = await request.send();
       final responseString = await streamedResponse.stream.bytesToString();
       return http.Response(responseString, streamedResponse.statusCode);
     }
 
-    // ✅ First attempt
     http.Response response = await _send();
 
-    // ✅ If 401, try to refresh token
     if (response.statusCode == 401) {
       final refreshResult = await _refreshToken();
 
-      // ✅ If refresh failed, logout and navigate
       if (refreshResult is DataFailed) {
-        await Auth.logout();
+        await Auth.clearAuth();
         landingRoute.sweepNavigate();
         await delay(milliSeconds: 1000);
         return http.Response("{}", 401);
       }
-
-      // ✅ Retry upload with new token
       response = await _send();
     }
 
@@ -215,21 +188,19 @@ class SecureCall {
         headers: getHeaders(),
       );
 
-      // final validRefreshToken =
-      //     (res.headers['x-custom-http-status'] ?? 1004) == 1004;
-
       if (res.statusCode == 200) {
         final refreshRes = jsonDecode(res.body);
         if (refreshRes['status'] != "success") {
           return DataFailed(refreshRes['message']);
         }
-        await Auth.setToken(refreshRes['data']['accessToken']);
+        await Auth.setToken(refreshRes['token']);
         _isRefreshing = false;
         return const DataSuccess("Refresh Success");
       }
-      Auth.logout;
+      Auth.clearAuth();
       _isRefreshing = false;
-      // loginRoute.sweepNavigate;
+      landingRoute.sweepNavigate;
+      await delay(milliSeconds: 1000);
       return DataFailed("Server Error ${res.statusCode}");
     } catch (e) {
       return const DataFailed("Something went wrong");

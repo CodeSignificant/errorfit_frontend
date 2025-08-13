@@ -14,6 +14,7 @@ class Toast {
       backgroundColor: AppColors.greenLight,
       borderColor: AppColors.green,
       iconPath: "ic_success",
+        iconColor: AppColors.green
     );
   }
 
@@ -24,6 +25,7 @@ class Toast {
       backgroundColor: AppColors.transparent,
       borderColor: AppColors.snackYellow,
       iconPath: "ic_info",
+        iconColor: AppColors.snackYellow
     );
   }
 
@@ -31,9 +33,10 @@ class Toast {
     _show(
       title: title,
       message: message,
-      backgroundColor: AppColors.transparent,
+        backgroundColor: AppColors.white,
       borderColor: AppColors.error,
       iconPath: "ic_error",
+        iconColor: AppColors.error
     );
   }
 
@@ -43,6 +46,7 @@ class Toast {
     required Color backgroundColor,
     required Color borderColor,
     required String iconPath,
+    required Color iconColor
   }) {
     final context = Get.overlayContext;
     if (context == null) return;
@@ -57,6 +61,7 @@ class Toast {
             iconPath: iconPath,
             title: title,
             message: message,
+            iconColor: iconColor,
           ),
     );
 
@@ -71,6 +76,7 @@ class _ToastWidget extends StatefulWidget {
   final String iconPath;
   final String title;
   final String message;
+  final Color iconColor;
 
   const _ToastWidget({
     required this.overlay,
@@ -78,7 +84,7 @@ class _ToastWidget extends StatefulWidget {
     required this.borderColor,
     required this.iconPath,
     required this.title,
-    required this.message,
+    required this.message, required this.iconColor,
   });
 
   @override
@@ -133,7 +139,7 @@ class _ToastWidgetState extends State<_ToastWidget> {
                 ),
                 child: Row(
                   children: [
-                    SvgIcon(path: widget.iconPath),
+                    SvgIcon(path: widget.iconPath, color: widget.iconColor,),
                     const SizedBox(width: 16),
                     Expanded(
                       child: Column(
@@ -147,7 +153,7 @@ class _ToastWidgetState extends State<_ToastWidget> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          const SizedBox(height: 4,),
+                          // const SizedBox(height: 4,),
                           Text(
                             widget.message,
                             style: const TextStyle(
@@ -163,6 +169,7 @@ class _ToastWidgetState extends State<_ToastWidget> {
                     SvgIconButton(
                       onClick: () => widget.overlay.remove(),
                       path: "ic_close",
+                      color: AppColors.primary25,
                     ),
                   ],
                 ),

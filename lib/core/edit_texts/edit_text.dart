@@ -27,6 +27,7 @@ class EditText extends StatefulWidget {
   final int? maxLines;
   final int? maxLength;
   final FocusNode? focusNode;
+  final TextAlign? textAlign;
 
   const EditText({
     super.key,
@@ -47,7 +48,10 @@ class EditText extends StatefulWidget {
     this.prefixIcon,
     this.iconSize,
     this.inputFormatters,
-    this.maxLines, this.focusNode, this.maxLength, // ✅ Constructor updated
+    this.maxLines,
+    this.focusNode,
+    this.maxLength,
+    this.textAlign,
   });
 
   @override
@@ -130,11 +134,14 @@ class _EditTextState extends State<EditText> {
                       inputFormatters: widget.inputFormatters,
                       maxLines: widget.maxLines ?? 1,
                       focusNode: widget.focusNode,
-                      // ✅ Use maxLines
+                      maxLength: widget.maxLength,
+
+                      textAlign: widget.textAlign ?? TextAlign.start,
                       decoration: InputDecoration(
                         isCollapsed: true,
                         border: InputBorder.none,
                         hintText: widget.hint,
+                        counterText: "",
                         hintStyle: widget.hintStyle ?? FontStyles.s12Grey4,
                         contentPadding: const EdgeInsets.symmetric(
                           vertical: 12,

@@ -48,8 +48,8 @@ class LoginTypesRow extends StatelessWidget {
   }
 
   String _findIcon(LoginTypes value) {
-    if (value == LoginTypes.facebook) return "ic_facebook";
-    if (value == LoginTypes.apple) return "ic_apple";
+    // if (value == LoginTypes.facebook) return "ic_facebook";
+    // if (value == LoginTypes.apple) return "ic_apple";
     if (value == LoginTypes.mail) return "ic_mail";
     if (value == LoginTypes.phone) return "ic_phone";
     return "ic_google";

@@ -103,9 +103,10 @@ class ProductDetailsMobile extends StatelessWidget {
           MyCarousel(
             height: 450,
             control: control.carouselControl,
-            items: list
-                .map((e) => ImageLoader(url: e.image.autoUrl, radius: 0))
-                .toList(),
+            // items: list
+            //     .map((e) => ImageLoader(url: e.image.autoUrl, radius: 0))
+            //     .toList(),
+            builder: (int index, int length, item)=>ImageLoader(url: item.image.autoUrl, radius: 0,),
           ),
           const SizedBox(height: 10),
           DotListener(

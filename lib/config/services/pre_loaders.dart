@@ -1,4 +1,5 @@
 
+import 'package:error_fit/config/storage/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_strategy/url_strategy.dart';
@@ -13,6 +14,7 @@ class PreLoaders {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    await AppState.init();
+    await LocalStorage().init();
+    // await AppState.init();
   }
 }

@@ -6,7 +6,7 @@ class ProfileSectionControl extends GetxController {
   void onAccountClick() {}
 
   void onLogoutClick() {
-    Auth.logout;
+    Auth.clearAuth();
     landingRoute.sweepNavigate;
   }
 }
