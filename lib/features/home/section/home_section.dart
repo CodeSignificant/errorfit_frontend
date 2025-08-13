@@ -1,7 +1,8 @@
 import 'package:error_fit/config/extensions/string_extensions.dart';
+import 'package:error_fit/config/routes/routers.dart';
 import 'package:error_fit/config/styles/font_styles.dart';
 import 'package:error_fit/core/buttons/anim_button.dart';
-import 'package:error_fit/features/home/models/category_model.dart';
+import 'package:error_fit/features/home/models/home_flow_model.dart';
 import 'package:error_fit/features/home/section/home_section_controller.dart';
 import 'package:error_fit/features/products/widgets/product_tile.dart';
 import 'package:flutter/material.dart';
@@ -41,37 +42,46 @@ class _HomeSectionState extends State<HomeSection> {
               children: [
                 _carousel(),
                 const SizedBox(height: 26),
-                _categories(),
-                const SizedBox(height: 26),
-                ImageLoader(
-                  url: dummyImages[2].autoUrl,
-                  height: 200,
-                  radius: 0,
-                ),
-                const SizedBox(height: 26),
-                _grid3Add(),
-                const SizedBox(height: 26),
-                ImageLoader(
-                  url: dummyImages[2].autoUrl,
-                  height: 200,
-                  radius: 0,
-                ),
-                const SizedBox(height: 26),
-                _grid2Add(),
-                const SizedBox(height: 26),
-                ImageLoader(
-                  url: dummyImages[2].autoUrl,
-                  height: 200,
-                  radius: 0,
-                ),
-                const SizedBox(height: 26),
-                _recentlyViewed(),
-                const SizedBox(height: 26),
-                ImageLoader(
-                  url: dummyImages[2].autoUrl,
-                  height: 200,
-                  radius: 0,
-                ),
+                Obx(() {
+                  final flow = control.homeFlowList.value;
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    spacing: 26,
+                    children: List.generate(
+                      flow.length, (index) => _generateFlow(flow[index]),),
+                  );
+                }),
+                // _categories([]),
+                // const SizedBox(height: 26),
+                // ImageLoader(
+                //   url: dummyImages[2].autoUrl,
+                //   height: 200,
+                //   radius: 0,
+                // ),
+                // const SizedBox(height: 26),
+                // // _grid3Add([]),
+                // const SizedBox(height: 26),
+                // ImageLoader(
+                //   url: dummyImages[2].autoUrl,
+                //   height: 200,
+                //   radius: 0,
+                // ),
+                // const SizedBox(height: 26),
+                // // _grid2Add(),
+                // const SizedBox(height: 26),
+                // ImageLoader(
+                //   url: dummyImages[2].autoUrl,
+                //   height: 200,
+                //   radius: 0,
+                // ),
+                // const SizedBox(height: 26),
+                // _recentlyViewed(),
+                // const SizedBox(height: 26),
+                // ImageLoader(
+                //   url: dummyImages[2].autoUrl,
+                //   height: 200,
+                //   radius: 0,
+                // ),
                 const SizedBox(height: 26),
               ],
             ),
@@ -95,31 +105,37 @@ class _HomeSectionState extends State<HomeSection> {
       child: Stack(
         children: [
           Positioned.fill(
-            child: MyCarousel(
+            child: MyCarousel<MyCarouselModel>(
               control: control.carouselControl,
               autoScrollDuration: Duration(seconds: 3),
-              items: [
-                ImageLoader(
-                  url: dummyImages[1].autoUrl,
-                  radius: 0,
-                ),
-                ImageLoader(
-                  url: dummyImages[1].autoUrl,
-                  radius: 0,
-                ),
-                ImageLoader(
-                  url: dummyImages[1].autoUrl,
-                  radius: 0,
-                ),
-                ImageLoader(
-                  url: dummyImages[1].autoUrl,
-                  radius: 0,
-                ),
-                ImageLoader(
-                  url: dummyImages[1].autoUrl,
-                  radius: 0,
-                ),
-              ],
+              builder: (index, length, item) =>
+                  GestureDetector(
+                      onTap: () => control.onCarouselItemClick(item),
+                      child: ImageLoader(
+                        url: (item as MyCarouselModel).image.autoUrl,
+                        radius: 0,)),
+              // items: [
+              //   ImageLoader(
+              //     url: dummyImages[1].autoUrl,
+              //     radius: 0,
+              //   ),
+              //   ImageLoader(
+              //     url: dummyImages[1].autoUrl,
+              //     radius: 0,
+              //   ),
+              //   ImageLoader(
+              //     url: dummyImages[1].autoUrl,
+              //     radius: 0,
+              //   ),
+              //   ImageLoader(
+              //     url: dummyImages[1].autoUrl,
+              //     radius: 0,
+              //   ),
+              //   ImageLoader(
+              //     url: dummyImages[1].autoUrl,
+              //     radius: 0,
+              //   ),
+              // ],
             ),
           ),
           Positioned(
@@ -172,14 +188,14 @@ class _HomeSectionState extends State<HomeSection> {
     );
   }
 
-  Widget _categories() {
+  Widget _categories(List<CategoryFlowModel> categories) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0),
         child: Row(
           spacing: 16,
-          children: CategoryModel.dummyList
+          children: categories
               .map((e) => _categoryTile(model: e))
               .toList(),
         ),
@@ -187,7 +203,7 @@ class _HomeSectionState extends State<HomeSection> {
     );
   }
 
-  Widget _categoryTile({required CategoryModel model}) {
+  Widget _categoryTile({required CategoryFlowModel model}) {
     return AnimButton(
       onClick: () => control.onCategoryClick(model),
       child: SizedBox(
@@ -203,6 +219,16 @@ class _HomeSectionState extends State<HomeSection> {
         ),
       ),
     );
+  }
+
+  Widget _adImage({required AdImageFlowModel model}) {
+    return AnimButton(
+        onClick: () {
+          navigate(model.route);
+        },
+        child: ImageLoader(url: model.image.autoUrl,
+          height: 200,
+          radius: 0,));
   }
 
   Widget _recentlyViewed() {
@@ -234,37 +260,83 @@ class _HomeSectionState extends State<HomeSection> {
     );
   }
 
-  Widget _grid2Add() {
+  Widget _grid2Add(List<Grid2FlowModel> model) {
     return SizedBox(
       height: 200,
       child: Row(
         children: [
-          Expanded(child: ImageLoader(url: dummyImages[3].autoUrl, radius: 0,)),
-          Expanded(child: ImageLoader(url: dummyImages[4].autoUrl, radius: 0,))
+          Expanded(child: AnimButton(onClick: () => navigate(model.first.route),
+              child: ImageLoader(url: model.first.image.autoUrl, radius: 0,))),
+          Expanded(
+              child: AnimButton(onClick: () => navigate(model.last.route),
+                  child: ImageLoader(
+                    url: model.last.image.autoUrl, radius: 0,)))
         ],
       ),
     );
   }
 
-  Widget _grid3Add() {
+  Widget _grid3Add(List<Grid3FlowModel> model) {
     return SizedBox(
       height: 200,
       child: Row(
         children: [
-          Expanded(child: ImageLoader(url: dummyImages[3].autoUrl, radius: 0,)),
+          Expanded(child: AnimButton(onClick: () => navigate(model.first.route),
+              child: ImageLoader(url: model.first.image.autoUrl, radius: 0,))),
           Expanded(child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(child: ImageLoader(
-                url: dummyImages[4].autoUrl,
-                radius: 0,)),
-              Expanded(child: ImageLoader(
-                url: dummyImages[5].autoUrl,
-                radius: 0,)),
+              Expanded(child: AnimButton(
+                onClick: () => navigate(model[1].route),
+                child: ImageLoader(
+                  url: model[1].image.autoUrl,
+                  radius: 0,),
+              )),
+              Expanded(child: AnimButton(
+                onClick: () => navigate(model[2].route),
+                child: ImageLoader(
+                  url: model[2].image.autoUrl,
+                  radius: 0,),
+              )),
             ],
           ))
         ],
       ),
     );
+  }
+
+  Widget _generateFlow(flow) {
+    if (flow['type'] == "categories") {
+      return _categories(CategoryFlowModel.fromJsonList(flow['data'] ?? []));
+    }
+    if (flow['type'] == "banner") {
+      return _adImage(model: AdImageFlowModel.fromJson(flow['data'] ?? {}));
+    }
+    if (flow['type'] == "grid3") {
+      List<Grid3FlowModel> output = [];
+      final list = Grid3FlowModel.fromJsonList(flow['data'] ?? []);
+      for (int i = 0; i < 3; i++) {
+        try {
+          output.add(list[i]);
+        } catch (e) {
+          output.add(Grid3FlowModel.fromJson({}));
+        }
+      }
+      return _grid3Add(output);
+    }
+
+    if (flow['type'] == "grid2") {
+      List<Grid2FlowModel> output = [];
+      final list = Grid2FlowModel.fromJsonList(flow['data'] ?? []);
+      for (int i = 0; i < 2; i++) {
+        try {
+          output.add(list[i]);
+        } catch (e) {
+          output.add(Grid2FlowModel.fromJson({}));
+        }
+      }
+      return _grid2Add(output);
+    }
+    return SizedBox();
   }
 }

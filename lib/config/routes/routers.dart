@@ -25,10 +25,9 @@ GenerateRoute get testRoute => GenerateRoute("/test");
 GenerateRoute get notFoundRoute => GenerateRoute("/not_found");
 
 navigate(String? route) {
-  if (route != null) {
-    Get.toNamed(route);
-    return;
-  }
+  if (route == null) return;
+  if (route.isEmpty) return;
+  Get.toNamed(route);
 }
 
 // bool redirect() {

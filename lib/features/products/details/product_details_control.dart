@@ -40,6 +40,7 @@ class ProductDetailsControl extends GetxController {
       ProductModel.initial(),
       ProductModel.initial(),
     ];
+    carouselControl.list.value = carouselList.value;
     loadingControl.setLoading(false);
   }
 

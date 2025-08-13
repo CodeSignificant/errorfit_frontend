@@ -81,6 +81,22 @@ class Decorations {
     );
   }
 
+  static BoxDecoration get sheet {
+    return BoxDecoration(
+      color: AppColors.white,
+      borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(26), topRight: Radius.circular(26)),
+      boxShadow: [
+        BoxShadow(
+          color: AppColors.black.withAlpha(20),
+          offset: Offset(2, 0),
+          spreadRadius: 1,
+          blurRadius: 2,
+        ),
+      ],
+    );
+  }
+
   static BoxDecoration get bottomBorder {
     return BoxDecoration(
         color: Colors.white,

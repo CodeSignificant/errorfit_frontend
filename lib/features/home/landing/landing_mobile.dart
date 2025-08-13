@@ -1,7 +1,7 @@
 import 'package:error_fit/config/extensions/string_extensions.dart';
 import 'package:error_fit/config/styles/app_colors.dart';
 import 'package:error_fit/core/images/ImageLoader.dart';
-import 'package:error_fit/core/resources/constants.dart';
+import 'package:error_fit/core/resources/actions.dart';
 import 'package:error_fit/features/home/landing/landing_controller.dart';
 import 'package:error_fit/features/home/widgets/login_types_row.dart';
 import 'package:flutter/material.dart';
@@ -31,14 +31,8 @@ class _LandingMobileState extends State<LandingMobile> {
                 child: MyCarousel(
                   control: widget.control.carouselControl,
                   autoScrollDuration: Duration(seconds: 4),
-                  items: [
-                    ImageLoader(
-                        url: dummyImages[0].autoUrl),
-                    ImageLoader(
-                        url: dummyImages[0].autoUrl),
-                    ImageLoader(
-                        url: dummyImages[0].autoUrl),
-                  ],
+                  builder: (index, length, item) =>
+                      ImageLoader(url: (item as String).autoUrl, radius: 0,),
                 ),
               ),
               Positioned(left: 0, right: 0, bottom: 0, child: Container(
@@ -78,7 +72,7 @@ class _LandingMobileState extends State<LandingMobile> {
                           ),),
                     const SizedBox(height: 6,),
                     LoginTypesRow(onSelect: widget.control.onLoginTypeSelect),
-                    const SizedBox(height: 16,),
+                    SizedBox(height: 16+kBottomBarHeight,),
 
                   ],
                 ),

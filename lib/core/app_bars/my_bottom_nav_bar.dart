@@ -2,6 +2,7 @@ import 'package:error_fit/config/enums/bottom_nav_types.dart';
 import 'package:error_fit/config/styles/app_colors.dart';
 import 'package:error_fit/core/buttons/anim_button.dart';
 import 'package:error_fit/core/images/svg_icon.dart';
+import 'package:error_fit/core/resources/actions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -33,37 +34,43 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
     return Container(
       decoration: BoxDecoration(color: AppColors.white),
       child: Obx(() {
-        return Row(
-          children: BottomNavTypes.values
-              .map(
-                (e) => Expanded(
-                  child: AnimButton(
-                    onClick: () => _onTabSelect(e),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const SizedBox(height: 12),
-                        SvgIcon(
-                          path: _findIcon(e),
-                          color: e == _selectedType.value
-                              ? AppColors.primary
-                              : AppColors.primary70,
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: BottomNavTypes.values
+                  .map(
+                    (e) => Expanded(
+                      child: AnimButton(
+                        onClick: () => _onTabSelect(e),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            const SizedBox(height: 12),
+                            SvgIcon(
+                              path: _findIcon(e),
+                              color: e == _selectedType.value
+                                  ? AppColors.primary
+                                  : AppColors.primary70,
+                            ),
+                            const SizedBox(height: 12),
+                          ],
                         ),
-                        const SizedBox(height: 12),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              )
-              .toList(),
+                  )
+                  .toList(),
+            ),
+            SizedBox(height: kBottomBarHeight,)
+          ],
         );
       }),
     );
   }
 
   void _onTabSelect(BottomNavTypes type) {
-    _selectedType.value = type;
     widget.onSelect(type);
+    _selectedType.value = type;
   }
 
   _findIcon(BottomNavTypes e) {

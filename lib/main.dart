@@ -15,8 +15,8 @@ import 'config/styles/app_colors.dart';
 void main() async {
   await PreLoaders.init();
   await Config.init(Flavours.pro);
-  await AppState.init();
-  await Auth.init();
+  // await AppState.init();
+  // await Auth.init();
   await FinalLoaders.init();
 
   runApp(

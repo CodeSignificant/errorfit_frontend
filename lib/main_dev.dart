@@ -15,9 +15,8 @@ void main() async {
   await PreLoaders.init();
   await Config.init(Flavours.dev);
 
-  await Auth.init();
-
-  await AppState.init();
+  // await Auth.init();
+  // await AppState.init();
   await FinalLoaders.init();
 
   runApp(

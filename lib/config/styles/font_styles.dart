@@ -49,6 +49,11 @@ class FontStyles {
     color: AppColors.white,
     fontWeight: FontWeight.w400,
   );
+  static const s24White7 = TextStyle(
+    fontSize: 24,
+    color: AppColors.white,
+    fontWeight: FontWeight.w700,
+  );
   static const s14Black4 = TextStyle(
     fontSize: 14,
     color: AppColors.black,

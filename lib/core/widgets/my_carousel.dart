@@ -86,7 +86,7 @@ class MyCarouselModel {
 class MyCarouselController extends GetxController {
   static const String dotListenerId = 'dot_listener';
 
-  List<dynamic> list = [];
+  RxList<dynamic> list = [].obs;
   final PageController pageController = PageController();
   Duration? autoScrollDuration;
   Timer? _timer;
@@ -132,17 +132,18 @@ class MyCarouselController extends GetxController {
   }
 }
 
-class MyCarousel extends StatefulWidget {
+class MyCarousel<T> extends StatefulWidget {
   final MyCarouselController control;
-  final List<Widget> items;
+  final List<Widget>? items;
+  final Widget Function(int index, int length, dynamic item) builder;
   final Duration? autoScrollDuration;
   final double? height;
 
   const MyCarousel({
     super.key,
     required this.control,
-    required this.items,
-    this.autoScrollDuration, this.height,
+    required this.builder,
+    this.autoScrollDuration, this.height, this.items,
   });
 
   @override
@@ -153,7 +154,7 @@ class _MyCarouselState extends State<MyCarousel> {
   @override
   void initState() {
     super.initState();
-    widget.control.list = widget.items;
+    if (widget.items != null) widget.control.list.value = widget.items!;
     widget.control.autoScrollDuration = widget.autoScrollDuration;
     // No manual onInit
   }
@@ -162,6 +163,7 @@ class _MyCarouselState extends State<MyCarousel> {
   void dispose() {
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MyCarouselController>(
@@ -169,12 +171,16 @@ class _MyCarouselState extends State<MyCarousel> {
       builder: (_) {
         return SizedBox(
           height: widget.height,
-          child: PageView.builder(
-            controller: widget.control.pageController,
-            itemCount: widget.items.length,
-            onPageChanged: widget.control.onPageChanged,
-            itemBuilder: (_, index) => widget.items[index],
-          ),
+          child: Obx(() {
+            final list = widget.control.list.value;
+            return PageView.builder(
+              controller: widget.control.pageController,
+              itemCount: list.length,
+              onPageChanged: widget.control.onPageChanged,
+              itemBuilder: (_, index) =>
+                  widget.builder(index, list.length, list[index]),
+            );
+          }),
         );
       },
     );
