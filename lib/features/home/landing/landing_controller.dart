@@ -5,6 +5,7 @@ import 'package:error_fit/core/resources/actions.dart';
 import 'package:error_fit/core/resources/data_response.dart';
 import 'package:error_fit/core/widgets/my_carousel.dart';
 import 'package:error_fit/features/home/widgets/mail_login_sheet.dart';
+import 'package:error_fit/features/home/widgets/phone_login_sheet.dart';
 import 'package:error_fit/features/home/widgets/verify_otp_sheet.dart';
 import 'package:get/get.dart';
 
@@ -59,13 +60,32 @@ class LandingController extends GetxController{
     // showBottomSheet(context: context, builder: (context) => MailLoginSheet(),);
   }
 
-  _onMailOTPSentCompleted(DataResponse response) async {
+  _onMailOTPSentCompleted(DataResponse response, String mail) async {
     if (response is DataSuccess) {
       closeDialog();
       await delay();
       Get.bottomSheet(VerifyOTPSheet(
         title: "OTP sent successfully to your mail",
-        hint: "adi@4ss.in",
+        hint: mail,
+        token: response.data,
+        onComplete: (response) {
+          if (response is DataSuccess) {
+            homeRoute.replace;
+          }
+          if (response is DataFailed) {
+            Toast.failed(title: "Unable to Login", message: response.error);
+          }
+        },));
+    }
+  }
+
+  _onPhoneOTPSentCompleted(DataResponse response, String phone) async {
+    if (response is DataSuccess) {
+      closeDialog();
+      await delay();
+      Get.bottomSheet(VerifyOTPSheet(
+        title: "OTP sent successfully to your mail",
+        hint: "+91 $phone",
         token: response.data,
         onComplete: (response) {
           if (response is DataSuccess) {
@@ -79,7 +99,7 @@ class LandingController extends GetxController{
   }
 
   void _phoneLogin() async {
-
+    Get.bottomSheet(PhoneLoginSheet(onComplete: _onPhoneOTPSentCompleted));
   }
 
 

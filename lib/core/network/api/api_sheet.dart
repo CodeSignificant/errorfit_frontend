@@ -14,8 +14,11 @@ class AuthApi {
   // POST(mail)
   String get mailOTP => "$_baseUrl/MailOTP/Login.php";
 
+  // // POST(otp, device) => token
+  // String get verifyMailOTP => "$_baseUrl/MailOTP/VerifyMailOTP.php";
+
   // POST(otp, device) => token
-  String get verifyMailOTP => "$_baseUrl/MailOTP/VerifyMailOTP.php";
+  String get verifyOTP => "$_baseUrl/VerifyOTP.php";
 
   // POST(phone, country_code)
   String get phoneOTP => "$_baseUrl/PhoneOTP/Login.php";
