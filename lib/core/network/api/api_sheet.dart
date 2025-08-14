@@ -1,6 +1,7 @@
 import '../../../config/environments/config.dart';
 class ApiSheet {
   static final auth = AuthApi();
+  static final products = ProductsApi();
   static final address = AddressApi();
   static final wishlist = WishlistApi();
   static final cart = CartApi();
@@ -48,6 +49,17 @@ class AuthApi {
   String get logoutAll => "$_baseUrl/LogoutAll.php";
 }
 
+class ProductsApi {
+  final String domain = Config.domain;
+  final String _baseUrl = "${Config.baseUrl}/Products"; ////errorfit.4ss.in/api/v1/Services/Products/Public/FilterProducts.php
+
+  // POST(page_no)
+  String get filter => "$_baseUrl/Public/FilterProducts.php";
+
+
+
+}
+
 class AddressApi {
   final String domain = Config.domain;
   final String _baseUrl = "${Config.baseUrl}/Users/Address";
@@ -73,7 +85,7 @@ class WishlistApi {
   String get addNew => "$_baseUrl/Set.php";
 
   // GET() => Secure
-  String get update => "$_baseUrl/Fetch.php";
+  String get fetch => "$_baseUrl/Fetch.php";
 
 }
 

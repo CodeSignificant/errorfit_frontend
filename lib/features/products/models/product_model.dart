@@ -1,4 +1,5 @@
 import 'package:error_fit/config/extensions/string_extensions.dart';
+import 'package:error_fit/core/resources/actions.dart';
 import 'package:error_fit/core/resources/constants.dart';
 import 'package:get/get.dart';
 
@@ -25,10 +26,14 @@ class ProductModel {
     return ProductModel(
       title: json['title'] ?? '',
       brand: json['brand'] ?? '',
-      image: json['image'] ?? '',
-      sellingPrice: (json['sellingPrice'] ?? 0).toDouble(),
-      mrpPrice: (json['mrpPrice'] ?? 0).toDouble(),
-      isLiked: json['isLiked'] ?? false,
+      image: json['preview_url'] ?? '',
+      sellingPrice: (json['selling_price'] is String)
+          ? double.tryParse(json['selling_price']) ?? 0.0
+          : (json['selling_price']?.toDouble() ?? 0.0),
+      mrpPrice: (json['mrp_price'] is String)
+          ? double.tryParse(json['mrp_price']) ?? 0.0
+          : (json['mrp_price']?.toDouble() ?? 0.0),
+      isLiked: json['is_liked'] ?? false,
       id: json['id'] ?? '',
     );
   }
@@ -55,7 +60,8 @@ class ProductModel {
     for (var item in list) {
       try {
         result.add(ProductModel.fromJson(item));
-      } catch (_) {
+      } catch (e) {
+        trace(e.toString());
         continue;
       }
     }

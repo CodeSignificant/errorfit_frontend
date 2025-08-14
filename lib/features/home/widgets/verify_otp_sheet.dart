@@ -76,7 +76,6 @@ class _VerifyOTPSheetState extends State<VerifyOTPSheet> {
     control.setOnCompleteListener((response) => widget.onComplete(response));
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     return Column(

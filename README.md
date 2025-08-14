@@ -17,16 +17,22 @@ samples, guidance on mobile development, and a full API reference.
 
 
 TODO
-> add horizontalImages in home flow
 > user info api to get user details after login
-> categories images in flow and app, api
-> fetch/filter products
+> search/filter products
 > products details
-> profile pages (account, wishlist, orders, address, support)
+> profile account
+> wishlist page
+> orders pages
+> address page
+> support page
 > notifications
 > add contact phone number in pro @.env.pro.dart
-> 
+
 
 
 COMPLETED
-> add phone otp login sheet and verify 
+> add phone otp login sheet and verify
+> add horizontalImages in home flow
+> brands in search page
+> fetch products
+> categories images in flow and app, api

@@ -1,4 +1,5 @@
 import 'package:error_fit/config/routes/routers.dart';
+import 'package:error_fit/config/services/auth.dart';
 import 'package:error_fit/features/products/models/product_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -57,7 +58,13 @@ class HomeSectionController extends GetxController{
     productDetailsRoute.param(model.id).navigate;
   }
 
-  onProductLikeClick(ProductModel model) {}
+  onProductLikeClick(ProductModel model) {
+    if(Auth.isLogin){
+      landingRoute.navigate;
+      return;
+    }
+
+  }
 
   void onCarouselItemClick(MyCarouselModel item) {
     navigate(item.route);

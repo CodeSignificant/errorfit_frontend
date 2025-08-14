@@ -103,4 +103,7 @@ class LandingController extends GetxController{
   }
 
 
+  void onGuestClick() {
+    homeRoute.navigate;
+  }
 }
