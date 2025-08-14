@@ -28,13 +28,33 @@ class AuthRepo {
     }
   }
 
+  static Future<DataResponse> phoneOTPLogin({required String phone}) async {
+    try {
+      final response = await http.post(
+        Uri.parse(ApiSheet.auth.phoneOTP),
+        body: jsonEncode({"phone": phone, "country_code": "+91"}),
+      );
+      final res = jsonDecode(response.body);
+      trace(response.body.toString());
+      if (!(res['status'] ?? false)) {
+        trace(response.body);
+        return DataFailed(res['message'] ?? "No response");
+      }
+      final data = res['token'];
+      return DataSuccess(data);
+    } catch (e) {
+      trace(e.toString());
+      return const DataFailed("Something went wrong");
+    }
+  }
+
   static Future<DataResponse> verifyOTP({
     required String otp,
     required String token,
   }) async {
     try {
       final response = await http.post(
-        Uri.parse(ApiSheet.auth.verifyMailOTP),
+        Uri.parse(ApiSheet.auth.verifyOTP),
         headers: {
           'Authorization': 'Bearer $token',
           'Content-Type': 'application/json',

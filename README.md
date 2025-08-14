@@ -17,7 +17,6 @@ samples, guidance on mobile development, and a full API reference.
 
 
 TODO
-> add phone otp login sheet and verify
 > add horizontalImages in home flow
 > user info api to get user details after login
 > categories images in flow and app, api
@@ -27,3 +26,7 @@ TODO
 > notifications
 > add contact phone number in pro @.env.pro.dart
 > 
+
+
+COMPLETED
+> add phone otp login sheet and verify 

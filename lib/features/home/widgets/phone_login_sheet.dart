@@ -9,34 +9,37 @@ import 'package:error_fit/core/resources/data_response.dart';
 import 'package:error_fit/core/resources/validations.dart';
 import 'package:error_fit/core/widgets/sheet_nob.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-class MailLoginSheetControl extends GetxController {
-  final mailControl = TextEditingController();
+class PhoneLoginSheetControl extends GetxController {
+  final phoneControl = TextEditingController();
   final isLoading = false.obs;
   final error = "".obs;
-  Function(DataResponse response, String mail)? _onComplete;
+  Function(DataResponse response, String phone)? _onComplete;
 
-  void setOnCompleteListener(Function(DataResponse response, String mail) listener) {
+  void setOnCompleteListener(
+    Function(DataResponse response, String phone) listener,
+  ) {
     _onComplete = listener;
   }
 
   void onLoginClick() async {
     error.value = "";
-    if (!Validations.isValidEmail(mailControl.text)) {
-      error.value = "Please enter a valid mail";
+    if (!Validations.isValidIndianMobileNumber(phoneControl.text)) {
+      error.value = "Please enter a valid phone";
       return;
     }
     isLoading.value = true;
-    final result = await AuthRepo.mailOTPLogin(
-      mail: mailControl.text.trim().toLowerCase(),
+    final result = await AuthRepo.phoneOTPLogin(
+      phone: phoneControl.text.trim().toLowerCase(),
     );
     isLoading.value = false;
-    _onComplete?.call(result, mailControl.text.trim());
+    _onComplete?.call(result, phoneControl.text.trim());
     if (result is DataSuccess) {
       Toast.success(
         title: "OTP sent successfully",
-        message: "check your mail for OTP",
+        message: "check your phone for OTP",
       );
       return;
     }
@@ -47,21 +50,23 @@ class MailLoginSheetControl extends GetxController {
   }
 }
 
-class MailLoginSheet extends StatefulWidget {
-  final Function(DataResponse response, String mail) onComplete;
+class PhoneLoginSheet extends StatefulWidget {
+  final Function(DataResponse response, String phone) onComplete;
 
-  const MailLoginSheet({super.key, required this.onComplete});
+  const PhoneLoginSheet({super.key, required this.onComplete});
 
   @override
-  State<MailLoginSheet> createState() => _MailLoginSheetState();
+  State<PhoneLoginSheet> createState() => _PhoneLoginSheetState();
 }
 
-class _MailLoginSheetState extends State<MailLoginSheet> {
-  final control = MailLoginSheetControl();
+class _PhoneLoginSheetState extends State<PhoneLoginSheet> {
+  final control = PhoneLoginSheetControl();
 
   @override
   void initState() {
-    control.setOnCompleteListener((response, mail) => widget.onComplete(response, mail));
+    control.setOnCompleteListener(
+      (response, phone) => widget.onComplete(response, phone),
+    );
     super.initState();
   }
 
@@ -80,17 +85,18 @@ class _MailLoginSheetState extends State<MailLoginSheet> {
               const SheetNob(),
               const SizedBox(height: 26),
               Text(
-                "Enter your mail for Login/Signup",
+                "Enter your phone for Login/Signup",
                 style: FontStyles.s16Primary7,
               ),
               const SizedBox(height: 12),
               Obx(() {
                 return EditText(
-                  controller: control.mailControl,
+                  controller: control.phoneControl,
                   error: control.error.value,
-                  hint: "EMail",
-                  keyboardType: TextInputType.emailAddress,
+                  hint: "Phone",
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   textInputAction: TextInputAction.go,
+                  keyboardType: TextInputType.number,
                 );
               }),
               const SizedBox(height: 16),
