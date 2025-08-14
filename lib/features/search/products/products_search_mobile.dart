@@ -1,6 +1,7 @@
 import 'package:error_fit/config/styles/app_colors.dart';
 import 'package:error_fit/core/buttons/svg_icon_button.dart';
 import 'package:error_fit/core/images/svg_icon.dart';
+import 'package:error_fit/core/resources/actions.dart';
 import 'package:error_fit/core/resources/stretch_grid.dart';
 import 'package:error_fit/core/widgets/loading_view.dart';
 import 'package:error_fit/features/products/widgets/product_tile.dart';
@@ -25,17 +26,30 @@ class _ProductsSearchMobileState extends State<ProductsSearchMobile> {
       children: [
         Container(
           color: AppColors.white,
-          height: kToolbarHeight,
-          child: Row(
+          height: kToolbarHeight + kStatusBarHeight,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(width: 14),
-              SvgIconButton(path: "ic_ios_left", size: 24, onClick: widget.control.onBackClick),
-              const SizedBox(width: 14),
-              Expanded(child: Text("Search")),
-              SvgIcon(path: "ic_search", size: 20, color: AppColors.primary,),
-              const SizedBox(width: 10),
-              SvgIcon(path: "ic_menu", color: AppColors.primary,),
-              const SizedBox(width: 14),
+              Padding(
+                padding: EdgeInsets.only(top: kStatusBarHeight),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(width: 14),
+                    SvgIconButton(path: "ic_ios_left",
+                        size: 24,
+                        onClick: widget.control.onBackClick),
+                    const SizedBox(width: 14),
+                    Expanded(child: Text("Search")),
+                    SvgIcon(
+                      path: "ic_search", size: 20, color: AppColors.primary,),
+                    const SizedBox(width: 10),
+                    SvgIcon(path: "ic_menu", color: AppColors.primary,),
+                    const SizedBox(width: 14),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -71,6 +85,7 @@ class _ProductsSearchMobileState extends State<ProductsSearchMobile> {
             ),
           ),
         ),
+        SizedBox(height: kBottomBarHeight,)
       ],
     );
   }

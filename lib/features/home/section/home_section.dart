@@ -11,7 +11,6 @@ import 'package:get/get.dart';
 import '../../../config/styles/app_colors.dart';
 import '../../../core/app_bars/main_app_bar.dart';
 import '../../../core/images/ImageLoader.dart';
-import '../../../core/resources/constants.dart';
 import '../../../core/widgets/my_carousel.dart';
 
 class HomeSection extends StatefulWidget {
@@ -203,6 +202,7 @@ class _HomeSectionState extends State<HomeSection> {
     );
   }
 
+
   Widget _categoryTile({required CategoryFlowModel model}) {
     return AnimButton(
       onClick: () => control.onCategoryClick(model),
@@ -221,6 +221,23 @@ class _HomeSectionState extends State<HomeSection> {
     );
   }
 
+  Widget _horizontalImages(List<HorizontalImagesFlowModel> categories) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: categories
+            .map((e) =>
+            AnimButton(onClick: () => navigate(e.route),
+                child: ImageLoader(
+                  url: e.image.autoUrl,
+                  radius: 0,
+                  height: 150,
+                  width: 100,
+                  fit: BoxFit.contain,)))
+            .toList(),
+      ),
+    );
+  }
   Widget _adImage({required AdImageFlowModel model}) {
     return AnimButton(
         onClick: () {
@@ -311,6 +328,11 @@ class _HomeSectionState extends State<HomeSection> {
     }
     if (flow['type'] == "banner") {
       return _adImage(model: AdImageFlowModel.fromJson(flow['data'] ?? {}));
+    }
+
+    if (flow['type'] == "horizontal_images") {
+      return _horizontalImages(
+          HorizontalImagesFlowModel.fromJsonList(flow['data'] ?? []));
     }
     if (flow['type'] == "grid3") {
       List<Grid3FlowModel> output = [];

@@ -1,5 +1,7 @@
 import 'package:error_fit/config/extensions/string_extensions.dart';
 import 'package:error_fit/config/styles/app_colors.dart';
+import 'package:error_fit/config/styles/font_styles.dart';
+import 'package:error_fit/core/buttons/anim_button.dart';
 import 'package:error_fit/core/images/ImageLoader.dart';
 import 'package:error_fit/core/resources/actions.dart';
 import 'package:error_fit/features/home/landing/landing_controller.dart';
@@ -72,6 +74,12 @@ class _LandingMobileState extends State<LandingMobile> {
                           ),),
                     const SizedBox(height: 6,),
                     LoginTypesRow(onSelect: widget.control.onLoginTypeSelect),
+
+                    const SizedBox(height: 16,),
+                    Center(child: AnimButton(
+                        onClick: widget.control.onGuestClick,
+                        child: Text("continue as a guest", style: FontStyles
+                            .s14Primary6,))),
                     SizedBox(height: 16+kBottomBarHeight,),
 
                   ],

@@ -1,4 +1,5 @@
 import 'package:error_fit/config/extensions/double_extensions.dart';
+import 'package:error_fit/config/extensions/string_extensions.dart';
 import 'package:error_fit/config/styles/decorations.dart';
 import 'package:error_fit/config/styles/font_styles.dart';
 import 'package:error_fit/core/buttons/anim_button.dart';
@@ -30,7 +31,7 @@ class ProductTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ImageLoader(
-              url: model.image,
+              url: model.image.autoUrl,
               height: 200,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(8),

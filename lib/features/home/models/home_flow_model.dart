@@ -1,5 +1,46 @@
 abstract class HomeFlowModel {}
 
+class HorizontalImagesFlowModel extends HomeFlowModel {
+  final String title;
+  final String image;
+  final String route;
+
+  HorizontalImagesFlowModel({
+    required this.title,
+    required this.image,
+    required this.route,
+  });
+
+  // Factory constructor to create instance from JSON
+  factory HorizontalImagesFlowModel.fromJson(Map<String, dynamic> json) {
+    return HorizontalImagesFlowModel(
+      title: json['title'] as String? ?? '',
+      image: json['image'] as String? ?? '',
+      route: json['deep_link'] as String? ?? '',
+    );
+  }
+
+  // Convert list of JSON maps to list of CategoryFlowModel
+  static List<HorizontalImagesFlowModel> fromJsonList(List<dynamic> list) {
+    final List<HorizontalImagesFlowModel> items = [];
+
+    for (var json in list) {
+      try {
+        items.add(HorizontalImagesFlowModel.fromJson(json));
+      } catch (e) {
+        continue;
+      }
+    }
+
+    return items;
+  }
+
+  // Optional: toJson method for serialization
+  Map<String, dynamic> toJson() {
+    return {'title': title, 'image': image, 'route': route};
+  }
+}
+
 class CategoryFlowModel extends HomeFlowModel {
   final String title;
   final String image;
