@@ -1,6 +1,8 @@
 import 'package:error_fit/core/resources/constants.dart';
 import 'package:get/get.dart';
 
+import '../../../core/resources/actions.dart';
+
 class CartModel {
   final String title;
   final String brand;
@@ -51,35 +53,45 @@ class CartModel {
       title: json['title'] ?? '',
       brand: json['brand'] ?? '',
       size: json['size'] ?? '',
-      price: json['price'] is double
-          ? json['price']
-          : double.tryParse(json['price']?.toString() ?? '') ?? 0.0,
+      price: json['selling_price'] is double
+          ? json['selling_price']
+          : double.tryParse(json['selling_price']?.toString() ?? '') ?? 0.0,
       maxLimit: json['maxLimit'] is int
           ? json['maxLimit']
           : int.tryParse(json['maxLimit']?.toString() ?? '') ?? 10,
-      isSelect: json['isSelect'] ?? false,
-      image: json['image'] ?? "",
-      count: json['count'] ?? 1,
-      id: json['id'] ?? "0",
+      isSelect: (json['selected'] == '1' || json['selected'] == 1 ||
+          json['selected'] == true) ? true : false,
+      image: json['preview_url'] ?? "",
+      count: int.tryParse(json['count']?.toString() ?? '1') ?? 1,
+      id: json['id'] ?? "NA",
     );
   }
 
+
   /// Safe loop-based list parsing with error handling
-  static List<CartModel> fromJsonList(List<dynamic> list) {
+  static List<CartModel> fromJsonList(List<dynamic>? list) {
+    if (list == null) return [];
+
     List<CartModel> result = [];
 
     for (var item in list) {
       try {
         if (item is Map<String, dynamic>) {
           result.add(CartModel.fromJson(item));
+        } else {
+          // Optionally log this unexpected item type
+          trace("Skipped");
         }
-      } catch (e) {
+      } catch (e, stackTrace) {
+        // Use your preferred logging method instead of trace if needed
+        trace('Error parsing CartModel: $e\n$stackTrace');
         continue;
       }
     }
 
     return result;
   }
+
 
   /// Create a default initial model
   factory CartModel.initial() => CartModel(

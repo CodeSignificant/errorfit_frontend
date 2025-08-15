@@ -14,8 +14,9 @@ class Auth {
     return _storage.getString(_authTokenKey) ?? "";
   }
 
-  static Future<void> setUser(String name, String mail, String countryCode,
-      String phone, String gender) async {
+  static Future<void> setUser(
+      {required String name, required String mail, required String countryCode,
+        required String phone, required String gender}) async {
     await _storage.setEncryptedJson(_userKey, {
       "name": name,
       "mail": mail,
