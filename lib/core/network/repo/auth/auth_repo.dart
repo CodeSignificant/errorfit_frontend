@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:error_fit/config/services/auth.dart';
+import 'package:error_fit/core/network/api/secure_call.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../resources/actions.dart';
@@ -68,6 +69,27 @@ class AuthRepo {
       }
       Auth.setToken(res['token'] ?? "");
       return DataSuccess(res['message'] ?? "");
+    } catch (e) {
+      trace(e.toString());
+      return const DataFailed("Something went wrong");
+    }
+  }
+
+  static Future<DataResponse> info() async {
+    try {
+      final response = await SecureCall.get(
+          Uri.parse(ApiSheet.auth.info));
+      final res = jsonDecode(response.body);
+      if (!(res['status'] ?? false)) {
+        trace(response.body);
+        return DataFailed(res['message'] ?? "No response");
+      }
+      Auth.setUser(name: res['name'] ?? "",
+          mail: res['mail'] ?? "",
+          countryCode: res['country_code'] ?? "",
+          phone: res['phone'] ?? "",
+          gender: res['gender'] ?? "");
+      return DataSuccess(res['message'] ?? "Fetch");
     } catch (e) {
       trace(e.toString());
       return const DataFailed("Something went wrong");

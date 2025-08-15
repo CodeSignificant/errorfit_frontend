@@ -5,6 +5,7 @@ import 'package:error_fit/config/routes/routers.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:http_parser/http_parser.dart';
+
 import '../../../config/services/auth.dart';
 import '../../resources/actions.dart';
 import '../../resources/data_response.dart';
@@ -13,14 +14,15 @@ import 'api_sheet.dart';
 class SecureCall {
   static bool _isRefreshing = false;
 
-  static Map<String, String> getHeaders() => {
-    'Authorization': 'Bearer ${Auth.token}',
-    'Content-Type': 'application/json'
+  static Map<String, String> get getHeaders =>
+      {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${Auth.token}'
   };
 
   static Future<Response> get(Uri url, {Map<String, String>? headers}) async {
     await _waitUntilRefresh();
-    var res = await http.get(url, headers: headers ?? getHeaders());
+    var res = await http.get(url, headers: headers ?? getHeaders);
     if (res.statusCode == 401) { //&& validRefreshToken
       if ((await _refreshToken()) is DataFailed) {
         await Auth.clearAuth();
@@ -28,7 +30,7 @@ class SecureCall {
         await delay(milliSeconds: 1000);
         return Response("{}", 401);
       }
-      res = await http.get(url, headers: getHeaders());
+      res = await http.get(url, headers: getHeaders);
     }
 
     return res;
@@ -43,7 +45,7 @@ class SecureCall {
     await _waitUntilRefresh();
     Response res = await http.post(
       url,
-      headers: headers ?? getHeaders(),
+      headers: headers ?? getHeaders,
       body: body,
       encoding: encoding,
     );
@@ -57,7 +59,7 @@ class SecureCall {
       }
       res = await http.post(
         url,
-        headers: getHeaders(),
+        headers: getHeaders,
         body: body,
         encoding: encoding,
       );
@@ -74,7 +76,7 @@ class SecureCall {
     await _waitUntilRefresh();
     Response res = await http.put(
       url,
-      headers: headers ?? getHeaders(),
+      headers: headers ?? getHeaders,
       body: body,
       encoding: encoding,
     );
@@ -89,7 +91,7 @@ class SecureCall {
       }
       res = await http.put(
         url,
-        headers: getHeaders(),
+        headers: getHeaders,
         body: body,
         encoding: encoding,
       );
@@ -106,7 +108,7 @@ class SecureCall {
     await _waitUntilRefresh();
     var res = await http.delete(
       url,
-      headers: headers ?? getHeaders(),
+      headers: headers ?? getHeaders,
       body: body,
       encoding: encoding,
     );
@@ -120,7 +122,7 @@ class SecureCall {
       }
       res = await http.delete(
         url,
-        headers: headers ?? getHeaders(),
+        headers: headers ?? getHeaders,
         body: body,
         encoding: encoding,
       );
@@ -185,7 +187,7 @@ class SecureCall {
       _isRefreshing = true;
       final res = await http.post(
         Uri.parse(ApiSheet.auth.refreshToken),
-        headers: getHeaders(),
+        headers: getHeaders,
       );
 
       if (res.statusCode == 200) {

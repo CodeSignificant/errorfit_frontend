@@ -17,6 +17,8 @@ samples, guidance on mobile development, and a full API reference.
 
 
 TODO
+> cart(update, remove, add)
+> product(like)
 > user info api to get user details after login
 > search/filter products
 > products details

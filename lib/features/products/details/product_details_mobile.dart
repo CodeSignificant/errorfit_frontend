@@ -9,6 +9,7 @@ import 'package:error_fit/core/buttons/circle_button.dart';
 import 'package:error_fit/core/buttons/like_button.dart';
 import 'package:error_fit/core/buttons/my_back_button.dart';
 import 'package:error_fit/core/images/ImageLoader.dart';
+import 'package:error_fit/core/resources/actions.dart';
 import 'package:error_fit/core/resources/constants.dart';
 import 'package:error_fit/core/widgets/counter_view.dart';
 import 'package:error_fit/core/widgets/loading_view.dart';
@@ -51,6 +52,7 @@ class ProductDetailsMobile extends StatelessWidget {
                 ),
               ),
               _bottomBar(),
+              SizedBox(height: kBottomBarHeight,)
             ],
           ),
         ),
@@ -62,7 +64,12 @@ class ProductDetailsMobile extends StatelessWidget {
 
   Widget _appBar() {
     return Padding(
-      padding: const EdgeInsets.all(12.0),
+      padding: EdgeInsets.only(
+        left: 12.0,
+        right: 12,
+        bottom: 12,
+        top: 12 + kStatusBarHeight,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

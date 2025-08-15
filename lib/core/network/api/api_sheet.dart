@@ -35,9 +35,9 @@ class AuthApi {
   //
   // // POST(otp, new_password) => token
   // String get verifyForgot => "$_baseUrl/LoginPassword/VerifyForgot.php";
-  //
-  // // POST(otp, new_password, old_password) => Secure
-  // String get changePassword => "$_baseUrl/ChangePassword.php";
+
+  // GET() => Secure
+  String get info => "$_baseUrl/Info.php";
 
   // GET()=>Secure
   String get refreshToken => "$_baseUrl/RefreshToken.php";
@@ -100,7 +100,7 @@ class CartApi {
   String get remove => "$_baseUrl/Remove.php";
 
   // GET() => Secure
-  String get update => "$_baseUrl/Fetch.php";
+  String get fetch => "$_baseUrl/Fetch.php";
 
 }
 

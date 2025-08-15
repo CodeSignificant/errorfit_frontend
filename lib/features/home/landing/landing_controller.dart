@@ -1,6 +1,7 @@
 import 'package:error_fit/config/enums/login_types.dart';
 import 'package:error_fit/config/routes/routers.dart';
 import 'package:error_fit/config/storage/home_flow_storage.dart';
+import 'package:error_fit/core/network/repo/auth/auth_repo.dart';
 import 'package:error_fit/core/resources/actions.dart';
 import 'package:error_fit/core/resources/data_response.dart';
 import 'package:error_fit/core/widgets/my_carousel.dart';
@@ -68,8 +69,9 @@ class LandingController extends GetxController{
         title: "OTP sent successfully to your mail",
         hint: mail,
         token: response.data,
-        onComplete: (response) {
+        onComplete: (response) async {
           if (response is DataSuccess) {
+            await AuthRepo.info();
             homeRoute.replace;
           }
           if (response is DataFailed) {
@@ -87,8 +89,9 @@ class LandingController extends GetxController{
         title: "OTP sent successfully to your mail",
         hint: "+91 $phone",
         token: response.data,
-        onComplete: (response) {
+        onComplete: (response) async {
           if (response is DataSuccess) {
+            await AuthRepo.info();
             homeRoute.replace;
           }
           if (response is DataFailed) {

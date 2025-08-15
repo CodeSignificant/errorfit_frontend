@@ -4,6 +4,7 @@ import 'package:error_fit/config/styles/decorations.dart';
 import 'package:error_fit/config/styles/font_styles.dart';
 import 'package:error_fit/core/buttons/anim_button.dart';
 import 'package:error_fit/core/images/svg_icon.dart';
+import 'package:error_fit/core/resources/actions.dart';
 import 'package:error_fit/features/auth/profile_section/profile_section_control.dart';
 import 'package:flutter/material.dart';
 
@@ -23,6 +24,7 @@ class _ProfileSectionState extends State<ProfileSection> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          SizedBox(height: kStatusBarHeight,),
           Container(
             constraints: BoxConstraints(
               minHeight: MediaQuery.of(context).size.height - kToolbarHeight,

@@ -1,6 +1,8 @@
 import 'package:error_fit/config/extensions/double_extensions.dart';
 import 'package:error_fit/config/routes/routers.dart';
-import 'package:error_fit/core/resources/actions.dart';
+import 'package:error_fit/core/app_bars/toast.dart';
+import 'package:error_fit/core/network/repo/users/cart_repo.dart';
+import 'package:error_fit/core/resources/data_response.dart';
 import 'package:error_fit/core/widgets/loading_view.dart';
 import 'package:error_fit/features/cart/models/cart_model.dart';
 import 'package:get/get.dart';
@@ -19,10 +21,22 @@ class CartSectionControl extends GetxController{
   }
 
   void _loadCart() async {
-    await delay(milliSeconds: 1000);
-    cartList.addAll(List.generate(10, (index) => CartModel.initial()));
-    _calculateCheckout();
-    loadingControl.setLoading(false);
+    final result = await CartRepo.fetch();
+    if (result is DataSuccess) {
+      cartList.addAll(result.data!);
+      if (cartList.isEmpty) {
+        loadingControl.setError("No Products in the Cart");
+        return;
+      }
+      _calculateCheckout();
+      loadingControl.setLoading(false);
+    }
+    if (result is DataFailed) {
+      loadingControl.setError(result.error);
+      Toast.failed(title: "Fetch Failed", message: result.error);
+      return;
+    }
+    // cartList.addAll(List.generate(10, (index) => CartModel.initial()));
   }
 
   onItemClick(CartModel model) {
@@ -50,15 +64,15 @@ class CartSectionControl extends GetxController{
         overall += itemTotal;
       }
     }
-    gst = (totalPrice * 0.05);
+    // gst = (totalPrice * 0.05);
     shipping = totalPrice >= 499 ? 0 : 100;
-    overall += (gst + shipping);
+    overall += (0 + shipping);
 
     checkoutCalculation.value = {
       'totalItems': "$totalItems",
       'totalPrice': totalPrice.formatPrice,
       'overall': overall.formatPrice,
-      'gst': gst.formatPrice,
+      // 'gst': gst.formatPrice,
       'shipping': shipping > 0 ? "$shipping" : "FREE",
     };
   }
