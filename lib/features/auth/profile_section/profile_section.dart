@@ -95,7 +95,7 @@ class _ProfileSectionState extends State<ProfileSection> {
                 _profileItem(
                   title: "WishList",
                   icon: "ic_unliked",
-                  onClick: control.onAccountClick,
+                  onClick: control.onWishlistClick,
                 ),
                 _profileItem(
                   title: "Address",
