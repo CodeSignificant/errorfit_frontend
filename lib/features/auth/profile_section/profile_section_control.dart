@@ -9,4 +9,8 @@ class ProfileSectionControl extends GetxController {
     Auth.clearAuth();
     landingRoute.sweepNavigate;
   }
+
+  void onWishlistClick() {
+    wishlistRoute.navigate;
+  }
 }

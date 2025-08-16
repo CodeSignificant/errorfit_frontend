@@ -13,6 +13,10 @@ GenerateRoute get productDetailsRoute => GenerateRoute("/product_details");
 // -----------------------------------------------------------------------------SEARCH
 GenerateRoute get productsSearchRoute => GenerateRoute("/products_search");
 
+
+// -----------------------------------------------------------------------------WISHLIST
+GenerateRoute get wishlistRoute => GenerateRoute("/wishlist");
+
 // ---------------------------------------------------------------------------- AUTH
 
 // GenerateRoute get loginRoute => GenerateRoute("/login");

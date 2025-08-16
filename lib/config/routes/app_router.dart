@@ -4,6 +4,7 @@ import 'package:error_fit/features/home/main/home_page.dart';
 import 'package:error_fit/features/home/splash/splash_page.dart';
 import 'package:error_fit/features/products/details/product_details_page.dart';
 import 'package:error_fit/features/search/products/products_search_page.dart';
+import 'package:error_fit/features/wishlist_page/main/wishlist_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -37,6 +38,13 @@ class AppRouter {
     GetPage(
       name: productsSearchRoute.route,
       page: () => ProductsSearchPage(queryParams: Get.parameters),
+      // middlewares: [PretendAuthMiddleware()],
+    ),
+
+    // ------------------------------------------------------------------------ WISHLIST
+    GetPage(
+      name: wishlistRoute.route,
+      page: () => WishlistPage(),
       // middlewares: [PretendAuthMiddleware()],
     ),
 

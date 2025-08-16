@@ -1,26 +1,29 @@
-import 'package:error_fit/config/routes/routers.dart';
-import 'package:error_fit/config/services/auth.dart';
-import 'package:error_fit/core/network/repo/products/filter_products_repo.dart';
+import 'package:error_fit/core/app_bars/toast.dart';
 import 'package:error_fit/core/network/repo/users/wishlist_repo.dart';
 import 'package:error_fit/core/resources/data_response.dart';
 import 'package:error_fit/core/widgets/loading_view.dart';
 import 'package:error_fit/features/products/models/product_model.dart';
 import 'package:get/get.dart';
 
-class ProductsSearchControl extends GetxController {
-  final loadingControl = LoadingViewController();
-  final productsList = <ProductModel>[].obs;
+import '../../../config/routes/routers.dart';
+import '../../../config/services/auth.dart';
 
-  init(Map<String, String?> params) {
-    _loadProducts();
+class WishlistController extends GetxController {
+  final productsList = <ProductModel>[].obs;
+  final loadingControl = LoadingViewController();
+
+  @override
+  void onInit() {
+    _loadLikedProducts();
+    super.onInit();
   }
 
-  void _loadProducts() async {
-    final result = await FilterProductsRepo.filter();
+  void _loadLikedProducts() async {
+    final result = await WishlistRepo.fetch();
     if (result is DataSuccess) {
       productsList.addAll(result.data!);
       if (productsList.isEmpty) {
-        loadingControl.setError("No products found!");
+        loadingControl.setError("No Liked Products Found");
         return;
       }
       loadingControl.setLoading(false);
@@ -28,8 +31,9 @@ class ProductsSearchControl extends GetxController {
     }
     if (result is DataFailed) {
       loadingControl.setError(result.error);
+      Toast.failed(title: "Unable to fetch", message: result.error);
+      return;
     }
-    loadingControl.setLoading(false);
   }
 
   onProductClick(ProductModel model) {
@@ -41,10 +45,10 @@ class ProductsSearchControl extends GetxController {
       landingRoute.navigate;
       return;
     }
-    await WishlistRepo.setLike(productId: model.id, like: model.isLiked.value);
-  }
-
-  void onBackClick() {
-    Get.back();
+    productsList.remove(model);
+    if (productsList.isEmpty) {
+      loadingControl.setError("No Liked Products Found");
+    }
+    await WishlistRepo.setLike(productId: model.id, like: false);
   }
 }

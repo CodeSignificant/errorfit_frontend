@@ -18,12 +18,10 @@ samples, guidance on mobile development, and a full API reference.
 
 TODO
 > cart(update, remove, add)
-> product(like)
 > user info api to get user details after login
 > search/filter products
 > products details
 > profile account
-> wishlist page
 > orders pages
 > address page
 > support page
@@ -38,3 +36,5 @@ COMPLETED
 > brands in search page
 > fetch products
 > categories images in flow and app, api
+> product(like)
+> wishlist page
