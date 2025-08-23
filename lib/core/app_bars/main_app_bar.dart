@@ -1,4 +1,5 @@
 import 'package:error_fit/config/routes/routers.dart';
+import 'package:error_fit/config/services/auth.dart';
 import 'package:error_fit/config/styles/app_colors.dart';
 import 'package:error_fit/core/buttons/svg_icon_button.dart';
 import 'package:error_fit/core/resources/actions.dart';
@@ -74,6 +75,11 @@ class MainAppBar extends StatelessWidget {
                 onClick: _onNotificationClick,
                 path: "ic_notification",
                 color: AppColors.primary,),
+              const SizedBox(width: 12,),
+              SvgIconButton(
+                onClick: _onProfileClick,
+                path: "ic_profile",
+                color: AppColors.primary,),
               const SizedBox(width: 16,)
             ],
           ),
@@ -97,5 +103,10 @@ class MainAppBar extends StatelessWidget {
 
   void _onSearchClick() {
     productsSearchRoute.navigate;
+  }
+
+  void _onProfileClick() {
+    Auth.clearAuth();
+    landingRoute.sweepNavigate;
   }
 }

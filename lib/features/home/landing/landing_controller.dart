@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../core/app_bars/toast.dart';
+import '../../../core/network/repo/auth/auth_repo.dart';
+import '../../../core/resources/validations.dart';
 
 
 
@@ -22,10 +24,13 @@ class LandingController extends GetxController{
   // final String iosClientId = 'YOUR_IOS_CLIENT_ID.apps.googleusercontent.com';
   // final String webClientId = '764684738213-r22a3vg3olrpk430kufaml0jr84huetg.apps.googleusercontent.com';
   final mailControl = TextEditingController();
+  final phoneControl = TextEditingController();
   final otpControl = TextEditingController();
   final isLoading = false.obs;
   final error = "".obs;
   final token = "".obs;
+  final tokenUser = "".obs;
+  final activeLoginType = LoginTypes.mail.obs;
 
   void init() async {
     carouselControl.list.value =
@@ -49,11 +54,11 @@ class LandingController extends GetxController{
     //   return;
     // }
     if (type == LoginTypes.mail) {
-      _mailLogin();
+      _mailLoginSheet();
       return;
     }
     if (type == LoginTypes.phone) {
-      _phoneLogin();
+      _phoneLoginSheet();
       return;
     }
   }
@@ -62,7 +67,7 @@ class LandingController extends GetxController{
     
   }
 
-  void _mailLogin() async {
+  void _mailLoginSheet() async {
     Get.bottomSheet(MailLoginSheet(onComplete: _onMailOTPSentCompleted));
     // showBottomSheet(context: context, builder: (context) => MailLoginSheet(),);
   }
@@ -107,7 +112,7 @@ class LandingController extends GetxController{
     }
   }
 
-  void _phoneLogin() async {
+  void _phoneLoginSheet() async {
     Get.bottomSheet(PhoneLoginSheet(onComplete: _onPhoneOTPSentCompleted));
   }
 
@@ -116,14 +121,103 @@ class LandingController extends GetxController{
     homeRoute.navigate;
   }
 
-  void onLoginClick() {
-    token.value = "jfosjfosfjso";
+  void onLoginClick() async {
+    if (activeLoginType.value == LoginTypes.mail) {
+      return _mailLogin();
+    }
+    if (activeLoginType.value == LoginTypes.phone) {
+      return _phoneLogin();
+    }
+
   }
 
-  void onVerifyClick() {
+  void _mailLogin() async {
+    error.value = "";
+    if (!Validations.isValidEmail(mailControl.text)) {
+      error.value = "Please enter a valid mail";
+      return;
+    }
+    isLoading.value = true;
+    final result = await AuthRepo.mailOTPLogin(
+      mail: mailControl.text.trim().toLowerCase(),
+    );
+    isLoading.value = false;
+    if (result is DataSuccess) {
+      Toast.success(
+        title: "OTP sent successfully",
+        message: "check your mail for OTP",
+      );
+      tokenUser.value = mailControl.text.trim();
+      token.value = result.data!;
+      return;
+    }
+    if (result is DataFailed) {
+      Toast.failed(title: "OTP sent failed", message: result.error);
+      return;
+    }
+  }
+
+  void _phoneLogin() async {
+    error.value = "";
+    if (!Validations.isValidIndianMobileNumber(phoneControl.text)) {
+      error.value = "Please enter a valid phone";
+      return;
+    }
+    isLoading.value = true;
+    final result = await AuthRepo.phoneOTPLogin(
+      phone: phoneControl.text.trim().toLowerCase(),
+    );
+    if (result is DataSuccess) {
+      tokenUser.value = "+91 ${phoneControl.text.trim()}";
+      token.value = result.data!;
+      isLoading.value = false;
+      Toast.success(
+        title: "OTP sent successfully",
+        message: "check your phone for OTP",
+      );
+      return;
+    }
+    isLoading.value = false;
+    if (result is DataFailed) {
+      Toast.failed(title: "OTP sent failed", message: result.error);
+      return;
+    }
+  }
+
+  void onVerifyClick() async {
+    error.value = "";
+    if (otpControl.text
+        .trim()
+        .length != 6) {
+      error.value = "Please enter a full otp";
+      return;
+    }
+    isLoading.value = true;
+    final result = await AuthRepo.verifyOTP(
+      otp: otpControl.text.trim(),
+      token: token.value,
+    );
+    if (result is DataSuccess) {
+      await UsersRepo.info();
+      isLoading.value = false;
+      Toast.success(
+        title: "Login successfully",
+        message: "welcome to the ErrorFit",
+      );
+      homeRoute.replace;
+      return;
+    }
+    isLoading.value = false;
+    if (result is DataFailed) {
+      error.value = result.error;
+      Toast.failed(title: "Login failed", message: result.error);
+      return;
+    }
   }
 
   onLoginTypeClick(LoginTypes type) {
     token.value = "";
+    activeLoginType.value = type;
   }
+
 }

@@ -1,3 +1,4 @@
+import 'package:error_fit/config/enums/login_types.dart';
 import 'package:error_fit/config/extensions/string_extensions.dart';
 import 'package:error_fit/core/images/ImageLoader.dart';
 import 'package:error_fit/core/resources/center_min.dart';
@@ -50,6 +51,10 @@ class _LandingWebState extends State<LandingWeb> {
                           if (widget.control.token.isNotEmpty) {
                             return _verifyOTP();
                           }
+                          if (widget.control.activeLoginType.value ==
+                              LoginTypes.phone) {
+                            return _phoneLogin();
+                          }
                           return _mailLogin();
                         }),
                       )),
@@ -100,6 +105,36 @@ class _LandingWebState extends State<LandingWeb> {
     );
   }
 
+  Widget _phoneLogin() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+
+        const SizedBox(height: 26),
+        Text(
+          "Enter your phone for Login/Signup",
+          style: FontStyles.s16Primary7,
+        ),
+        const SizedBox(height: 12),
+        EditText(
+          controller: widget.control.phoneControl,
+          error: widget.control.error.value,
+          hint: "Phone",
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          textInputAction: TextInputAction.go,
+          keyboardType: TextInputType.number,
+        ),
+        const SizedBox(height: 16),
+        Button(
+          onClick: widget.control.onLoginClick,
+          loading: widget.control.isLoading.value,
+          text: "Login/Signup",
+        ),
+        SizedBox(height: 16),
+      ],
+    );
+  }
+
   Widget _verifyOTP() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -108,7 +143,8 @@ class _LandingWebState extends State<LandingWeb> {
         const SizedBox(height: 26),
         Text("Verify OTP", style: FontStyles.s16Primary7),
         const SizedBox(height: 2),
-        Text("OTP sent successfully", style: FontStyles.s14Primary705),
+        Text("OTP sent to ${widget.control.tokenUser.value}",
+            style: FontStyles.s14Primary705),
         const SizedBox(height: 14),
         Obx(() {
           return EditText(
