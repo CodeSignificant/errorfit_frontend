@@ -1,4 +1,3 @@
-import 'package:error_fit/config/environments/config.dart';
 
 class CategoryModel {
 

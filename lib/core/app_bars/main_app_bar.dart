@@ -1,6 +1,7 @@
 import 'package:error_fit/config/routes/routers.dart';
 import 'package:error_fit/config/services/auth.dart';
 import 'package:error_fit/config/styles/app_colors.dart';
+import 'package:error_fit/core/buttons/anim_button.dart';
 import 'package:error_fit/core/buttons/svg_icon_button.dart';
 import 'package:error_fit/core/resources/actions.dart';
 import 'package:flutter/material.dart';
@@ -58,8 +59,11 @@ class MainAppBar extends StatelessWidget {
           Row(
             children: [
               const SizedBox(width: 12,),
-              Image.asset(
-                "assets/logos/img_ef_banner.png", width: 80, height: 36,),
+              AnimButton(
+                onClick: () => homeRoute.navigate,
+                child: Image.asset(
+                  "assets/logos/img_ef_banner.png", width: 80, height: 36,),
+              ),
               const Spacer(),
               SvgIconButton(
                 onClick: _onSearchClick,

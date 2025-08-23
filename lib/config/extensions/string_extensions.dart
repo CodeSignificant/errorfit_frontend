@@ -18,6 +18,7 @@ extension StringExtensions on String {
     if (startsWith("http")) return this;
     return "${Config.imageBaseUrl}$this";
   }
+
   String get formatStateShortCut {
     switch(this){
       case "Andhra Pradesh": return "AP";

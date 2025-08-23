@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 
 import '../../../config/storage/home_flow_storage.dart';
 import '../../../core/widgets/my_carousel.dart';
-import '../models/category_model.dart';
 import '../models/home_flow_model.dart';
 
 class HomeSectionController extends GetxController{

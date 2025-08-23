@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_strategy/url_strategy.dart';
 
-import 'app_state.dart';
 
 class PreLoaders {
   static Future<void> init() async {

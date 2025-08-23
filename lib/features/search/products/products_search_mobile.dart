@@ -55,7 +55,7 @@ class _ProductsSearchMobileState extends State<ProductsSearchMobile> {
                       padding: 0,
                       path: "ic_search", size: 20, color: AppColors.primary,),
                     const SizedBox(width: 10),
-                    SvgIcon(path: "ic_menu", color: AppColors.primary,),
+                    SvgIconButton(onClick: widget.control.onFilterClick, path: "ic_menu", color: AppColors.primary,),
                     const SizedBox(width: 14),
                   ],
                 ),

@@ -54,31 +54,31 @@ class AppRouter {
     GetPage(
       name: cartRoute.route,
       page: () => CartPage(),
-      // middlewares: [PretendAuthMiddleware()],
+      middlewares: [AuthMiddleware()],
     ),
 
     // ------------------------------------------------------------------------ ORDERS
     GetPage(
       name: ordersRoute.route,
       page: () => OrdersPage(),
-      // middlewares: [PretendAuthMiddleware()],
+      middlewares: [AuthMiddleware()],
     ),
 
     // ------------------------------------------------------------------------ PROFILE
     GetPage(
       name: accountRoute.route,
       page: () => EditProfilePage(),
-      // middlewares: [PretendAuthMiddleware()],
+      middlewares: [AuthMiddleware()],
     ),
     GetPage(
       name: wishlistRoute.route,
       page: () => WishlistPage(),
-      // middlewares: [PretendAuthMiddleware()],
+      middlewares: [AuthMiddleware()],
     ),
     GetPage(
       name: addressRoute.route,
       page: () => AddressPage(),
-      // middlewares: [PretendAuthMiddleware()],
+      middlewares: [AuthMiddleware()],
     ),
     GetPage(
       name: notificationsRoute.route,
@@ -88,7 +88,7 @@ class AppRouter {
     GetPage(
       name: supportRoute.route,
       page: () => SupportPage(),
-      // middlewares: [PretendAuthMiddleware()],
+      middlewares: [AuthMiddleware()],
     ),
 
     //kIsWeb ? const HomePage() :

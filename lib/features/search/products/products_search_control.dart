@@ -6,6 +6,7 @@ import 'package:error_fit/core/resources/actions.dart';
 import 'package:error_fit/core/resources/data_response.dart';
 import 'package:error_fit/core/widgets/loading_view.dart';
 import 'package:error_fit/features/products/models/product_model.dart';
+import 'package:error_fit/features/search/filter/filter_sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -35,7 +36,8 @@ class ProductsSearchControl extends GetxController {
   void _loadProducts() async {
     final result = await FilterProductsRepo.filter();
     if (result is DataSuccess) {
-      productsList.value = result.data!;
+      productsList.value =
+      [...result.data!, ...result.data!, ...result.data!, ...result.data!];
       if (productsList.isEmpty) {
         loadingControl.setError("No products found!");
         return;
@@ -85,5 +87,9 @@ class ProductsSearchControl extends GetxController {
       loadingControl.setError(result.error);
     }
     loadingControl.setLoading(false);
+  }
+
+  void onFilterClick() {
+    Get.bottomSheet(FilterSheet(), isScrollControlled: true);
   }
 }

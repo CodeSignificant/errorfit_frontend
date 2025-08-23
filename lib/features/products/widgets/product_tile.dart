@@ -1,4 +1,5 @@
 import 'package:error_fit/config/extensions/double_extensions.dart';
+import 'package:error_fit/config/extensions/num_extentions.dart';
 import 'package:error_fit/config/extensions/string_extensions.dart';
 import 'package:error_fit/config/styles/decorations.dart';
 import 'package:error_fit/config/styles/font_styles.dart';
@@ -32,7 +33,7 @@ class ProductTile extends StatelessWidget {
           children: [
             ImageLoader(
               url: model.image.autoUrl,
-              height: 200,
+              height: 260.ratio(context, 200, 260),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(8),
                 topRight: Radius.circular(8),
@@ -44,7 +45,9 @@ class ProductTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(model.title, style: FontStyles.s20Black4),
+                  Text(model.title, maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: FontStyles.s20Black4),
                   Text(model.brand, style: FontStyles.s14Primary705),
 
                   const SizedBox(height: 10),

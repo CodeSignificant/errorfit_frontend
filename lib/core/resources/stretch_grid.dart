@@ -45,6 +45,7 @@ class StretchGrid extends StatelessWidget {
     }
 
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: rows,
     );

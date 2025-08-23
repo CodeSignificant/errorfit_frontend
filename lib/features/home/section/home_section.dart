@@ -74,7 +74,7 @@ class _HomeSectionState extends State<HomeSection> {
                 //   radius: 0,
                 // ),
                 // const SizedBox(height: 26),
-                // _recentlyViewed(),
+                _recentlyViewed(),
                 // const SizedBox(height: 26),
                 // ImageLoader(
                 //   url: dummyImages[2].autoUrl,
@@ -233,11 +233,12 @@ class _HomeSectionState extends State<HomeSection> {
                   radius: 0,
                   height: 200,
                   width: 150,
-                  fit: BoxFit.contain,)))
+                  fit: BoxFit.cover,)))
             .toList(),
       ),
     );
   }
+
   Widget _adImage({required AdImageFlowModel model}) {
     return AnimButton(
         onClick: () {

@@ -49,8 +49,23 @@ class FontStyles {
     color: AppColors.primary,
     fontWeight: FontWeight.w600,
   );
+  static const s12White4 = TextStyle(
+    fontSize: 12,
+    color: AppColors.white,
+    fontWeight: FontWeight.w400,
+  );
   static const s14White4 = TextStyle(
     fontSize: 14,
+    color: AppColors.white,
+    fontWeight: FontWeight.w400,
+  );
+  static const s16White4 = TextStyle(
+    fontSize: 16,
+    color: AppColors.white,
+    fontWeight: FontWeight.w400,
+  );
+  static const s18White4 = TextStyle(
+    fontSize: 18,
     color: AppColors.white,
     fontWeight: FontWeight.w400,
   );
@@ -58,6 +73,16 @@ class FontStyles {
     fontSize: 24,
     color: AppColors.white,
     fontWeight: FontWeight.w700,
+  );
+  static const s22White4 = TextStyle(
+    fontSize: 22,
+    color: AppColors.white,
+    fontWeight: FontWeight.w400,
+  );
+  static const s10White4 = TextStyle(
+    fontSize: 10,
+    color: AppColors.white,
+    fontWeight: FontWeight.w400,
   );
   static const s14Black4 = TextStyle(
     fontSize: 14,

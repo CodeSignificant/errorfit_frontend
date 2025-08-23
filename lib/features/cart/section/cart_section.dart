@@ -1,4 +1,3 @@
-import 'package:error_fit/config/extensions/double_extensions.dart';
 import 'package:error_fit/config/styles/app_colors.dart';
 import 'package:error_fit/config/styles/font_styles.dart';
 import 'package:error_fit/core/app_bars/main_app_bar.dart';
