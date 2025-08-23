@@ -1,7 +1,9 @@
 import 'package:error_fit/config/routes/routers.dart';
-import 'package:error_fit/core/resources/actions.dart';
+import 'package:error_fit/core/network/repo/products/filter_products_repo.dart';
+import 'package:error_fit/core/resources/data_response.dart';
 import 'package:error_fit/core/widgets/loading_view.dart';
 import 'package:error_fit/core/widgets/my_carousel.dart';
+import 'package:error_fit/features/products/models/product_details_model.dart';
 import 'package:error_fit/features/products/models/product_model.dart';
 import 'package:get/get.dart';
 
@@ -12,9 +14,7 @@ class ProductDetailsControl extends GetxController {
   final loadingControl = LoadingViewController();
 
   final isProductLiked = false.obs;
-
-  final carouselList = <MyCarouselModel>[].obs;
-  final similarProductsList = <ProductModel>[].obs;
+  final details = ProductDetailsModel.initial().obs;
 
   init(String id) {
     this.id = id;
@@ -22,25 +22,18 @@ class ProductDetailsControl extends GetxController {
   }
 
   void _loadProduct(String id) async {
-    await delay(milliSeconds: 1000);
-    carouselList.value = [
-      MyCarouselModel.initial(),
-      MyCarouselModel.initial(),
-      MyCarouselModel.initial(),
-    ];
-    similarProductsList.value = [
-      ProductModel.initial(),
-      ProductModel.initial(),
-      ProductModel.initial(),
-      ProductModel.initial(),
-      ProductModel.initial(),
-      ProductModel.initial(),
-      ProductModel.initial(),
-      ProductModel.initial(),
-      ProductModel.initial(),
-      ProductModel.initial(),
-    ];
-    carouselControl.list.value = carouselList.value;
+    final result = await FilterProductsRepo.details(id: id);
+    if (result is DataSuccess) {
+      details.value = result.data!;
+      carouselControl.list.value = details.value.images;
+      isProductLiked.value = details.value.isLiked;
+      loadingControl.setLoading(false);
+      return;
+    }
+    if (result is DataSuccess) {
+      loadingControl.setError(result.error);
+      return;
+    }
     loadingControl.setLoading(false);
   }
 
@@ -63,4 +56,12 @@ class ProductDetailsControl extends GetxController {
   onDecrementClick(int value) {}
 
   void onShareClick() {}
+
+  void onVariantClick(Variant variant) {
+    productDetailsRoute.param(variant.id).replace;
+  }
+
+  void onSizeClick(SizeOption e) {
+    productDetailsRoute.param(e.id).replace;
+  }
 }

@@ -231,8 +231,8 @@ class _HomeSectionState extends State<HomeSection> {
                 child: ImageLoader(
                   url: e.image.autoUrl,
                   radius: 0,
-                  height: 150,
-                  width: 100,
+                  height: 200,
+                  width: 150,
                   fit: BoxFit.contain,)))
             .toList(),
       ),

@@ -3,6 +3,10 @@ class ApiSheet {
   static final auth = AuthApi();
   static final products = ProductsApi();
   static final address = AddressApi();
+  static final users = UsersApi();
+  static final orders = OrdersApi();
+  static final services = ServicesApi();
+  static final notifications = NotificationsApi();
   static final wishlist = WishlistApi();
   static final cart = CartApi();
   static final public = PublicApi();
@@ -56,13 +60,52 @@ class ProductsApi {
   // POST(page_no)
   String get filter => "$_baseUrl/Public/FilterProducts.php";
 
+  // POST(search)
+  String get search => "$_baseUrl/Public/SearchProducts.php";
 
+  // POST(id)
+  String get details => "$_baseUrl/Public/ProductDetails.php";
+
+}
+
+class ServicesApi {
+  final String domain = Config.domain;
+  final String _baseUrl = "${Config.baseUrl}/Support"; ////errorfit.4ss.in/api/v1/Services/Products/Public/FilterProducts.php
+
+  // POST(message) => Secure
+  String get raise => "$_baseUrl/Create.php";
 
 }
 
 class AddressApi {
   final String domain = Config.domain;
   final String _baseUrl = "${Config.baseUrl}/Users/Address";
+
+  // POST(name, mail, phone, country_code, pincode, address, lat?, lon?) => Secure
+  String get addNew => "$_baseUrl/Create.php";
+
+  // POST(id, name, mail, phone, country_code, pincode, address, lat?, lon?) => Secure
+  String get update => "$_baseUrl/Update.php";
+
+  // POST(id) => Secure
+  String get delete => "$_baseUrl/Delete.php";
+
+  // GET => Secure
+  String get fetch => "$_baseUrl/Fetch.php";
+}
+
+class OrdersApi {
+  final String domain = Config.domain;
+  final String _baseUrl = "${Config.baseUrl}/Orders";
+
+
+  // GET(?page) => Secure
+  String fetch(int page) => "$_baseUrl/Fetch.php?page=$page";
+}
+
+class UsersApi {
+  final String domain = Config.domain;
+  final String _baseUrl = "${Config.baseUrl}/Users/Details";
 
   // POST(name, mail, phone, country_code, pincode, address, lat?, lon?) => Secure
   String get addNew => "$_baseUrl/Create.php";
@@ -111,4 +154,21 @@ class PublicApi {
   // GET()
   String get homeFlow => "$_baseUrl/Home/Flow.php";
 
+}
+
+class NotificationsApi {
+  final String domain = Config.domain;
+  final String _baseUrl = "${Config.baseUrl}/Users/Notifications";
+
+  // // POST(name, mail, phone, country_code, pincode, address, lat?, lon?) => Secure
+  // String get addNew => "$_baseUrl/Create.php";
+
+  // POST(id, name, mail, phone, country_code, pincode, address, lat?, lon?) => Secure
+  // String get update => "$_baseUrl/Update.php";
+
+  // // POST(id) => Secure
+  // String get delete => "$_baseUrl/Delete.php";
+
+  // GET => Secure
+  String get fetch => "$_baseUrl/Fetch.php";
 }

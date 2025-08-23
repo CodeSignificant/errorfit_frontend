@@ -9,10 +9,15 @@ class FontStyles {
     color: AppColors.black,
     fontWeight: FontWeight.w600,
   );
+  static const s12Primary704 = TextStyle(
+    fontSize: 12,
+    color: AppColors.primary70,
+    fontWeight: FontWeight.w400,
+  );
   static const s12Black4 = TextStyle(
-    fontSize: 10,
+    fontSize: 12,
     color: AppColors.black,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w400,
   );
   static const s12Grey4 = TextStyle(
     fontSize: 12,
@@ -57,6 +62,11 @@ class FontStyles {
   static const s14Black4 = TextStyle(
     fontSize: 14,
     color: AppColors.black,
+    fontWeight: FontWeight.w400,
+  );
+  static const s14Link4 = TextStyle(
+    fontSize: 14,
+    color: AppColors.link,
     fontWeight: FontWeight.w400,
   );
   static const s14Primary5 = TextStyle(

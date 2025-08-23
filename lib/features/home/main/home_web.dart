@@ -1,3 +1,4 @@
+import 'package:error_fit/core/app_bars/main_app_bar.dart';
 import 'package:error_fit/features/home/main/home_controller.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,6 @@ class HomeWeb extends StatefulWidget {
 class _HomeWebState extends State<HomeWeb> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Column(children: [MainAppBar()]);
   }
 }

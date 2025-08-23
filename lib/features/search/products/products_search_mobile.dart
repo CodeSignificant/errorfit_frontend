@@ -41,8 +41,18 @@ class _ProductsSearchMobileState extends State<ProductsSearchMobile> {
                         size: 24,
                         onClick: widget.control.onBackClick),
                     const SizedBox(width: 14),
-                    Expanded(child: Text("Search")),
-                    SvgIcon(
+                    Expanded(
+                        child: TextFormField(
+                          controller: widget.control.searchControl,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Search",
+                          ),
+                          focusNode: widget.control.searchFocus,
+                        )),
+                    SvgIconButton(
+                      onClick: widget.control.onSearchIconClick,
+                      padding: 0,
                       path: "ic_search", size: 20, color: AppColors.primary,),
                     const SizedBox(width: 10),
                     SvgIcon(path: "ic_menu", color: AppColors.primary,),

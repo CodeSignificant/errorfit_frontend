@@ -14,8 +14,19 @@ GenerateRoute get productDetailsRoute => GenerateRoute("/product_details");
 GenerateRoute get productsSearchRoute => GenerateRoute("/products_search");
 
 
-// -----------------------------------------------------------------------------WISHLIST
+// -----------------------------------------------------------------------------PROFILE
+GenerateRoute get cartRoute => GenerateRoute("/cart");
+
+// ----------------------------------------------------------------------------- ORDERS
+GenerateRoute get ordersRoute => GenerateRoute("/orders");
+GenerateRoute get orderDetailsRoute => GenerateRoute("/order_details");
+
+// -----------------------------------------------------------------------------PROFILE
+GenerateRoute get accountRoute => GenerateRoute("/account");
 GenerateRoute get wishlistRoute => GenerateRoute("/wishlist");
+GenerateRoute get addressRoute => GenerateRoute("/address");
+GenerateRoute get notificationsRoute => GenerateRoute("/notifications");
+GenerateRoute get supportRoute => GenerateRoute("/support");
 
 // ---------------------------------------------------------------------------- AUTH
 

@@ -57,11 +57,12 @@ class _ProfileSectionState extends State<ProfileSection> {
                                   style: FontStyles.s20Black6,
                                 ),
                                 Text(
-                                  Auth.mail,
+                                  Auth.mail.isEmpty ? "Mail" : Auth.mail,
                                   style: FontStyles.s14Primary705,
                                 ),
                                 Text(
-                                  Auth.phone,
+                                  Auth.phone.isEmpty ? "Phone Number" : Auth
+                                      .phone,
                                   style: FontStyles.s14Primary705,
                                 ),
                               ],
@@ -90,7 +91,7 @@ class _ProfileSectionState extends State<ProfileSection> {
                 _profileItem(
                   title: "Orders",
                   icon: "ic_cart",
-                  onClick: control.onAccountClick,
+                  onClick: control.onOrdersClick,
                 ),
                 _profileItem(
                   title: "WishList",
@@ -100,17 +101,17 @@ class _ProfileSectionState extends State<ProfileSection> {
                 _profileItem(
                   title: "Address",
                   icon: "ic_location",
-                  onClick: control.onAccountClick,
+                  onClick: control.onAddressClick,
                 ),
                 _profileItem(
                   title: "Notifications",
                   icon: "ic_notification",
-                  onClick: control.onAccountClick,
+                  onClick: control.onNotificationsClick,
                 ),
                 _profileItem(
                   title: "Support",
                   icon: "ic_support",
-                  onClick: control.onAccountClick,
+                  onClick: control.onSupportClick,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,

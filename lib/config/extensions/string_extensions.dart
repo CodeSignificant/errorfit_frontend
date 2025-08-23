@@ -54,6 +54,31 @@ extension StringExtensions on String {
     return split(' ').map((word) => word.capitalizeFirst()).join(' ');
   }
 
+  String get formatPrice {
+    if (isEmpty) return "NA";
+
+    double? value = double.tryParse(this);
+    if (value == null) return "NA";
+
+    final formatter = NumberFormat.currency(
+      locale: 'en_IN',
+      symbol: '₹',
+      decimalDigits: 2,
+    );
+    return formatter.format(value);
+  }
+
+  String percentageOf(String total) {
+    double valueNum = double.tryParse(this) ?? 0.0;
+    double totalNum = double.tryParse(total) ?? 0.0;
+
+    if (totalNum == 0) return "NA";
+
+    int percentage = ((valueNum / totalNum) * 100).round();
+    if (percentage > 100) return "0%";
+    return "${100 - percentage}%";
+  }
+
   String formatIndianCurrencyDecimals({String symbol = '₹'}) {
     final formatter = NumberFormat.currency(
       locale: 'en_IN',
