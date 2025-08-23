@@ -11,7 +11,7 @@ class Toast {
     _show(
       title: title,
       message: message,
-      backgroundColor: AppColors.greenLight,
+        backgroundColor: AppColors.white,
       borderColor: AppColors.green,
       iconPath: "ic_success",
         iconColor: AppColors.green
@@ -22,7 +22,7 @@ class Toast {
     _show(
       title: title,
       message: message,
-      backgroundColor: AppColors.transparent,
+        backgroundColor: AppColors.white,
       borderColor: AppColors.snackYellow,
       iconPath: "ic_info",
         iconColor: AppColors.snackYellow

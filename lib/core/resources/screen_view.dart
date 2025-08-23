@@ -13,7 +13,7 @@ class ScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     if (screenWidth < minScreen) return mobile ?? Container();
-    if (screenWidth < tabScreen) return mobile ?? Container();
+    if (screenWidth < tabScreen) return tab ?? Container();
     return web ?? Container();
   }
 }

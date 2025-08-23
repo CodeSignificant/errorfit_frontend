@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io' show Platform;
 
 import 'package:device_info_plus/device_info_plus.dart';
@@ -9,6 +10,22 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../config/environments/config.dart';
+
+Timer? _debounceTimer;
+
+void debounceListener(
+  TextEditingController controller,
+  VoidCallback onDebounce, {
+  Duration delay = const Duration(milliseconds: 500),
+}) {
+  controller.addListener(() {
+    // Cancel previous timer if running
+    if (_debounceTimer?.isActive ?? false) _debounceTimer!.cancel();
+
+    // Start a new timer
+    _debounceTimer = Timer(delay, onDebounce);
+  });
+}
 
 String maskPhoneNumber(String phone) {
   if (phone.length <= 4) return phone;

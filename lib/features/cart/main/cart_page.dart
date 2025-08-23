@@ -1,4 +1,7 @@
+import 'package:error_fit/core/resources/screen_view.dart';
 import 'package:error_fit/features/cart/main/cart_controller.dart';
+import 'package:error_fit/features/cart/main/cart_web_view.dart';
+import 'package:error_fit/features/cart/section/cart_section.dart';
 import 'package:flutter/material.dart';
 
 class CartPage extends StatefulWidget {
@@ -19,6 +22,11 @@ class _CartPageState extends State<CartPage> {
   }
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+      body: ScreenView(
+        mobile: CartSection(),
+        web: CartWebView(control: control),
+      ),
+    );
   }
 }

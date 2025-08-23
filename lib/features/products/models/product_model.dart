@@ -33,7 +33,7 @@ class ProductModel {
       mrpPrice: (json['mrp_price'] is String)
           ? double.tryParse(json['mrp_price']) ?? 0.0
           : (json['mrp_price']?.toDouble() ?? 0.0),
-      isLiked: json['is_liked'] ?? false,
+      isLiked: json['is_liked'] == "1" || json['is_liked'] == 1  || json['is_liked'] == true ? true : false,
       id: json['id'] ?? '',
     );
   }
@@ -55,11 +55,15 @@ class ProductModel {
     return (((mrpPrice - sellingPrice) / mrpPrice) * 100).round();
   }
 
-  static List<ProductModel> fromJsonList(List<dynamic> list) {
+  static List<ProductModel> fromJsonList(List<dynamic> list, {bool? isLiked}) {
     final result = <ProductModel>[];
     for (var item in list) {
       try {
-        result.add(ProductModel.fromJson(item));
+        final model = ProductModel.fromJson(item);
+        if (isLiked != null) {
+          model.isLiked.value = isLiked;
+        }
+        result.add(model);
       } catch (e) {
         trace(e.toString());
         continue;

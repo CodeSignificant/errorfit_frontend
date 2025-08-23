@@ -17,15 +17,13 @@ samples, guidance on mobile development, and a full API reference.
 
 
 TODO
-> cart(update, remove, add)
-> user info api to get user details after login
-> search/filter products
-> products details
 > profile account
+> products details
+> cart(update, remove, add)
+> search/filter products
 > orders pages
-> address page
-> support page
-> notifications
+> delete account
+> add primary feature in address
 > add contact phone number in pro @.env.pro.dart
 
 
@@ -38,3 +36,8 @@ COMPLETED
 > categories images in flow and app, api
 > product(like)
 > wishlist page
+> address page
+> support page
+> notifications
+> user info api to get user details after login
+> pagination model

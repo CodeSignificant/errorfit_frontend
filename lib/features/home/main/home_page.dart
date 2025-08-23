@@ -6,7 +6,8 @@ import 'package:error_fit/features/home/main/home_web.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final String? tab;
+  const HomePage({super.key, this.tab});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -17,7 +18,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    control.onInit();
+    control.init(tab: widget.tab);
     super.initState();
   }
 

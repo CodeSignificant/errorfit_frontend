@@ -185,14 +185,14 @@ class SecureCall {
   static Future<DataResponse> _refreshToken() async {
     try {
       _isRefreshing = true;
-      final res = await http.post(
+      final res = await http.get(
         Uri.parse(ApiSheet.auth.refreshToken),
         headers: getHeaders,
       );
 
       if (res.statusCode == 200) {
         final refreshRes = jsonDecode(res.body);
-        if (refreshRes['status'] != "success") {
+        if (!refreshRes['status']) {
           return DataFailed(refreshRes['message']);
         }
         await Auth.setToken(refreshRes['token']);

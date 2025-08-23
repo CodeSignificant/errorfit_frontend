@@ -1,6 +1,6 @@
 import 'package:error_fit/core/resources/screen_view.dart';
-import 'package:error_fit/features/wishlist_page/main/wishlist_controller.dart';
-import 'package:error_fit/features/wishlist_page/main/wishlist_mobile_view.dart';
+import 'package:error_fit/features/wishlist/main/wishlist_controller.dart';
+import 'package:error_fit/features/wishlist/main/wishlist_mobile_view.dart';
 import 'package:flutter/material.dart';
 
 class WishlistPage extends StatefulWidget {

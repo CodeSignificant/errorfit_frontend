@@ -1,13 +1,14 @@
 import 'package:error_fit/config/enums/login_types.dart';
 import 'package:error_fit/config/routes/routers.dart';
 import 'package:error_fit/config/storage/home_flow_storage.dart';
-import 'package:error_fit/core/network/repo/auth/auth_repo.dart';
+import 'package:error_fit/core/network/repo/users/users_repo.dart';
 import 'package:error_fit/core/resources/actions.dart';
 import 'package:error_fit/core/resources/data_response.dart';
 import 'package:error_fit/core/widgets/my_carousel.dart';
 import 'package:error_fit/features/home/widgets/mail_login_sheet.dart';
 import 'package:error_fit/features/home/widgets/phone_login_sheet.dart';
 import 'package:error_fit/features/home/widgets/verify_otp_sheet.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../core/app_bars/toast.dart';
@@ -20,6 +21,11 @@ class LandingController extends GetxController{
   // final String androidClientId = '764684738213-9a4pbqcrcmkbvkjvikm5sdu41ol04gpv.apps.googleusercontent.com';
   // final String iosClientId = 'YOUR_IOS_CLIENT_ID.apps.googleusercontent.com';
   // final String webClientId = '764684738213-r22a3vg3olrpk430kufaml0jr84huetg.apps.googleusercontent.com';
+  final mailControl = TextEditingController();
+  final otpControl = TextEditingController();
+  final isLoading = false.obs;
+  final error = "".obs;
+  final token = "".obs;
 
   void init() async {
     carouselControl.list.value =
@@ -71,7 +77,7 @@ class LandingController extends GetxController{
         token: response.data,
         onComplete: (response) async {
           if (response is DataSuccess) {
-            await AuthRepo.info();
+            await UsersRepo.info();
             homeRoute.replace;
           }
           if (response is DataFailed) {
@@ -91,7 +97,7 @@ class LandingController extends GetxController{
         token: response.data,
         onComplete: (response) async {
           if (response is DataSuccess) {
-            await AuthRepo.info();
+            await UsersRepo.info();
             homeRoute.replace;
           }
           if (response is DataFailed) {
@@ -108,5 +114,16 @@ class LandingController extends GetxController{
 
   void onGuestClick() {
     homeRoute.navigate;
+  }
+
+  void onLoginClick() {
+    token.value = "jfosjfosfjso";
+  }
+
+  void onVerifyClick() {
+  }
+
+  onLoginTypeClick(LoginTypes type) {
+    token.value = "";
   }
 }

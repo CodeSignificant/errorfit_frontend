@@ -1,7 +1,7 @@
 import 'package:error_fit/core/app_bars/title_appbar.dart';
 import 'package:error_fit/core/resources/actions.dart';
 import 'package:error_fit/core/widgets/loading_view.dart';
-import 'package:error_fit/features/wishlist_page/main/wishlist_controller.dart';
+import 'package:error_fit/features/wishlist/main/wishlist_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

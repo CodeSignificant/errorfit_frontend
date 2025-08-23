@@ -40,7 +40,7 @@ class WishlistRepo {
         return DataFailed(res['message'] ?? "No response");
       }
       // final data = res['data'];
-      return DataSuccess(ProductModel.fromJsonList(res['data']));
+      return DataSuccess(ProductModel.fromJsonList(res['data'], isLiked: true));
     } catch (e) {
       trace(e.toString());
       return const DataFailed("Something went wrong");

@@ -1,8 +1,8 @@
-import 'package:error_fit/config/extensions/double_extensions.dart';
 import 'package:error_fit/config/extensions/string_extensions.dart';
 import 'package:error_fit/config/styles/app_colors.dart';
 import 'package:error_fit/config/styles/decorations.dart';
 import 'package:error_fit/config/styles/font_styles.dart';
+import 'package:error_fit/core/buttons/anim_button.dart';
 import 'package:error_fit/core/buttons/border_button.dart';
 import 'package:error_fit/core/buttons/button.dart';
 import 'package:error_fit/core/buttons/circle_button.dart';
@@ -10,11 +10,12 @@ import 'package:error_fit/core/buttons/like_button.dart';
 import 'package:error_fit/core/buttons/my_back_button.dart';
 import 'package:error_fit/core/images/ImageLoader.dart';
 import 'package:error_fit/core/resources/actions.dart';
-import 'package:error_fit/core/resources/constants.dart';
 import 'package:error_fit/core/widgets/counter_view.dart';
 import 'package:error_fit/core/widgets/loading_view.dart';
 import 'package:error_fit/core/widgets/my_carousel.dart';
 import 'package:error_fit/features/products/details/product_details_control.dart';
+import 'package:error_fit/features/products/models/product_details_model.dart';
+import 'package:error_fit/features/products/models/product_model.dart';
 import 'package:error_fit/features/products/widgets/product_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -29,32 +30,36 @@ class ProductDetailsMobile extends StatelessWidget {
     return Stack(
       children: [
         Positioned.fill(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: LoadingView(
-                  controller: control.loadingControl,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _carousel(),
-                        _productDetails(),
-                        _variants(),
-                        _sizes(),
-                        _productInfo(),
-                        _seller(),
-                        _similarProducts(),
-                      ],
+          child: Obx(() {
+            final details = control.details.value;
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: LoadingView(
+                    controller: control.loadingControl,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _carousel(),
+                          _productDetails(details),
+                          _variants(details.variants),
+                          _sizes(details.sizes),
+                          _productInfo(details.info),
+                          _seller(details.seller),
+                          _similarProducts(details.similar),
+                          const SizedBox(height: 16,),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              _bottomBar(),
-              SizedBox(height: kBottomBarHeight,)
-            ],
-          ),
+                _bottomBar(),
+                SizedBox(height: kBottomBarHeight,)
+              ],
+            );
+          }),
         ),
 
         Positioned(top: 0, left: 0, right: 0, child: _appBar()),
@@ -102,57 +107,58 @@ class ProductDetailsMobile extends StatelessWidget {
   }
 
   Widget _carousel() {
-    return Obx(() {
-      final list = control.carouselList.value;
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          MyCarousel(
-            height: 450,
-            control: control.carouselControl,
-            // items: list
-            //     .map((e) => ImageLoader(url: e.image.autoUrl, radius: 0))
-            //     .toList(),
-            builder: (int index, int length, item)=>ImageLoader(url: item.image.autoUrl, radius: 0,),
-          ),
-          const SizedBox(height: 10),
-          DotListener(
-            control: control.carouselControl,
-            builder: (index, length, goToPage) => Center(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  spacing: 6,
-                  children: List.generate(
-                    length,
-                    (i) => Container(
-                      height: 8,
-                      width: 8,
-                      decoration: Decorations.dot(
-                        color: index == i
-                            ? AppColors.primary
-                            : AppColors.primary70,
-                      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        MyCarousel(
+          height: 450,
+          control: control.carouselControl,
+          // items: list
+          //     .map((e) => ImageLoader(url: e.image.autoUrl, radius: 0))
+          //     .toList(),
+          builder: (int index, int length, item) =>
+              ImageLoader(url: (item as String).autoUrl, radius: 0,),
+        ),
+        const SizedBox(height: 10),
+        DotListener(
+          control: control.carouselControl,
+          builder: (index, length, goToPage) =>
+              Center(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    spacing: 6,
+                    children: List.generate(
+                      length,
+                          (i) =>
+                          Container(
+                            height: 8,
+                            width: 8,
+                            decoration: Decorations.dot(
+                              color: index == i
+                                  ? AppColors.primary
+                                  : AppColors.primary70,
+                            ),
+                          ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ),
-        ],
-      );
-    });
+        ),
+      ],
+    );
   }
 
-  Widget _productDetails() {
+  Widget _productDetails(ProductDetailsModel details) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text("Special Lenin Pant", style: FontStyles.s16Primary7),
+          Text(details.title, style: FontStyles.s16Primary7),
           Text(
-            "some random description up to 100 characters",
+            details.description,
             maxLines: 3,
             style: FontStyles.s16Primary704,
           ),
@@ -166,18 +172,21 @@ class ProductDetailsMobile extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          1200.0.formatPrice,
+                          details.mrpPrice.formatPrice,
                           style: FontStyles.s14Primary705.copyWith(
                             decoration: TextDecoration.lineThrough,
                           ),
                         ),
                         const SizedBox(width: 10),
                         Expanded(
-                          child: Text("20% off", style: FontStyles.s14Green4),
+                          child: Text("${details.sellingPrice.percentageOf(
+                              details.mrpPrice)} Off",
+                              style: FontStyles.s14Green4),
                         ),
                       ],
                     ),
-                    Text(899.0.formatPrice, style: FontStyles.s20Black7),
+                    Text(details.sellingPrice.formatPrice,
+                        style: FontStyles.s20Black7),
                   ],
                 ),
               ),
@@ -202,7 +211,8 @@ class ProductDetailsMobile extends StatelessWidget {
     );
   }
 
-  Widget _variants() {
+  Widget _variants(List<Variant> variants) {
+    if (variants.isEmpty) return SizedBox();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -218,13 +228,17 @@ class ProductDetailsMobile extends StatelessWidget {
             child: Row(
               spacing: 10,
               children: List.generate(
-                4,
-                (index) => ImageLoader(
-                  url: dummyImages[1].autoUrl,
-                  radius: 10,
-                  height: 90,
-                  width: 70,
-                ),
+                variants.length,
+                    (index) =>
+                    AnimButton(
+                      onClick: () => control.onVariantClick(variants[index]),
+                      child: ImageLoader(
+                        url: variants[index].previewUrl.autoUrl,
+                        radius: 10,
+                        height: 90,
+                        width: 70,
+                      ),
+                    ),
               ),
             ),
           ),
@@ -234,7 +248,7 @@ class ProductDetailsMobile extends StatelessWidget {
     );
   }
 
-  Widget _sizes() {
+  Widget _sizes(List<SizeOption> sizes) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -250,17 +264,22 @@ class ProductDetailsMobile extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
             child: Row(
               spacing: 10,
-              children: ["S", "M", "L", "XL", "XXL"]
+              children: sizes
                   .map(
-                    (e) => Container(
-                      decoration: Decorations.card,
-                      height: 48,
-                      width: 48,
-                      child: Center(
-                        child: Text(e, style: FontStyles.s16Primary707),
+                    (e) =>
+                    AnimButton(
+                      onClick: () => control.onSizeClick(e),
+                      child: Container(
+                        decoration: Decorations.card,
+                        height: 48,
+                        width: 48,
+                        child: Center(
+                          child: Text(e.size.toUpperCase(),
+                              style: FontStyles.s16Primary707),
+                        ),
                       ),
                     ),
-                  )
+              )
                   .toList(),
             ),
           ),
@@ -270,7 +289,7 @@ class ProductDetailsMobile extends StatelessWidget {
     );
   }
 
-  Widget _productInfo() {
+  Widget _productInfo(ProductInfo info) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: Column(
@@ -282,20 +301,24 @@ class ProductDetailsMobile extends StatelessWidget {
           Column(
             spacing: 4,
             children: List.generate(
-              4,
-              (index) => Row(
-                children: [
-                  Text("Brand : ", style: FontStyles.s14Primary706),
-                  Expanded(
-                    child: Text("Error Fit", style: FontStyles.s14Primary704),
+              info.details.length,
+                  (index) =>
+                  Row(
+                    children: [
+                      Text("${info.details[index].title} : ",
+                          style: FontStyles.s14Primary706),
+                      Expanded(
+                        child: Text(
+                            info.details[index].title,
+                            style: FontStyles.s14Primary704),
+                      ),
+                    ],
                   ),
-                ],
-              ),
             ),
           ),
           const SizedBox(height: 4),
           Text(
-            "some description about product and company",
+            info.info,
             style: FontStyles.s14Primary705,
           ),
         ],
@@ -303,7 +326,8 @@ class ProductDetailsMobile extends StatelessWidget {
     );
   }
 
-  Widget _seller() {
+  Widget _seller(Seller
+  seller) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: Column(
@@ -317,15 +341,16 @@ class ProductDetailsMobile extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             child: Row(
               children: [
-                ImageLoader(url: "", width: 48, height: 48),
+                ImageLoader(url: seller.logoUrl.autoUrl, width: 48, height: 48),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Text("ErrorFit", style: FontStyles.s14Primary6),
+                      Text(seller.name, style: FontStyles.s14Primary6),
                       const SizedBox(height: 2),
-                      Text("since 25-07-25", style: FontStyles.s14Primary705),
+                      Text("since ${seller.createdAt}",
+                          style: FontStyles.s14Primary705),
                     ],
                   ),
                 ),
@@ -337,9 +362,11 @@ class ProductDetailsMobile extends StatelessWidget {
     );
   }
 
-  Widget _similarProducts() {
+  Widget _similarProducts(List<ProductModel> products) {
+    if (products.isEmpty) return Container();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
       children: [
         const SizedBox(height: 26),
         Padding(
@@ -349,23 +376,18 @@ class ProductDetailsMobile extends StatelessWidget {
         const SizedBox(height: 10),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: Obx(() {
-              final list = control.similarProductsList.value;
-              if (list.isEmpty) return Container();
-              return Row(
-                spacing: 10,
-                children: List.generate(
-                  list.length,
-                  (index) => ProductTile(
-                    model: list[index],
+          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          child: Row(
+            spacing: 10,
+            children: List.generate(
+              products.length,
+                  (index) =>
+                  ProductTile(
+                    model: products[index],
                     onClick: control.onSimilarProductClick,
                     onLikeClick: control.onProductLikeClick,
                   ),
-                ),
-              );
-            }),
+            ),
           ),
         ),
         const SizedBox(height: 12),
