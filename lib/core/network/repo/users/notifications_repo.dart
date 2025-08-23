@@ -18,7 +18,6 @@ class NotificationsRepo {
       );
       final res = jsonDecode(response.body);
       if (!(res['status'] ?? false)) {
-        trace(response.body);
         return DataFailed(res['message'] ?? "No response");
       }
       // final data = res['data'];
