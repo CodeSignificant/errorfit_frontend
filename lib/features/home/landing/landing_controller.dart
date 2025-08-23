@@ -31,10 +31,13 @@ class LandingController extends GetxController{
   final token = "".obs;
   final tokenUser = "".obs;
   final activeLoginType = LoginTypes.mail.obs;
+  final landingWebImage = <String>[].obs;
 
   void init() async {
     carouselControl.list.value =
     List<dynamic>.from(HomeFlowStorage.mobileJson['landing'] ?? []);
+    landingWebImage.value =
+    List<String>.from(HomeFlowStorage.webJson['landing'] ?? []);
     // trace(await getUniqueDeviceName());
     // trace(await getAppVersion());
   }

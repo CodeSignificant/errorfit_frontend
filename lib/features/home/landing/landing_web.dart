@@ -2,7 +2,6 @@ import 'package:error_fit/config/enums/login_types.dart';
 import 'package:error_fit/config/extensions/string_extensions.dart';
 import 'package:error_fit/core/images/ImageLoader.dart';
 import 'package:error_fit/core/resources/center_min.dart';
-import 'package:error_fit/core/resources/constants.dart';
 import 'package:error_fit/features/home/widgets/login_types_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -31,7 +30,7 @@ class _LandingWebState extends State<LandingWeb> {
       children: [
         Expanded(
             child: ImageLoader(
-              url: dummyImages[1].autoUrl,
+              url: widget.control.landingWebImage.first.autoUrl,
               radius: 0,
               fit: BoxFit.cover,)),
         Expanded(
@@ -42,7 +41,7 @@ class _LandingWebState extends State<LandingWeb> {
                 children: [
                   const SizedBox(height: 26,),
                   Image.asset(
-                    "assets/logos/logo_errorfit.png", height: 60, width: 60,),
+                    "assets/logos/img_ef_banner.png", height: 60,),
                   Flexible(
                       child: SingleChildScrollView(
                         padding: const EdgeInsets.symmetric(

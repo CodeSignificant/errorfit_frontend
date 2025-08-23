@@ -139,7 +139,7 @@ class SecureCall {
       }) async {
     await _waitUntilRefresh();
 
-    Future<http.Response> _send() async {
+    Future<http.Response> send() async {
       final request = http.MultipartRequest('POST', url);
 
       request.headers.addAll({
@@ -164,7 +164,7 @@ class SecureCall {
       return http.Response(responseString, streamedResponse.statusCode);
     }
 
-    http.Response response = await _send();
+    http.Response response = await send();
 
     if (response.statusCode == 401) {
       final refreshResult = await _refreshToken();
@@ -175,7 +175,7 @@ class SecureCall {
         await delay(milliSeconds: 1000);
         return http.Response("{}", 401);
       }
-      response = await _send();
+      response = await send();
     }
 
     return response;

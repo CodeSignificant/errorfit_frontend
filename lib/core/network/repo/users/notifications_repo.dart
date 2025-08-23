@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:error_fit/core/network/api/secure_call.dart';
 import 'package:error_fit/features/notifications/models/notifications_model.dart';
-import 'package:error_fit/features/products/models/product_model.dart';
 
 import '../../../resources/actions.dart';
 import '../../../resources/data_response.dart';

@@ -86,7 +86,7 @@ class _ShimmerPlaceholderState extends State<ShimmerPlaceholder>
 class SlidingGradientTransform extends GradientTransform {
   final double slidePercent;
 
-  SlidingGradientTransform({required this.slidePercent});
+  const SlidingGradientTransform({required this.slidePercent});
 
   @override
   Matrix4 transform(Rect bounds, {TextDirection? textDirection}) {

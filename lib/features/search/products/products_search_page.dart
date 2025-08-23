@@ -1,9 +1,9 @@
 
 import 'package:error_fit/core/resources/screen_view.dart';
+import 'package:error_fit/features/search/products/product_search_web_view.dart';
 import 'package:error_fit/features/search/products/products_search_control.dart';
 import 'package:error_fit/features/search/products/products_search_mobile.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class ProductsSearchPage extends StatefulWidget {
   final Map<String, String?> queryParams;
@@ -18,14 +18,19 @@ class _ProductsSearchPageState extends State<ProductsSearchPage> {
 
   @override
   void initState() {
-    control.init(widget.queryParams);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      control.init(widget.queryParams);
+    },);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ScreenView(mobile: ProductsSearchMobile(control: control),),
+      body: ScreenView(
+        mobile: ProductsSearchMobile(control: control),
+        web: ProductSearchWebView(control: control),
+      ),
     );
   }
 }

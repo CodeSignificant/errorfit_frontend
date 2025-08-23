@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:error_fit/core/resources/actions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/resources/encryption_helper.dart';

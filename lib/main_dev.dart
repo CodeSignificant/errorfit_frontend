@@ -1,12 +1,9 @@
 import 'dart:ui';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'config/enums/flavours.dart';
 import 'config/environments/config.dart';
 import 'config/routes/app_router.dart';
-import 'config/services/app_state.dart';
-import 'config/services/auth.dart';
 import 'config/services/final_loaders.dart';
 import 'config/services/pre_loaders.dart';
 import 'config/styles/app_colors.dart';

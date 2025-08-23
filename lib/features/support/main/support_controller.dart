@@ -7,10 +7,6 @@ import 'package:get/get.dart';
 class SupportController extends GetxController {
   final messageControl = TextEditingController();
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
   void onSubmitClick() async {
     final message = messageControl.text.trim();
