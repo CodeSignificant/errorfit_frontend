@@ -42,3 +42,4 @@ COMPLETED
 > products details
 > cart(update, remove, add)
 > recently viewed
+> multi devices logout & logout

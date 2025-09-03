@@ -7,16 +7,33 @@ import 'package:error_fit/core/widgets/loading_view.dart';
 import 'package:error_fit/features/address/widgets/edit_address_sheet.dart';
 import 'package:get/get.dart';
 
+import '../../../config/services/auth.dart';
+import '../../../core/network/repo/auth/auth_repo.dart';
+
 class AccountController extends GetxController {
   final loadingControl = LoadingViewController();
 
-  void onLogoutClick() async {
-    Get.dialog(ConfirmDialog());
+  void onLogoutClick() {
+    Get.dialog(ConfirmDialog(title: "Confirm Logout",
+      description: "Are you sure to logout in this device",
+      onConfirmClick: () async {
+        await AuthRepo.logout();
+        Auth.clearAuth();
+        landingRoute.sweepNavigate;
+      },));
   }
 
   void onDeleteClick() {}
 
-  void onLogoutAllClick() {}
+  void onLogoutAllClick() {
+    Get.dialog(ConfirmDialog(title: "Confirm Logout All",
+      description: "It will logout all devices you logged in",
+      onConfirmClick: () async {
+        await AuthRepo.logoutAll();
+        Auth.clearAuth();
+        landingRoute.sweepNavigate;
+      },));
+  }
 
   void onOrdersClick() {
     ordersRoute.navigate;

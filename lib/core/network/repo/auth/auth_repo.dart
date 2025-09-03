@@ -95,6 +95,37 @@ class AuthRepo {
     }
   }
 
+  static Future<DataResponse> logout() async {
+    try {
+      final response = await SecureCall.get(
+          Uri.parse(ApiSheet.auth.logout));
+      final res = jsonDecode(response.body);
+      if (!(res['status'] ?? false)) {
+        trace(response.body);
+        return DataFailed(res['message'] ?? "No response");
+      }
+      return DataSuccess(res['message'] ?? "Logged Out");
+    } catch (e) {
+      trace(e.toString());
+      return const DataFailed("Something went wrong");
+    }
+  }
+  static Future<DataResponse> logoutAll() async {
+    try {
+      final response = await SecureCall.get(
+          Uri.parse(ApiSheet.auth.logoutAll));
+      final res = jsonDecode(response.body);
+      if (!(res['status'] ?? false)) {
+        trace(response.body);
+        return DataFailed(res['message'] ?? "No response");
+      }
+      return DataSuccess(res['message'] ?? "LoggedOut All");
+    } catch (e) {
+      trace(e.toString());
+      return const DataFailed("Something went wrong");
+    }
+  }
+
   // static Future<DataResponse> getUserDetails() async {
   //   try {
   //     final response = await SecureCall.get(

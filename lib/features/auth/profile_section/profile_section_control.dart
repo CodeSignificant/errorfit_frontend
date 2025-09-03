@@ -1,5 +1,6 @@
 import 'package:error_fit/config/routes/routers.dart';
 import 'package:error_fit/config/services/auth.dart';
+import 'package:error_fit/core/network/repo/auth/auth_repo.dart';
 import 'package:error_fit/core/widgets/confirm_dialog.dart';
 import 'package:get/get.dart';
 
@@ -11,7 +12,8 @@ class ProfileSectionControl extends GetxController {
   void onLogoutClick() {
     Get.dialog(ConfirmDialog(title: "Confirm Logout",
       description: "Are you sure to logout in this device",
-      onConfirmClick: () {
+      onConfirmClick: () async {
+        await AuthRepo.logout();
         Auth.clearAuth();
         landingRoute.sweepNavigate;
       },));
