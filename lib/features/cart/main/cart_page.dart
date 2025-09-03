@@ -17,7 +17,7 @@ class _CartPageState extends State<CartPage> {
 
   @override
   void initState() {
-    control.init();
+    control.onInit();
     super.initState();
   }
   @override

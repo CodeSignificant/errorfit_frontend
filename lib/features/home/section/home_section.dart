@@ -1,3 +1,4 @@
+import 'package:error_fit/config/extensions/num_extentions.dart';
 import 'package:error_fit/config/extensions/string_extensions.dart';
 import 'package:error_fit/config/routes/routers.dart';
 import 'package:error_fit/config/styles/font_styles.dart';

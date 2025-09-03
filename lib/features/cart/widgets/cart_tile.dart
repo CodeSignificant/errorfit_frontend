@@ -5,6 +5,7 @@ import 'package:error_fit/config/styles/font_styles.dart';
 import 'package:error_fit/core/buttons/anim_button.dart';
 import 'package:error_fit/core/buttons/radio_button.dart';
 import 'package:error_fit/core/images/ImageLoader.dart';
+import 'package:error_fit/core/resources/actions.dart';
 import 'package:error_fit/features/cart/models/cart_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,8 +16,10 @@ class CartTile extends StatelessWidget {
   final CartModel model;
   final Function(CartModel model) onClick;
   final Function(CartModel model)? onChangeListener;
+  final Function(CartModel model)? onRemoveClick;
 
-  const CartTile({super.key, required this.model, required this.onClick, this.onChangeListener});
+  const CartTile(
+      {super.key, required this.model, required this.onClick, this.onChangeListener, this.onRemoveClick});
 
   @override
   Widget build(BuildContext context) {
@@ -101,10 +104,15 @@ class CartTile extends StatelessWidget {
   }
 
   _onIncrementClick(int value) {
+    if(value == 11) return;
     model.increment();
     onChangeListener?.call(model);
   }
   _onDecrementClick(int value) {
+    if (value == 0) {
+      onRemoveClick?.call(model);
+      return;
+    }
     model.decrement();
     onChangeListener?.call(model);
   }

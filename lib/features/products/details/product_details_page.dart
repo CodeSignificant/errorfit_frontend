@@ -1,6 +1,7 @@
 import 'package:error_fit/core/resources/screen_view.dart';
 import 'package:error_fit/features/products/details/product_details_control.dart';
 import 'package:error_fit/features/products/details/product_details_mobile.dart';
+import 'package:error_fit/features/products/details/product_details_web.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailsPage extends StatefulWidget {
@@ -17,14 +18,19 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
   @override
   void initState() {
-    control.init(widget.id);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      control.init(widget.id);
+    },);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ScreenView(mobile: ProductDetailsMobile(control: control)),
+      body: ScreenView(
+        mobile: ProductDetailsMobile(control: control),
+        web: ProductDetailsWeb(control: control),
+      ),
     );
   }
 

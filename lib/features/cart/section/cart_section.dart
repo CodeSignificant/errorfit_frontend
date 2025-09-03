@@ -40,10 +40,11 @@ class _CartSectionState extends State<CartSection> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  const SizedBox(height: 8,),
                   ...List.generate(list.length, (index) =>
                       CartTile(model: list[index], onClick: control
                           .onItemClick, onChangeListener: control
-                          .onItemChangeListener,),),
+                          .onItemChangeListener, onRemoveClick: control.onRemoveClick,),),
                   const SizedBox(height: 36,),
                   _checkout(),
                   const SizedBox(height: 16,),

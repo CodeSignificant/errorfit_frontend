@@ -10,6 +10,7 @@ class CartModel {
   final double price;
   final String image;
   final int maxLimit;
+  final String productId;
   final String id;
 
   RxBool isSelect;
@@ -22,6 +23,7 @@ class CartModel {
     required this.price,
     required this.maxLimit,
     required this.image,
+    required this.productId,
     required this.id,
     bool isSelect = true,
     int count = 1,
@@ -63,6 +65,7 @@ class CartModel {
           json['selected'] == true) ? true : false,
       image: json['preview_url'] ?? "",
       count: int.tryParse(json['count']?.toString() ?? '1') ?? 1,
+      productId: json['product_id'] ?? "NA",
       id: json['id'] ?? "NA",
     );
   }
@@ -101,7 +104,8 @@ class CartModel {
     price: 2300.0,
     maxLimit: 10,
     image: dummyImages[0],
-    id: "test"
+    productId: "",
+    id: ""
   );
 
   /// Convert to JSON

@@ -34,6 +34,7 @@ class _ConfirmDialogState extends State<ConfirmDialog> {
     return Dialog(
       child: Container(
         decoration: Decorations.card,
+        constraints: BoxConstraints(maxWidth: 400),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: Column(
           spacing: 10,

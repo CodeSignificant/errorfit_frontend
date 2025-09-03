@@ -16,7 +16,6 @@ class AuthRepo {
         body: jsonEncode({"mail": mail}),
       );
       final res = jsonDecode(response.body);
-      trace(response.body.toString());
       if (!(res['status'] ?? false)) {
         trace(response.body);
         return DataFailed(res['message'] ?? "No response");

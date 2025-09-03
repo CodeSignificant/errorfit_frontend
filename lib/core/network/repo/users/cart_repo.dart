@@ -40,7 +40,6 @@ class CartRepo {
           "selected": selected ? 1 : 0}),
       );
       final res = jsonDecode(response.body);
-      // trace(response.body.toString());
       if (!(res['status'] ?? false)) {
         trace(response.body);
         return DataFailed(res['message'] ?? "No response");
@@ -60,7 +59,6 @@ class CartRepo {
           "id": productId}),
       );
       final res = jsonDecode(response.body);
-      trace(response.body.toString());
       if (!(res['status'] ?? false)) {
         return DataFailed(res['message'] ?? "No response");
       }

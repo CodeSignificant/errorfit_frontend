@@ -198,11 +198,13 @@ class ProductDetailsMobile extends StatelessWidget {
                 );
               }),
               const SizedBox(width: 10),
-              CounterView(
-                value: 1,
-                onIncrement: control.onIncrementClick,
-                onDecrement: control.onDecrementClick,
-              ),
+              Obx(() {
+                return CounterView(
+                  value: control.counter.value,
+                  onIncrement: control.onIncrementClick,
+                  onDecrement: control.onDecrementClick,
+                );
+              }),
               const SizedBox(width: 10),
             ],
           ),
