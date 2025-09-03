@@ -41,3 +41,4 @@ COMPLETED
 > pagination model
 > products details
 > cart(update, remove, add)
+> recently viewed

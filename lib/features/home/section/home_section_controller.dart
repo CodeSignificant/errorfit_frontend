@@ -1,5 +1,7 @@
 import 'package:error_fit/config/routes/routers.dart';
 import 'package:error_fit/config/services/auth.dart';
+import 'package:error_fit/core/network/repo/users/views_repo.dart';
+import 'package:error_fit/core/resources/data_response.dart';
 import 'package:error_fit/features/products/models/product_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -16,13 +18,7 @@ class HomeSectionController extends GetxController{
 
   final homeFlowList = <dynamic>[].obs;
 
-  final recentlyViewedProducts = <ProductModel>[
-    ProductModel.initial(),
-    ProductModel.initial(),
-    ProductModel.initial(),
-    ProductModel.initial(),
-    ProductModel.initial(),
-  ].obs;
+  final recentlyViewedProducts = <ProductModel>[].obs;
 
   @override
   void onInit() {
@@ -34,6 +30,10 @@ class HomeSectionController extends GetxController{
         HomeFlowStorage.mobileJson['carousel'] ?? []);
 
     homeFlowList.value = HomeFlowStorage.mobileJson['flow'] ?? [];
+
+    if(Auth.isLogin){
+      _loadRecentlyViewedProducts();
+    }
 
     super.onInit();
   }
@@ -62,11 +62,17 @@ class HomeSectionController extends GetxController{
       landingRoute.navigate;
       return;
     }
-
   }
 
   void onCarouselItemClick(MyCarouselModel item) {
     navigate(item.route);
+  }
+
+  void _loadRecentlyViewedProducts() async {
+    final result = await ViewsRepo.recentlyViewed();
+    if(result is DataSuccess){
+      recentlyViewedProducts.value = result.data!;
+    }
   }
 
 }

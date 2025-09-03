@@ -52,6 +52,7 @@ class ProductModel {
 
   int get offer {
     if (sellingPrice == 0) return 0;
+    if (mrpPrice == 0) return 0;
     return (((mrpPrice - sellingPrice) / mrpPrice) * 100).round();
   }
 
