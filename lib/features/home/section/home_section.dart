@@ -251,17 +251,20 @@ class _HomeSectionState extends State<HomeSection> {
   }
 
   Widget _recentlyViewed() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0),
-          child: Text("Recently Viewed", style: FontStyles.s16Primary7,),
-        ),
-        const SizedBox(height: 10,),
-        Obx(() {
-          final list = control.recentlyViewedProducts.value;
-          return SingleChildScrollView(
+    return Obx(() {
+      final list = control.recentlyViewedProducts.value;
+      if(list.isEmpty){
+        return SizedBox();
+      }
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: Text("Recently Viewed", style: FontStyles.s16Primary7,),
+          ),
+          const SizedBox(height: 10,),
+          SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -273,10 +276,10 @@ class _HomeSectionState extends State<HomeSection> {
                         onLikeClick: control.onProductLikeClick),),
               ),
             ),
-          );
-        })
-      ],
-    );
+          )
+        ],
+      );
+    });
   }
 
   Widget _grid2Add(List<Grid2FlowModel> model) {

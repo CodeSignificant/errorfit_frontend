@@ -8,10 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../config/routes/routers.dart';
+import '../../../config/services/auth.dart';
 import '../../../config/styles/app_colors.dart';
+import '../../../config/styles/font_styles.dart';
 import '../../../core/buttons/anim_button.dart';
 import '../../../core/images/ImageLoader.dart';
 import '../../../core/widgets/my_carousel.dart';
+import '../../products/widgets/product_tile.dart';
 import '../models/home_flow_model.dart';
 
 class HomeWeb extends StatefulWidget {
@@ -24,6 +27,15 @@ class HomeWeb extends StatefulWidget {
 }
 
 class _HomeWebState extends State<HomeWeb> {
+
+  @override
+  void initState() {
+    if(Auth.isLogin){
+      widget.control.loadRecentlyViewedProducts();
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -50,6 +62,7 @@ class _HomeWebState extends State<HomeWeb> {
                                 _generateFlow(flow[index]),),
                           );
                         }),
+                        _recentlyViewed(),
                       ],)),
                 const SizedBox(height: 60,),
                 Footer()
@@ -214,34 +227,38 @@ class _HomeWebState extends State<HomeWeb> {
           radius: 0,));
   }
 
-  // Widget _recentlyViewed() {
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.stretch,
-  //     children: [
-  //       Padding(
-  //         padding: const EdgeInsets.symmetric(horizontal: 12.0),
-  //         child: Text("Recently Viewed", style: FontStyles.s16Primary7,),
-  //       ),
-  //       const SizedBox(height: 10,),
-  //       Obx(() {
-  //         final list = widget.control.recentlyViewedProducts.value;
-  //         return SingleChildScrollView(
-  //           scrollDirection: Axis.horizontal,
-  //           child: Padding(
-  //             padding: const EdgeInsets.symmetric(horizontal: 12.0),
-  //             child: Row(
-  //               spacing: 10,
-  //               children: List.generate(list.length, (index) =>
-  //                   ProductTile(model: list[index],
-  //                       onClick: control.onProductClick,
-  //                       onLikeClick: control.onProductLikeClick),),
-  //             ),
-  //           ),
-  //         );
-  //       })
-  //     ],
-  //   );
-  // }
+
+  Widget _recentlyViewed() {
+    return Obx(() {
+      final list = widget.control.recentlyViewedProducts.value;
+      if(list.isEmpty){
+        return SizedBox();
+      }
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: Text("Recently Viewed", style: FontStyles.s16Primary7,),
+          ),
+          const SizedBox(height: 10,),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: Row(
+                spacing: 10,
+                children: List.generate(list.length, (index) =>
+                    ProductTile(model: list[index],
+                        onClick: widget.control.onProductClick,
+                        onLikeClick: widget.control.onProductLikeClick),),
+              ),
+            ),
+          )
+        ],
+      );
+    });
+  }
 
   Widget _grid2Add(List<Grid2FlowModel> model) {
     return SizedBox(

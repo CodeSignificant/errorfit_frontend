@@ -10,6 +10,7 @@ class ApiSheet {
   static final wishlist = WishlistApi();
   static final cart = CartApi();
   static final public = PublicApi();
+  static final views = ViewsApi();
 }
 
 class AuthApi {
@@ -171,4 +172,12 @@ class NotificationsApi {
 
   // GET => Secure
   String get fetch => "$_baseUrl/Fetch.php";
+}
+
+class ViewsApi {
+  final String domain = Config.domain;
+  final String _baseUrl = "${Config.baseUrl}/Users/Views";
+
+  // GET => Secure
+  String get recentlyViewed => "$_baseUrl/Fetch.php";
 }

@@ -6,6 +6,9 @@ import 'package:error_fit/features/home/models/home_flow_model.dart';
 import 'package:get/get.dart';
 
 import '../../../config/storage/home_flow_storage.dart';
+import '../../../core/network/repo/users/views_repo.dart';
+import '../../../core/resources/data_response.dart';
+import '../../products/models/product_model.dart';
 
 class HomeController extends GetxController{
 
@@ -13,12 +16,16 @@ class HomeController extends GetxController{
   final activeTab = BottomNavTypes.home.obs;
   final homeFlowList = <dynamic>[].obs;
 
+
+  final recentlyViewedProducts = <ProductModel>[].obs;
+
   init({String? tab}) async {
     _setTab(tab: tab);
     carouselControl.list.value = MyCarouselModel.fromJsonList(
         HomeFlowStorage.webJson['carousel'] ?? []);
 
     homeFlowList.value = HomeFlowStorage.webJson['flow'] ?? [];
+
   }
 
   onBottomNavSelect(BottomNavTypes type) {
@@ -53,5 +60,23 @@ class HomeController extends GetxController{
     productsSearchRoute
         .queryParam("category", model.title)
         .navigate;
+  }
+
+  void loadRecentlyViewedProducts() async {
+    final result = await ViewsRepo.recentlyViewed();
+    if(result is DataSuccess){
+      recentlyViewedProducts.value = result.data!;
+    }
+  }
+
+  onProductClick(ProductModel model) {
+    productDetailsRoute.param(model.id).navigate;
+  }
+
+  onProductLikeClick(ProductModel model) {
+    if(Auth.isLogin){
+      landingRoute.navigate;
+      return;
+    }
   }
 }
