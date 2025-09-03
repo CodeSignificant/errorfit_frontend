@@ -17,13 +17,11 @@ samples, guidance on mobile development, and a full API reference.
 
 
 TODO
+> add primary feature in address
 > profile account
-> products details
-> cart(update, remove, add)
 > search/filter products
 > orders pages
 > delete account
-> add primary feature in address
 > add contact phone number in pro @.env.pro.dart
 
 
@@ -41,3 +39,5 @@ COMPLETED
 > notifications
 > user info api to get user details after login
 > pagination model
+> products details
+> cart(update, remove, add)

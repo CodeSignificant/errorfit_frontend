@@ -1,5 +1,4 @@
 import 'package:error_fit/config/routes/routers.dart';
-import 'package:error_fit/config/services/auth.dart';
 import 'package:error_fit/config/styles/app_colors.dart';
 import 'package:error_fit/core/buttons/anim_button.dart';
 import 'package:error_fit/core/buttons/svg_icon_button.dart';
@@ -110,7 +109,6 @@ class MainAppBar extends StatelessWidget {
   }
 
   void _onProfileClick() {
-    Auth.clearAuth();
-    landingRoute.sweepNavigate;
+    accountRoute.navigate;
   }
 }

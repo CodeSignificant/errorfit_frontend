@@ -15,7 +15,7 @@ class Footer extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Container(
-            constraints: BoxConstraints(maxWidth: 300),
+            constraints: BoxConstraints(maxWidth: 280),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -48,7 +48,7 @@ class Footer extends StatelessWidget {
             ),
           ),
           Container(
-            constraints: BoxConstraints(maxWidth: 300),
+            constraints: BoxConstraints(maxWidth: 280),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -66,7 +66,7 @@ class Footer extends StatelessWidget {
             ),
           ),
           Container(
-            constraints: BoxConstraints(maxWidth: 300),
+            constraints: BoxConstraints(maxWidth: 280),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

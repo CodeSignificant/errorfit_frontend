@@ -12,12 +12,11 @@ import '../../api/api_sheet.dart';
 class FilterProductsRepo {
   static Future<DataResponse<List<ProductModel>>> filter() async {
     try {
-      final response = await http.post(
+      final response = await SecureCall.post(
         Uri.parse(ApiSheet.products.filter),
         body: jsonEncode({"page_no": 1}),
       );
       final res = jsonDecode(response.body);
-      // trace(response.body.toString());
       if (!(res['status'] ?? false)) {
         return DataFailed(res['message'] ?? "No response");
       }
@@ -36,7 +35,6 @@ class FilterProductsRepo {
         body: jsonEncode({"search": search}),
       );
       final res = jsonDecode(response.body);
-      // trace(response.body.toString());
       if (!(res['status'] ?? false)) {
         return DataFailed(res['message'] ?? "No response");
       }
@@ -55,7 +53,6 @@ class FilterProductsRepo {
         body: jsonEncode({"id": id}),
       );
       final res = jsonDecode(response.body);
-      // trace(response.body.toString());
       if (!(res['status'] ?? false)) {
         return DataFailed(res['message'] ?? "No response");
       }

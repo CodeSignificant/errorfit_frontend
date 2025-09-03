@@ -29,6 +29,10 @@ class Config {
     return dotenv.env['DOMAIN'] ?? "codesignificant.com";
   }
 
+  static String get webSiteBase {
+    return dotenv.env['WEBSITE_BASE'] ?? "https://codesignificant.com";
+  }
+
   static String get baseUrl {
     return dotenv.env['BASE_URL'] ?? "https://codesignificant.com";
   }

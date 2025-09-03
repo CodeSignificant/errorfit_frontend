@@ -34,39 +34,49 @@ class _AccountMobileViewState extends State<AccountMobileView> {
               children: [
                 Container(
                   decoration: Decorations.card,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 12,
-                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Text("Profile", style: FontStyles.s14Primary704),
+                      ClipRRect(borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(16),
+                          topRight: Radius.circular(16)),
+                          child: SvgIcon(path: 'ill_profile_bg',
+                            fit: BoxFit.cover,
+                            height: 120,)),
+                      // Text("Profile", style: FontStyles.s14Primary704),
                       const SizedBox(height: 16),
-                      Text("Name", style: FontStyles.s12Primary704),
-                      const SizedBox(height: 4),
-                      Text(Auth.name, style: FontStyles.s16Primary7),
-                      const SizedBox(height: 16),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text("Name", style: FontStyles.s12Primary704),
+                            const SizedBox(height: 4),
+                            Text(Auth.name, style: FontStyles.s16Primary7),
+                            const SizedBox(height: 16),
 
-                      Text("Mail", style: FontStyles.s12Primary704),
-                      const SizedBox(height: 4),
-                      Text(Auth.mail, style: FontStyles.s16Primary7),
-                      const SizedBox(height: 16),
+                            Text("Mail", style: FontStyles.s12Primary704),
+                            const SizedBox(height: 4),
+                            Text(Auth.mail, style: FontStyles.s16Primary7),
+                            const SizedBox(height: 16),
 
-                      Text("Phone", style: FontStyles.s12Primary704),
-                      const SizedBox(height: 4),
-                      Text(
-                        Auth.phone.isEmpty
-                            ? "Add phone number"
-                            : "${Auth.countryCode} ${Auth.phone}",
-                        style: FontStyles.s16Primary7,
-                      ),
-                      const SizedBox(height: 16),
+                            Text("Phone", style: FontStyles.s12Primary704),
+                            const SizedBox(height: 4),
+                            Text(
+                              Auth.phone.isEmpty
+                                  ? "Add phone number"
+                                  : "${Auth.countryCode} ${Auth.phone}",
+                              style: FontStyles.s16Primary7,
+                            ),
+                            const SizedBox(height: 16),
 
-                      Text("Gender", style: FontStyles.s12Primary704),
-                      const SizedBox(height: 4),
-                      Text(Auth.gender, style: FontStyles.s16Primary7),
-                      const SizedBox(height: 16),
+                            Text("Gender", style: FontStyles.s12Primary704),
+                            const SizedBox(height: 4),
+                            Text(Auth.gender, style: FontStyles.s16Primary7),
+                            const SizedBox(height: 16),
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),

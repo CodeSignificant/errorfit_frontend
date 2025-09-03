@@ -47,10 +47,11 @@ dependencies:
   cached_network_image: ^3.4.1
   url_launcher: ^6.3.1
   lottie: ^3.3.1
-  geolocator: ^14.0.2
   encrypt: ^5.0.3
-
+  geolocator: ^14.0.2
   http_parser: any
+  share_plus: ^11.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -81,6 +81,21 @@ class Decorations {
     );
   }
 
+  static BoxDecoration get cardLower {
+    return BoxDecoration(
+      color: AppColors.white,
+      borderRadius: BorderRadius.circular(16),
+      boxShadow: [
+        BoxShadow(
+          color: AppColors.black.withAlpha(20),
+          offset: Offset(2, 0),
+          spreadRadius: 1,
+          blurRadius: 2,
+        ),
+      ],
+    );
+  }
+
   static BoxDecoration get sheet {
     return BoxDecoration(
       color: AppColors.white,

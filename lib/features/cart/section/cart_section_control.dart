@@ -2,10 +2,13 @@ import 'package:error_fit/config/extensions/double_extensions.dart';
 import 'package:error_fit/config/routes/routers.dart';
 import 'package:error_fit/core/app_bars/toast.dart';
 import 'package:error_fit/core/network/repo/users/cart_repo.dart';
+import 'package:error_fit/core/resources/actions.dart';
 import 'package:error_fit/core/resources/data_response.dart';
 import 'package:error_fit/core/widgets/loading_view.dart';
 import 'package:error_fit/features/cart/models/cart_model.dart';
 import 'package:get/get.dart';
+
+import '../../../core/widgets/confirm_dialog.dart';
 
 class CartSectionControl extends GetxController{
   final loadingControl = LoadingViewController();
@@ -39,11 +42,24 @@ class CartSectionControl extends GetxController{
     // cartList.addAll(List.generate(10, (index) => CartModel.initial()));
   }
 
+  void _updateCart(CartModel model) async {
+    final result = await CartRepo.setUpdate(productId: model.productId,
+        count: model.count.value,
+        selected: model.isSelect.value);
+
+    if(result is DataFailed){
+      Toast.failed(title: "Cart not updated", message: result.error);
+      return;
+    }
+
+  }
+
   onItemClick(CartModel model) {
-    productDetailsRoute.param(model.id).navigate;
+    productDetailsRoute.param(model.productId).navigate;
   }
 
   onItemChangeListener(CartModel model) {
+    _updateCart(model);
     _calculateCheckout();
   }
 
@@ -75,5 +91,33 @@ class CartSectionControl extends GetxController{
       // 'gst': gst.formatPrice,
       'shipping': shipping > 0 ? "$shipping" : "FREE",
     };
+  }
+
+
+  onRemoveClick(CartModel model) {
+    Get.dialog(ConfirmDialog(
+      title: "Remove Item in Cart",
+      description: "Do you really want to remove an item: ${model.title}",
+      onConfirmClick: () {
+        _onDeleteItem(model);
+        closeDialog();
+      },
+    ));
+  }
+
+  void _onDeleteItem(CartModel model) async {
+    final result = await CartRepo.remove(productId: model.id);
+    if (result is DataSuccess) {
+      cartList.remove(model);
+      if (cartList.isEmpty) {
+        loadingControl.setError(
+            "Grab product in your cart now.");
+      }
+      return;
+    }
+    if (result is DataFailed) {
+      Toast.failed(title: "Unable to remove", message: result.error);
+      return;
+    }
   }
 }
