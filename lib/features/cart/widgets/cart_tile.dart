@@ -5,7 +5,6 @@ import 'package:error_fit/config/styles/font_styles.dart';
 import 'package:error_fit/core/buttons/anim_button.dart';
 import 'package:error_fit/core/buttons/radio_button.dart';
 import 'package:error_fit/core/images/ImageLoader.dart';
-import 'package:error_fit/core/resources/actions.dart';
 import 'package:error_fit/features/cart/models/cart_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

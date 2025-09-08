@@ -25,6 +25,18 @@ class Config {
     return dotenv.env['APP_NAME'] ?? "CS";
   }
 
+  static String get razorpayKey {
+    return dotenv.env['RAZORPAY_KEY'] ?? "";
+  }
+
+  static String get mail {
+    return dotenv.env['CONTACT_MAIL'] ?? "";
+  }
+
+  static String get phone {
+    return dotenv.env['CONTACT_PHONE'] ?? "";
+  }
+
   static String get domain {
     return dotenv.env['DOMAIN'] ?? "codesignificant.com";
   }

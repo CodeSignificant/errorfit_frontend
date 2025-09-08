@@ -21,9 +21,8 @@ TODO
 > profile account
 > search/filter products
 > orders pages
+> payment gateway
 > delete account
-> add contact phone number in pro @.env.pro.dart
-
 
 
 COMPLETED

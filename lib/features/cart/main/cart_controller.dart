@@ -1,4 +1,6 @@
 import 'package:error_fit/config/extensions/double_extensions.dart';
+import 'package:error_fit/config/services/razorpay_manager.dart';
+import 'package:error_fit/core/network/repo/orders/orders_repo.dart';
 import 'package:error_fit/core/resources/actions.dart';
 import 'package:error_fit/core/widgets/confirm_dialog.dart';
 import 'package:get/get.dart';
@@ -12,6 +14,8 @@ import '../models/cart_model.dart';
 
 class CartController extends GetxController {
   final loadingControl = LoadingViewController();
+
+  final _razorpay = RazorpayManager();
 
   final cartList = <CartModel>[].obs;
 
@@ -53,7 +57,37 @@ class CartController extends GetxController {
     _calculateCheckout();
   }
 
-  void onCheckoutClick() {}
+  void onCheckoutClick() async {
+    loadingControl.setLoading(true);
+    final result = await OrdersRepo.createOrder(
+        addressId: "8cf4845d-9f32-7bdd-b17f-5f92c7be03f6", paymentMode: "ONLINE");
+    if (result is DataFailed) {
+      loadingControl.setLoading(false);
+      Toast.failed(title: "Order Failed", message: result.error);
+      return;
+    }
+    _razorpay.init(
+      onSuccess: (response) async {
+        Toast.success(title: "Ordered successfully",
+            message: "Order Placed Successfully, Thank you");
+        loadingControl.setLoading(false);
+        cartList.value = [];
+        await delay();
+        ordersRoute.navigate;
+      },
+      onError: (errors) {
+        trace(errors.toString());
+      },
+    );
+    final paymentResult = await _razorpay.openCheckout(
+        orderId: result.data?['payment_order_id'] ?? ""
+    );
+    if (paymentResult is DataFailed) {
+      loadingControl.setLoading(false);
+      Toast.failed(title: "Payment Failed", message: result.error);
+      return;
+    }
+  }
 
   void _calculateCheckout() {
     int totalItems = 0;

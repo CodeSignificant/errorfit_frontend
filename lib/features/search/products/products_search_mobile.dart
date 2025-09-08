@@ -1,6 +1,5 @@
 import 'package:error_fit/config/styles/app_colors.dart';
 import 'package:error_fit/core/buttons/svg_icon_button.dart';
-import 'package:error_fit/core/images/svg_icon.dart';
 import 'package:error_fit/core/resources/actions.dart';
 import 'package:error_fit/core/resources/stretch_grid.dart';
 import 'package:error_fit/core/widgets/loading_view.dart';

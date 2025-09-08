@@ -16,7 +16,7 @@ class HorizontalImagesFlowModel extends HomeFlowModel {
     return HorizontalImagesFlowModel(
       title: json['title'] as String? ?? '',
       image: json['image'] as String? ?? '',
-      route: json['deep_link'] as String? ?? '',
+      route: json['route'] as String? ?? '',
     );
   }
 
@@ -57,7 +57,7 @@ class CategoryFlowModel extends HomeFlowModel {
     return CategoryFlowModel(
       title: json['title'] as String? ?? '',
       image: json['image'] as String? ?? '',
-      route: json['deep_link'] as String? ?? '',
+      route: json['route'] as String? ?? '',
     );
   }
 
@@ -91,7 +91,7 @@ class AdImageFlowModel extends HomeFlowModel {
   factory AdImageFlowModel.fromJson(Map<String, dynamic> json) {
     return AdImageFlowModel(
       image: json['image'] ?? "",
-      route: json['deep_link'] ?? "",
+      route: json['route'] ?? "",
     );
   }
 }
@@ -112,7 +112,7 @@ class Grid3FlowModel extends HomeFlowModel {
     return Grid3FlowModel(
       title: json['title'] as String? ?? '',
       image: json['image'] as String? ?? '',
-      route: json['deep_link'] as String? ?? '',
+      route: json['route'] as String? ?? '',
     );
   }
 
@@ -154,7 +154,7 @@ class Grid2FlowModel extends HomeFlowModel {
     return Grid2FlowModel(
       title: json['title'] as String? ?? '',
       image: json['image'] as String? ?? '',
-      route: json['deep_link'] as String? ?? '',
+      route: json['route'] as String? ?? '',
     );
   }
 

@@ -11,6 +11,7 @@ class ApiSheet {
   static final cart = CartApi();
   static final public = PublicApi();
   static final views = ViewsApi();
+  static final payments = PaymentsApi();
 }
 
 class AuthApi {
@@ -102,6 +103,9 @@ class OrdersApi {
 
   // GET(?page) => Secure
   String fetch(int page) => "$_baseUrl/Fetch.php?page=$page";
+
+  // GET(address_id, payment_mode, coupon) => Secure
+  String get createOrder => "$_baseUrl/CreateOrder.php";
 }
 
 class UsersApi {
@@ -180,4 +184,12 @@ class ViewsApi {
 
   // GET => Secure
   String get recentlyViewed => "$_baseUrl/Fetch.php";
+}
+
+class PaymentsApi {
+  final String domain = Config.domain;
+  final String _baseUrl = "${Config.baseUrl}/Payments";
+
+  // POST() => Secure
+  String get cartOrder => "$_baseUrl/Razorpay/CartOrder.php";
 }
