@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:error_fit/core/resources/pagination_model.dart';
-import 'package:error_fit/features/orders/orders_model.dart';
+import 'package:error_fit/features/orders/models/orders_model.dart';
 
 import '../../../resources/actions.dart';
 import '../../../resources/data_response.dart';
@@ -34,6 +34,32 @@ class OrdersRepo {
 
         ),
       );
+    } catch (e) {
+      trace(e.toString());
+      return const DataFailed("Something went wrong");
+    }
+  }
+
+  static Future<DataResponse> createOrder({
+    required String addressId,
+    required String paymentMode,
+    String? coupon
+  }) async {
+    try {
+      final response = await SecureCall.post(
+        Uri.parse(ApiSheet.orders.createOrder),
+        body: jsonEncode({
+          "address_id": addressId,
+          "payment_mode": paymentMode,
+          "coupon": coupon??""
+        })
+      );
+      final res = jsonDecode(response.body);
+      if (!(res['status'] ?? false)) {
+        return DataFailed(res['message'] ?? "No response");
+      }
+      final data = res['data'];
+      return DataSuccess(res);
     } catch (e) {
       trace(e.toString());
       return const DataFailed("Something went wrong");

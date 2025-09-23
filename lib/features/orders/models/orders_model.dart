@@ -1,4 +1,4 @@
-import '../../../core/resources/actions.dart'; // For trace logging if needed
+import '../../../../core/resources/actions.dart'; // For trace logging if needed
 
 /// Model representing the tracking status of an order
 class TrackingStatus {

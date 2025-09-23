@@ -7,6 +7,7 @@ import 'package:error_fit/core/images/svg_icon.dart';
 import 'package:error_fit/core/resources/actions.dart';
 import 'package:error_fit/features/auth/profile_section/profile_section_control.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ProfileSection extends StatefulWidget {
   const ProfileSection({super.key});
@@ -17,6 +18,12 @@ class ProfileSection extends StatefulWidget {
 
 class _ProfileSectionState extends State<ProfileSection> {
   final control = ProfileSectionControl();
+
+  @override
+  void initState() {
+    control.onInit();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +90,7 @@ class _ProfileSectionState extends State<ProfileSection> {
                     ),
                   ),
                 ),
+
                 _profileItem(
                   title: "Account",
                   icon: "ic_profile",
@@ -123,8 +131,11 @@ class _ProfileSectionState extends State<ProfileSection> {
                     Text("Privacy Policy", textAlign: TextAlign.center,
                       style: FontStyles.s14Primary705,),
                     const SizedBox(height: 4),
-                    Text("Version 1.0.0", textAlign: TextAlign.center,
-                      style: FontStyles.s14Primary705,),
+                    Obx(() {
+                      return Text("Version ${control.appVersion
+                          .value}", textAlign: TextAlign.center,
+                        style: FontStyles.s14Primary705,);
+                    }),
                   ],
                 ),
                 const SizedBox(height: 10),

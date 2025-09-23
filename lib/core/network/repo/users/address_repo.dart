@@ -17,6 +17,7 @@ class AddressRepo {
     required String address,
     double? lat,
     double? lon,
+    required bool makeDefault
   }) async {
     try {
       final response = await SecureCall.post(
@@ -30,6 +31,7 @@ class AddressRepo {
           "address": address,
           "lat": lat,
           "lon": lon,
+          "make_default": makeDefault ? 1 : 0
         }),
       );
       final res = jsonDecode(response.body);
@@ -39,7 +41,7 @@ class AddressRepo {
         return DataFailed(res['message'] ?? "No response");
       }
       // final data = res['data'];
-      return DataSuccess(res['message'] ?? "Added");
+      return DataSuccess(res['id'] ?? "");
     } catch (e) {
       trace(e.toString());
       return const DataFailed("Something went wrong");
@@ -71,6 +73,7 @@ class AddressRepo {
           "address": address,
           "lat": lat,
           "lon": lon,
+          "make_default": isPrimary ? 1 : 0
         }),
       );
       final res = jsonDecode(response.body);
@@ -118,6 +121,43 @@ class AddressRepo {
       }
       // final data = res['data'];
       return DataSuccess(AddressModel.fromJsonList(res['data'] ?? []));
+    } catch (e) {
+      trace(e.toString());
+      return const DataFailed("Something went wrong");
+    }
+  }
+
+  static Future<DataResponse<AddressModel>> fetchDefault() async {
+    try {
+      final response = await SecureCall.get(
+          Uri.parse(ApiSheet.address.fetchDefault));
+      final res = jsonDecode(response.body);
+      if (!(res['status'] ?? false)) {
+        trace(response.body);
+        return DataFailed(res['message'] ?? "No response");
+      }
+      // final data = res['data'];
+      return DataSuccess(AddressModel.fromJson(res['data'] ?? []));
+    } catch (e) {
+      trace(e.toString());
+      return const DataFailed("Something went wrong");
+    }
+  }
+
+  static Future<DataResponse> updateDefault({required String id}) async {
+    try {
+      final response = await SecureCall.post(
+          Uri.parse(ApiSheet.address.updateDefault),
+          body: jsonEncode({
+            "id": id
+          }));
+      final res = jsonDecode(response.body);
+      if (!(res['status'] ?? false)) {
+        trace(response.body);
+        return DataFailed(res['message'] ?? "No response");
+      }
+      // final data = res['data'];
+      return DataSuccess(res['message']);
     } catch (e) {
       trace(e.toString());
       return const DataFailed("Something went wrong");

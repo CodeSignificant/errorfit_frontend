@@ -1,4 +1,3 @@
-import 'package:error_fit/config/extensions/num_extentions.dart';
 import 'package:error_fit/config/extensions/string_extensions.dart';
 import 'package:error_fit/config/routes/routers.dart';
 import 'package:error_fit/config/styles/font_styles.dart';
@@ -252,13 +251,14 @@ class _HomeSectionState extends State<HomeSection> {
 
   Widget _recentlyViewed() {
     return Obx(() {
-      final list = control.recentlyViewedProducts.value;
+      final list = control.recentlyViewedProducts;
       if(list.isEmpty){
         return SizedBox();
       }
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          const SizedBox(height: 16,),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
             child: Text("Recently Viewed", style: FontStyles.s16Primary7,),

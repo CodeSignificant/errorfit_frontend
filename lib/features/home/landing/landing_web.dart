@@ -72,6 +72,37 @@ class _LandingWebState extends State<LandingWeb> {
     );
   }
 
+
+  Widget _phoneLogin() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+
+        const SizedBox(height: 26),
+        Text(
+          "Enter your phone for Login/Signup",
+          style: FontStyles.s16Primary7,
+        ),
+        const SizedBox(height: 12),
+        EditText(
+          controller: widget.control.phoneControl,
+          error: widget.control.error.value,
+          hint: "Phone",
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          textInputAction: TextInputAction.go,
+          keyboardType: TextInputType.number,
+        ),
+        const SizedBox(height: 16),
+        Button(
+          onClick: widget.control.onLoginClick,
+          loading: widget.control.isLoading.value,
+          text: "Login/Signup",
+        ),
+        SizedBox(height: 16),
+      ],
+    );
+  }
+
   Widget _mailLogin() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -99,36 +130,6 @@ class _LandingWebState extends State<LandingWeb> {
             text: "Login/Signup",
           );
         }),
-        SizedBox(height: 16),
-      ],
-    );
-  }
-
-  Widget _phoneLogin() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-
-        const SizedBox(height: 26),
-        Text(
-          "Enter your phone for Login/Signup",
-          style: FontStyles.s16Primary7,
-        ),
-        const SizedBox(height: 12),
-        EditText(
-          controller: widget.control.phoneControl,
-          error: widget.control.error.value,
-          hint: "Phone",
-          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          textInputAction: TextInputAction.go,
-          keyboardType: TextInputType.number,
-        ),
-        const SizedBox(height: 16),
-        Button(
-          onClick: widget.control.onLoginClick,
-          loading: widget.control.isLoading.value,
-          text: "Login/Signup",
-        ),
         SizedBox(height: 16),
       ],
     );

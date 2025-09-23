@@ -3,7 +3,7 @@ import 'package:error_fit/config/styles/decorations.dart';
 import 'package:error_fit/config/styles/font_styles.dart';
 import 'package:error_fit/core/buttons/anim_button.dart';
 import 'package:error_fit/core/images/ImageLoader.dart';
-import 'package:error_fit/features/orders/orders_model.dart';
+import 'package:error_fit/features/orders/models/orders_model.dart';
 import 'package:flutter/material.dart';
 
 class OrdersTile extends StatelessWidget {

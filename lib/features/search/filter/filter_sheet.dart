@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import 'package:error_fit/config/styles/decorations.dart';
 import 'package:error_fit/core/widgets/sheet_nob.dart';

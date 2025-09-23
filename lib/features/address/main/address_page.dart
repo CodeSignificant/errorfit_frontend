@@ -17,7 +17,9 @@ class _AddressPageState extends State<AddressPage> {
 
   @override
   void initState() {
-    control.onInit();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      control.onInit();
+    },);
     super.initState();
   }
 

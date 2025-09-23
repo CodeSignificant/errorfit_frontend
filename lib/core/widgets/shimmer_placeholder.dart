@@ -10,13 +10,15 @@ class ShimmerPlaceholder extends StatefulWidget {
   final double height;
   final ShimmerShape shape;
   final double borderRadius;
+  final EdgeInsets? padding;
+  final EdgeInsets? margin;
 
   const ShimmerPlaceholder({
     super.key,
     required this.width,
     required this.height,
     this.shape = ShimmerShape.rectangle,
-    this.borderRadius = 8.0,
+    this.borderRadius = 8.0, this.padding, this.margin,
   });
 
   @override
@@ -67,6 +69,8 @@ class _ShimmerPlaceholderState extends State<ShimmerPlaceholder>
           child: Container(
             width: widget.width,
             height: widget.height,
+            padding: widget.padding,
+            margin: widget.margin,
             decoration: BoxDecoration(
               color: Colors.grey.shade300,
               shape: widget.shape == ShimmerShape.circle

@@ -7,7 +7,7 @@ class BrandSearchModel {
   factory BrandSearchModel.fromJson(Map<String, dynamic> json) {
     return BrandSearchModel(
       image: json['image'] ?? "",
-      route: json['deep_link'] ?? "",
+      route: json['route'] ?? "",
     );
   }
 

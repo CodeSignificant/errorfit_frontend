@@ -51,6 +51,11 @@ dependencies:
   geolocator: ^14.0.2
   http_parser: any
   share_plus: ^11.1.0
+  razorpay_flutter: ^1.4.0
+  flutter_razorpay_web: ^0.0.3
+  google_sign_in: ^7.1.1
+  firebase_auth: ^6.0.2
+  firebase_core: ^4.1.0
 
 dev_dependencies:
   flutter_test:

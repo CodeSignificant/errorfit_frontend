@@ -17,14 +17,11 @@ samples, guidance on mobile development, and a full API reference.
 
 
 TODO
-> add primary feature in address
 > profile account
 > search/filter products
 > orders pages
 > delete account
-> add contact phone number in pro @.env.pro.dart
-
-
+> download Invoice
 
 COMPLETED
 > add phone otp login sheet and verify
@@ -42,3 +39,7 @@ COMPLETED
 > products details
 > cart(update, remove, add)
 > recently viewed
+> multi devices logout & logout
+> add primary feature in address
+> google login
+> payment gateway

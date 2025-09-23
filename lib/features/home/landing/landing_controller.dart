@@ -44,10 +44,10 @@ class LandingController extends GetxController{
 
 
   onLoginTypeSelect(LoginTypes type) {
-    // if (type == LoginTypes.google) {
-    //   _googleLoginClick();
-    //   return;
-    // }
+    if (type == LoginTypes.google) {
+      _googleLoginClick();
+      return;
+    }
     // if (type == LoginTypes.facebook) {
     //   homeRoute.replace;
     //   return;
@@ -67,6 +67,18 @@ class LandingController extends GetxController{
   }
 
   _googleLoginClick() async {
+    final result = await AuthRepo.signInWithGoogle();
+    if(result is DataFailed){
+      Toast.failed(title: "Google Login Failed", message: result.error);
+      return;
+    }
+    await UsersRepo.info();
+    Toast.success(
+      title: "Login successfully",
+      message: "welcome to the ErrorFit",
+    );
+    homeRoute.replace;
+    return;
     
   }
 
@@ -219,6 +231,10 @@ class LandingController extends GetxController{
   }
 
   onLoginTypeClick(LoginTypes type) {
+    if(type == LoginTypes.google){
+      _googleLoginClick();
+      return;
+    }
     token.value = "";
     activeLoginType.value = type;
   }

@@ -1,26 +1,29 @@
 import 'dart:convert';
-import 'package:error_fit/core/network/api/secure_call.dart';
-import 'package:error_fit/features/products/models/product_model.dart';
+
 import '../../../resources/actions.dart';
 import '../../../resources/data_response.dart';
 import '../../api/api_sheet.dart';
+import '../../api/secure_call.dart';
 
-class ViewsRepo {
+class PaymentsRepo {
 
-  static Future<DataResponse<List<ProductModel>>> recentlyViewed() async {
+
+  static Future<DataResponse> cartOrder() async {
     try {
-      final response = await SecureCall.get(
-        Uri.parse(ApiSheet.views.recentlyViewed)
-      );
+      final response = await SecureCall.post(
+          Uri.parse(ApiSheet.payments.cartOrder));
+      if(response.statusCode != 200){
+        return DataFailed("Server Error: ${response.statusCode}");
+      }
       final res = jsonDecode(response.body);
       if (!(res['status'] ?? false)) {
+        trace(response.body);
         return DataFailed(res['message'] ?? "No response");
       }
-      return DataSuccess(ProductModel.fromJsonList(res['data'] ?? []));
+      return DataSuccess(res['order_id'] ?? "");
     } catch (e) {
       trace(e.toString());
       return const DataFailed("Something went wrong");
     }
   }
-
 }

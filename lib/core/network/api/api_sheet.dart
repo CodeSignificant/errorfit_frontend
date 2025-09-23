@@ -11,11 +11,15 @@ class ApiSheet {
   static final cart = CartApi();
   static final public = PublicApi();
   static final views = ViewsApi();
+  static final payments = PaymentsApi();
 }
 
 class AuthApi {
   final String domain = Config.domain;
   final String _baseUrl = "${Config.baseUrl}/Auth";
+
+  // POST(id_token, device)
+  String get verifyGoogleLogin => "$_baseUrl/Google/verify_google_login_id.php";
 
   // POST(mail)
   String get mailOTP => "$_baseUrl/MailOTP/Login.php";
@@ -82,10 +86,10 @@ class AddressApi {
   final String domain = Config.domain;
   final String _baseUrl = "${Config.baseUrl}/Users/Address";
 
-  // POST(name, mail, phone, country_code, pincode, address, lat?, lon?) => Secure
+  // POST(name, mail, phone, country_code, pincode, address, lat?, lon?, make_default) => Secure
   String get addNew => "$_baseUrl/Create.php";
 
-  // POST(id, name, mail, phone, country_code, pincode, address, lat?, lon?) => Secure
+  // POST(id, name, mail, phone, country_code, pincode, address, lat?, lon?, make_default) => Secure
   String get update => "$_baseUrl/Update.php";
 
   // POST(id) => Secure
@@ -93,6 +97,12 @@ class AddressApi {
 
   // GET => Secure
   String get fetch => "$_baseUrl/Fetch.php";
+
+  // GET => Secure
+  String get fetchDefault => "$_baseUrl/FetchDefault.php";
+
+  // POST(id) => Secure
+  String get updateDefault => "$_baseUrl/UpdateDefault.php";
 }
 
 class OrdersApi {
@@ -102,6 +112,9 @@ class OrdersApi {
 
   // GET(?page) => Secure
   String fetch(int page) => "$_baseUrl/Fetch.php?page=$page";
+
+  // GET(address_id, payment_mode, coupon) => Secure
+  String get createOrder => "$_baseUrl/CreateOrder.php";
 }
 
 class UsersApi {
@@ -180,4 +193,12 @@ class ViewsApi {
 
   // GET => Secure
   String get recentlyViewed => "$_baseUrl/Fetch.php";
+}
+
+class PaymentsApi {
+  final String domain = Config.domain;
+  final String _baseUrl = "${Config.baseUrl}/Payments";
+
+  // POST() => Secure
+  String get cartOrder => "$_baseUrl/Razorpay/CartOrder.php";
 }

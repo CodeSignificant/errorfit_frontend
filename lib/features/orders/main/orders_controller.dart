@@ -1,7 +1,7 @@
 import 'package:error_fit/core/network/repo/orders/orders_repo.dart';
 import 'package:error_fit/core/resources/data_response.dart';
 import 'package:error_fit/core/widgets/loading_view.dart';
-import 'package:error_fit/features/orders/orders_model.dart';
+import 'package:error_fit/features/orders/models/orders_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 

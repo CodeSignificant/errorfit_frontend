@@ -1,5 +1,6 @@
 import 'package:error_fit/config/styles/decorations.dart';
 import 'package:error_fit/config/styles/font_styles.dart';
+import 'package:error_fit/core/app_bars/toast.dart';
 import 'package:error_fit/core/buttons/button.dart';
 import 'package:error_fit/core/buttons/check_button.dart';
 import 'package:error_fit/core/edit_texts/edit_text.dart';
@@ -14,9 +15,9 @@ import 'package:get/get.dart';
 
 class EditAddressSheet extends StatefulWidget {
   final AddressModel? model;
-  final Function(DataResponse response) onComplete;
+  final Function(dynamic data, AddressModel address) onSuccess;
 
-  const EditAddressSheet({super.key, required this.onComplete, this.model});
+  const EditAddressSheet({super.key, required this.onSuccess, this.model});
 
   @override
   State<EditAddressSheet> createState() => _EditAddressSheetState();
@@ -57,7 +58,10 @@ class _EditAddressSheetState extends State<EditAddressSheet> {
       child: Container(
         decoration: Decorations.sheet,
         constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height * 0.8,
+          maxHeight: MediaQuery
+              .of(context)
+              .size
+              .height * 0.9,
         ),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         child: Column(
@@ -198,12 +202,27 @@ class _EditAddressSheetState extends State<EditAddressSheet> {
       countryCode: "+91",
       pincode: pincodeControl.text.trim(),
       address: addressControl.text.trim(),
+        makeDefault: isPrimary.value
     );
     isLoading.value = false;
     if (result is DataFailed) {
+      Toast.failed(title: "Address Failed", message: result.error);
       error.value = result.error;
+      return;
     }
-    widget.onComplete(result);
+    if (result is DataSuccess) {
+      String newId = result.data!.toString();
+      AddressModel newModel = AddressModel(
+          id: newId,
+          name: nameControl.text.trim(),
+          mail: mailControl.text.trim(),
+          phone: phoneControl.text.trim(),
+          countryCode: "+91",
+          pincode: pincodeControl.text.trim(),
+          address: addressControl.text.trim(),
+          isSelected: isPrimary);
+      widget.onSuccess(result.data, newModel);
+    }
   }
 
   void _updateNewAddress() async {
@@ -221,8 +240,19 @@ class _EditAddressSheetState extends State<EditAddressSheet> {
     );
     isLoading.value = false;
     if (result is DataFailed) {
+      Toast.failed(title: "Address Failed", message: result.error);
       error.value = result.error;
+      return;
     }
-    widget.onComplete(result);
+    widget.onSuccess(result.data, AddressModel(
+        id: widget.model?.id ?? "",
+        name: nameControl.text.trim(),
+        mail: mailControl.text.trim(),
+        phone: phoneControl.text.trim(),
+        countryCode: "+91",
+        pincode: pincodeControl.text.trim(),
+        address: addressControl.text.trim(),
+        isSelected: isPrimary)
+    );
   }
 }

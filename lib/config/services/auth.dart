@@ -1,8 +1,14 @@
+import 'dart:convert';
+
+import 'package:error_fit/core/resources/actions.dart';
+import 'package:error_fit/features/address/models/address_model.dart';
+
 import '../storage/local_storage.dart';
 
 class Auth {
   static const _authTokenKey = 'auth_token';
   static const _userKey = 'user';
+  static const _defaultAddress = 'address';
 
   static final _storage = LocalStorage();
 
@@ -24,6 +30,21 @@ class Auth {
       "phone": phone,
       "gender": gender
     });
+  }
+
+  static Future<void> setDefaultAddress(Map<String, dynamic> address) async {
+    await _storage.setJson(_defaultAddress, address);
+  }
+
+
+  static AddressModel? get defaultAddress {
+     try{
+       return AddressModel.fromJson(_storage.getJson(_defaultAddress)??{});
+     }catch(e){
+       trace(jsonEncode(_storage.getJson(_defaultAddress)??"{}"));
+       trace("$e");
+       return null;
+     }
   }
 
   static String get name {

@@ -6,7 +6,10 @@ import 'package:error_fit/features/home/models/home_flow_model.dart';
 import 'package:get/get.dart';
 
 import '../../../config/storage/home_flow_storage.dart';
+import '../../../core/app_bars/toast.dart';
 import '../../../core/network/repo/users/views_repo.dart';
+import '../../../core/network/repo/users/wishlist_repo.dart';
+import '../../../core/resources/actions.dart';
 import '../../../core/resources/data_response.dart';
 import '../../products/models/product_model.dart';
 
@@ -18,6 +21,7 @@ class HomeController extends GetxController{
 
 
   final recentlyViewedProducts = <ProductModel>[].obs;
+
 
   init({String? tab}) async {
     _setTab(tab: tab);
@@ -73,10 +77,18 @@ class HomeController extends GetxController{
     productDetailsRoute.param(model.id).navigate;
   }
 
-  onProductLikeClick(ProductModel model) {
-    if(Auth.isLogin){
+  onProductLikeClick(ProductModel model) async {
+    if(!Auth.isLogin){
       landingRoute.navigate;
       return;
     }
+    final result = await WishlistRepo.setLike(
+        productId: model.id, like: model.isLiked.value);
+    if (result is DataFailed) {
+      Toast.info(title: "Unable to Like the Product", message: result.error);
+      return;
+    }
   }
+
+  void onResume() {}
 }

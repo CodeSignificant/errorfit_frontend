@@ -2,12 +2,15 @@ import 'package:error_fit/config/styles/app_colors.dart';
 import 'package:error_fit/config/styles/font_styles.dart';
 import 'package:error_fit/core/app_bars/main_app_bar.dart';
 import 'package:error_fit/core/buttons/button.dart';
+import 'package:error_fit/core/resources/actions.dart';
 import 'package:error_fit/core/widgets/loading_view.dart';
 import 'package:error_fit/features/cart/models/cart_model.dart';
 import 'package:error_fit/features/cart/section/cart_section_control.dart';
 import 'package:error_fit/features/cart/widgets/cart_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../main.dart';
 
 class CartSection extends StatefulWidget {
   const CartSection({super.key});
@@ -16,14 +19,35 @@ class CartSection extends StatefulWidget {
   State<CartSection> createState() => _CartSectionState();
 }
 
-class _CartSectionState extends State<CartSection> {
+class _CartSectionState extends State<CartSection>
+    with RouteAware, WidgetsBindingObserver {
 
   final control = CartSectionControl();
 
   @override
   void initState() {
     control.onInit();
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    routeObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context)!);
+  }
+
+  @override
+  void didPopNext() {
+    super.didPopNext();
+    control.onResume();
   }
 
   @override

@@ -27,20 +27,21 @@ class LoadingViewController extends GetxController {
 class LoadingView extends StatelessWidget {
   final LoadingViewController controller;
   final Widget child;
+  final Widget? loading;
   final Widget Function(String error)? errorBuilder;
 
   const LoadingView({
     super.key,
     required this.controller,
     required this.child,
-    this.errorBuilder,
+    this.errorBuilder, this.loading,
   });
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
       if (controller.isLoading.value) {
-        return Center(
+        return loading??Center(
           child: SizedBox(
             height: 24,
             width: 24,
