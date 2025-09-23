@@ -9,6 +9,7 @@ import '../../../config/storage/home_flow_storage.dart';
 import '../../../core/app_bars/toast.dart';
 import '../../../core/network/repo/users/views_repo.dart';
 import '../../../core/network/repo/users/wishlist_repo.dart';
+import '../../../core/resources/actions.dart';
 import '../../../core/resources/data_response.dart';
 import '../../products/models/product_model.dart';
 
@@ -20,6 +21,7 @@ class HomeController extends GetxController{
 
 
   final recentlyViewedProducts = <ProductModel>[].obs;
+
 
   init({String? tab}) async {
     _setTab(tab: tab);
@@ -87,4 +89,6 @@ class HomeController extends GetxController{
       return;
     }
   }
+
+  void onResume() {}
 }

@@ -18,6 +18,9 @@ class AuthApi {
   final String domain = Config.domain;
   final String _baseUrl = "${Config.baseUrl}/Auth";
 
+  // POST(id_token, device)
+  String get verifyGoogleLogin => "$_baseUrl/Google/verify_google_login_id.php";
+
   // POST(mail)
   String get mailOTP => "$_baseUrl/MailOTP/Login.php";
 
@@ -83,10 +86,10 @@ class AddressApi {
   final String domain = Config.domain;
   final String _baseUrl = "${Config.baseUrl}/Users/Address";
 
-  // POST(name, mail, phone, country_code, pincode, address, lat?, lon?) => Secure
+  // POST(name, mail, phone, country_code, pincode, address, lat?, lon?, make_default) => Secure
   String get addNew => "$_baseUrl/Create.php";
 
-  // POST(id, name, mail, phone, country_code, pincode, address, lat?, lon?) => Secure
+  // POST(id, name, mail, phone, country_code, pincode, address, lat?, lon?, make_default) => Secure
   String get update => "$_baseUrl/Update.php";
 
   // POST(id) => Secure
@@ -94,6 +97,12 @@ class AddressApi {
 
   // GET => Secure
   String get fetch => "$_baseUrl/Fetch.php";
+
+  // GET => Secure
+  String get fetchDefault => "$_baseUrl/FetchDefault.php";
+
+  // POST(id) => Secure
+  String get updateDefault => "$_baseUrl/UpdateDefault.php";
 }
 
 class OrdersApi {

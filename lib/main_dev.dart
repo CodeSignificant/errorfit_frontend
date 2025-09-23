@@ -7,13 +7,11 @@ import 'config/routes/app_router.dart';
 import 'config/services/final_loaders.dart';
 import 'config/services/pre_loaders.dart';
 import 'config/styles/app_colors.dart';
+import 'main.dart';
 
 void main() async {
-  await PreLoaders.init();
   await Config.init(Flavours.dev);
-
-  // await Auth.init();
-  // await AppState.init();
+  await PreLoaders.init();
   await FinalLoaders.init();
 
   runApp(
@@ -27,6 +25,7 @@ void main() async {
       ),
       initialRoute: "/",
       getPages: AppRouter.pages,
+      navigatorObservers: [routeObserver],
       scrollBehavior: const MaterialScrollBehavior().copyWith(
         dragDevices: {
           PointerDeviceKind.touch,

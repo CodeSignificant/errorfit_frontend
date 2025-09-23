@@ -30,18 +30,19 @@ class AddressModel {
   /// Convert from JSON
   factory AddressModel.fromJson(Map<String, dynamic> json) {
     return AddressModel(
-      id: json['id'] ?? '',
+      id: json['id']?.toString() ?? '',
       name: json['name'] ?? '',
       mail: json['mail'] ?? '',
       phone: json['phone'] ?? '',
-      countryCode: json['country_code'] ?? "",
-      pincode: json['pincode'] ?? "",
-      address: json['address'] ?? "",
-      lat: double.tryParse(json['lat']),
-      lon: double.tryParse(json['lon']),
-      isSelected: Rx(json['is_selected'] == 1 ? true : false),
+      countryCode: json['country_code'] ?? '',
+      pincode: json['pincode'] ?? '',
+      address: json['address'] ?? '',
+      lat: (json['lat'] is int ? (json['lat'] as int).toDouble() : double.tryParse(json['lat'].toString())) ?? 0.0,
+      lon: (json['lon'] is int ? (json['lon'] as int).toDouble() : double.tryParse(json['lon'].toString())) ?? 0.0,
+      isSelected: Rx(json['make_default'] == "1" ? true : false),
     );
   }
+
 
   /// Safe loop-based list parsing with error handling
   static List<AddressModel> fromJsonList(List<dynamic>? list) {
@@ -67,9 +68,8 @@ class AddressModel {
     return result;
   }
 
-  /// Create a default initial model
   factory AddressModel.initial() => AddressModel(
-    id: "test",
+    id: "",
     phone: "",
     countryCode: "",
     mail: "",

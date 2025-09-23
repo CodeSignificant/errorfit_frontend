@@ -14,6 +14,11 @@ class FontStyles {
     color: AppColors.white,
     fontWeight: FontWeight.w400,
   );
+  static const s10Primary704 = TextStyle(
+    fontSize: 10,
+    color: AppColors.primary70,
+    fontWeight: FontWeight.w400,
+  );
   static const s12Black4 = TextStyle(
     fontSize: 12,
     color: AppColors.black,
@@ -68,6 +73,11 @@ class FontStyles {
     fontSize: 14,
     color: AppColors.primary,
     fontWeight: FontWeight.w600,
+  );
+  static const s14Primary7 = TextStyle(
+    fontSize: 14,
+    color: AppColors.primary,
+    fontWeight: FontWeight.w700,
   );
   static const s14Primary704 = TextStyle(
     fontSize: 14,

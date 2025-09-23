@@ -53,6 +53,7 @@ class AddressController extends GetxController {
       for (var item in addressList) {
         item.isSelected.value = item.id == model.id;
       }
+      // addressList.refresh();
       return;
     }
     if (result is DataFailed) {
@@ -89,12 +90,11 @@ class AddressController extends GetxController {
     Get.bottomSheet(
       EditAddressSheet(
         model: model,
-        onComplete: (response) async {
-          if (response is DataSuccess) {
+        onSuccess: (response, model) async {
             closeDialog();
             await delay();
             _loadAddress();
-          }
+
         },
       ),
       isScrollControlled: true,
@@ -104,12 +104,10 @@ class AddressController extends GetxController {
   void addNewAddressClick() {
     Get.bottomSheet(
       EditAddressSheet(
-        onComplete: (response) async {
-          if (response is DataSuccess) {
+        onSuccess: (data, model) async {
             closeDialog();
             await delay();
             _loadAddress();
-          }
         },
       ),
       isScrollControlled: true,

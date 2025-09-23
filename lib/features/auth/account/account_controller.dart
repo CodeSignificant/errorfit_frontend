@@ -1,7 +1,6 @@
 import 'package:error_fit/config/routes/routers.dart';
 import 'package:error_fit/core/app_bars/toast.dart';
 import 'package:error_fit/core/resources/actions.dart';
-import 'package:error_fit/core/resources/data_response.dart';
 import 'package:error_fit/core/widgets/confirm_dialog.dart';
 import 'package:error_fit/core/widgets/loading_view.dart';
 import 'package:error_fit/features/address/widgets/edit_address_sheet.dart';
@@ -12,6 +11,18 @@ import '../../../core/network/repo/auth/auth_repo.dart';
 
 class AccountController extends GetxController {
   final loadingControl = LoadingViewController();
+
+  final appVersion = "".obs;
+
+  @override
+  void onInit() {
+    _loadData();
+    super.onInit();
+  }
+
+  void _loadData() async {
+    appVersion.value = await getAppVersion();
+  }
 
   void onLogoutClick() {
     Get.dialog(ConfirmDialog(title: "Confirm Logout",
@@ -46,18 +57,25 @@ class AccountController extends GetxController {
   void onChangeAddressClick() {
     Get.bottomSheet(
       EditAddressSheet(
-        onComplete: (response) {
-          if (response is DataSuccess) {
+        onSuccess: (data, model) {
             closeDialog();
             Toast.success(
               title: "Address added successfully",
               message: "New address created in your account",
             );
-            return;
-          }
         },
       ),
       isScrollControlled: true,
     );
   }
+
+  void onAddressClick() {
+  }
+
+  void onNotificationsClick() {
+  }
+
+  void onSupportClick() {
+  }
+
 }

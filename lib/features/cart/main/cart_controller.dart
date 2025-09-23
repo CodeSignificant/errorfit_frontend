@@ -30,7 +30,7 @@ class CartController extends GetxController {
   void _loadCart() async {
     final result = await CartRepo.fetch();
     if (result is DataSuccess) {
-      cartList.addAll(result.data!);
+      cartList.value = result.data!;
       if (cartList.isEmpty) {
         loadingControl.setError("No Products in the Cart");
         return;
@@ -58,6 +58,8 @@ class CartController extends GetxController {
   }
 
   void onCheckoutClick() async {
+    placeOrderRoute.navigate;
+    return;
     loadingControl.setLoading(true);
     final result = await OrdersRepo.createOrder(
         addressId: "8cf4845d-9f32-7bdd-b17f-5f92c7be03f6", paymentMode: "ONLINE");

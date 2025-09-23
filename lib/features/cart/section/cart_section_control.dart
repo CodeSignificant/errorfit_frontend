@@ -25,10 +25,14 @@ class CartSectionControl extends GetxController{
     super.onInit();
   }
 
+  void onResume() {
+    onInit();
+  }
+
   void _loadCart() async {
     final result = await CartRepo.fetch();
     if (result is DataSuccess) {
-      cartList.addAll(result.data!);
+      cartList.value = result.data!;
       if (cartList.isEmpty) {
         loadingControl.setError("No Products in the Cart");
         return;
@@ -67,6 +71,8 @@ class CartSectionControl extends GetxController{
 
 
   void onCheckoutClick() async {
+    placeOrderRoute.navigate;
+    return;
     final _razorpay = RazorpayManager();
     loadingControl.setLoading(true);
     final result = await OrdersRepo.createOrder(
@@ -154,4 +160,5 @@ class CartSectionControl extends GetxController{
       return;
     }
   }
+
 }

@@ -1,0 +1,3 @@
+-keep class proguard.annotation.** { *; }
+-dontwarn proguard.annotation.Keep
+-dontwarn proguard.annotation.KeepClassMembers

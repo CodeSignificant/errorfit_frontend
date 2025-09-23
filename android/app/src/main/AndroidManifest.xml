@@ -11,6 +11,7 @@
         android:label="error_fit"
         android:name="${applicationName}"
         android:usesCleartextTraffic="true"
+        android:enableOnBackInvokedCallback="true"
         android:icon="@drawable/logo_errorfit">
         <activity
             android:name=".MainActivity"

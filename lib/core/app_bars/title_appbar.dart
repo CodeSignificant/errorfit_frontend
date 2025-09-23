@@ -9,11 +9,12 @@ import 'package:get/get.dart';
 class TitleAppBar extends StatelessWidget {
   final String title;
   final Color background;
+  final bool tealButton;
 
   const TitleAppBar({
     super.key,
     required this.title,
-    this.background = AppColors.white,
+    this.background = AppColors.white, this.tealButton = true,
   });
 
   @override
@@ -40,7 +41,7 @@ class TitleAppBar extends StatelessWidget {
               const SizedBox(width: 12),
               Text(title, style: FontStyles.s14Black4),
               const Spacer(),
-              SvgIconButton(
+              if(tealButton)SvgIconButton(
                 onClick: _onTileIconClick,
                 path: "ic_cart",
                 color: AppColors.primary,

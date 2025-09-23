@@ -2,13 +2,10 @@ import 'dart:io' show Platform;
 
 import 'package:error_fit/config/environments/config.dart';
 import 'package:error_fit/config/services/auth.dart';
-import 'package:error_fit/core/network/repo/payments/payments_repo.dart';
 import 'package:error_fit/core/resources/data_response.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-
 // Web Razorpay SDK for Flutter Web
 import 'package:flutter_razorpay_web/flutter_razorpay_web.dart' as razorpay_web;
-
 // Native Razorpay SDK for Android/iOS
 import 'package:razorpay_flutter/razorpay_flutter.dart' as razorpay_native;
 
@@ -25,8 +22,9 @@ class RazorpayManager {
 
   /// Initialize Razorpay and set event listeners
   void init({
-    Function(Map<String, dynamic>)? onSuccess,
-    Function(Map<String, dynamic>)? onError,
+    Function(Map<String, dynamic>response)? onSuccess,
+    Function(Map<String, dynamic>response)? onError,
+    Function(Map<String, dynamic> response)? onCancelled,
     Function()? onExternalWallet,
   }) {
     if (kIsWeb) {
@@ -35,6 +33,7 @@ class RazorpayManager {
           if (onSuccess != null) onSuccess({"paymentId": response.paymentId});
         },
         onCancel: (razorpay_web.RpayCancelResponse error) {
+          onCancelled?.call({});
           print("Payment cancelled");
         },
         onFailed: (razorpay_web.RpayFailedResponse error) {

@@ -2,7 +2,6 @@ import 'package:error_fit/config/extensions/string_extensions.dart';
 import 'package:error_fit/config/routes/routers.dart';
 import 'package:error_fit/config/styles/app_colors.dart';
 import 'package:error_fit/config/styles/decorations.dart';
-import 'package:error_fit/config/styles/font_styles.dart';
 import 'package:error_fit/core/app_bars/main_app_bar.dart';
 import 'package:error_fit/core/buttons/anim_button.dart';
 import 'package:error_fit/core/images/ImageLoader.dart';
@@ -25,7 +24,9 @@ class _SearchSectionState extends State<SearchSection> {
 
   @override
   void initState() {
-    control.onInit();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      control.onInit();
+    },);
     super.initState();
   }
 
@@ -36,31 +37,13 @@ class _SearchSectionState extends State<SearchSection> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         MainAppBar(),
-        AnimButton(
-          onClick: control.onLocationClick,
-          child: Container(
-            color: AppColors.primary20.withAlpha(100),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-            child: Row(
-              children: [
-                SvgIcon(
-                  path: "ic_location", size: 12, color: AppColors.primary70,),
-                const SizedBox(width: 10,),
-                Expanded(child: Text(
-                  "Thurpu cheruvu center, veeravasaram, 534245", maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: FontStyles.s14Primary705,))
-              ],
-            ),
-          ),
-        ),
         Expanded(child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             spacing: 12,
             children: [
-              const SizedBox(height: 6,),
+              const SizedBox(height: 1,),
               AnimButton(
                 onClick: control.onSearchClick,
                 child: Container(
@@ -76,7 +59,7 @@ class _SearchSectionState extends State<SearchSection> {
                 ),
               ),
               Obx(() {
-                final list = control.brandsList.value;
+                final list = control.brandsList;
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   spacing: 16,
@@ -90,11 +73,6 @@ class _SearchSectionState extends State<SearchSection> {
                       ),),
                 );
               }),
-
-              // ImageLoader(url: dummyImages[1].autoUrl, height: 140,),
-              // ImageLoader(url: dummyImages[0].autoUrl, height: 140,),
-              // ImageLoader(url: dummyImages[1].autoUrl, height: 140,),
-              // ImageLoader(url: dummyImages[0].autoUrl, height: 140,),
               const SizedBox(height: 16,),
             ],
           ),

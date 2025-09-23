@@ -90,6 +90,8 @@ class UsersRepo {
         phone: res['phone'] ?? "",
         gender: res['gender'] ?? "",
       );
+      trace(res.toString());
+      Auth.setDefaultAddress(res['default_address']??{});
       return DataSuccess(res['message'] ?? "Fetch");
     } catch (e) {
       trace(e.toString());

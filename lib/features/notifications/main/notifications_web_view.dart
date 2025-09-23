@@ -1,4 +1,6 @@
 import 'package:error_fit/core/app_bars/main_app_bar.dart';
+import 'package:error_fit/core/images/svg_icon.dart';
+import 'package:error_fit/core/resources/center_max.dart';
 import 'package:error_fit/core/resources/center_tab.dart';
 import 'package:error_fit/features/notifications/main/notifications_controller.dart';
 import 'package:flutter/material.dart';
@@ -31,21 +33,35 @@ class _NotificationsWebViewState extends State<NotificationsWebView> {
               return MediaQuery.removePadding(
                 context: context,
                 removeTop: true,
-                child: ListView.builder(
-                  itemCount: list.length,
-                  itemBuilder: (context, index) => Padding(
-                    padding: EdgeInsets.only(
-                      left: 12,
-                      right: 12,
-                      bottom: 10.0,
-                      top: index == 0 ? 10 : 0,
-                    ),
-                    child: CenterTab(
-                      child: NotificationsTile(
-                        model: list[index],
-                        onNotificationClick: widget.control.onNotificationClick,
+                child: CenterMax(
+                  child: Row(
+                    children: [
+
+                      SvgIcon(path: "ill_notification", size: 360,),
+
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: list.length,
+                          itemBuilder: (context, index) =>
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  left: 12,
+                                  right: 12,
+                                  bottom: 10.0,
+                                  top: index == 0 ? 10 : 0,
+                                ),
+                                child: CenterTab(
+                                  child: NotificationsTile(
+                                    model: list[index],
+                                    onNotificationClick:
+                                    widget.control.onNotificationClick,
+                                  ),
+                                ),
+                              ),
+                        ),
                       ),
-                    ),
+
+                    ],
                   ),
                 ),
               );

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:error_fit/core/resources/pagination_model.dart';
-import 'package:error_fit/features/orders/orders_model.dart';
+import 'package:error_fit/features/orders/models/orders_model.dart';
 
 import '../../../resources/actions.dart';
 import '../../../resources/data_response.dart';
