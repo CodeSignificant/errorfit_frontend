@@ -19,7 +19,7 @@ jobs:
           flutter-version: '3.35.3'
           channel: 'stable'
 
-      - name: Flutter Doctor Check
+      - name: Flutter Doctor
         run: flutter doctor
 
       - name: Clean Flutter
@@ -34,9 +34,13 @@ jobs:
       - name: Deploy to Hostinger via SSH
         uses: appleboy/scp-action@v0.1.4
         with:
-          host: ${{ secrets.HOSTINGER_HOST }}
-          username: ${{ secrets.HOSTINGER_USER }}
-          key: ${{ secrets.HOSTINGER_SSH_KEY }}
-          port: ${{ secrets.HOSTINGER_PORT }}
+          host: 217.21.94.212
+          username: "u557234092"
+          key: "b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+QyNTUxOQAAACDLa27hLOPnNpVDFjUYi4U3h1kMunzyNPrGiTnrWCk49AAAAJCKiO8liojv
+JQAAAAtzc2gtZWQyNTUxOQAAACDLa27hLOPnNpVDFjUYi4U3h1kMunzyNPrGiTnrWCk49A
+AAAEDsl0daChmI/Y91K7BiSmIIk209aJR4XKItnKTa6ubI5MtrbuEs4+c2lUMWNRiLhTeH
+WQy6fPI0+saJOetYKTj0AAAACmFkaUA0c3MuaW4BAgM="
+          port: 65002
           source: "build/web/*"
           target: "/home/u557234092/domains/4ss.in/public_html/PipeLine"
