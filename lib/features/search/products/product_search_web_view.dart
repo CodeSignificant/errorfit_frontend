@@ -7,6 +7,7 @@ import 'package:error_fit/features/search/products/products_search_control.dart'
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../core/anim/fetching_anim.dart';
 import '../../products/widgets/product_tile.dart';
 
 class ProductSearchWebView extends StatefulWidget {
@@ -32,7 +33,7 @@ class _ProductSearchWebViewState extends State<ProductSearchWebView> {
               Container(
                 width: 300,
                 color: AppColors.white,
-                child: FilterView(),
+                child: FilterView(controller: widget.control.filterController,),
               ),
               Expanded(
                 child: LoadingView(
@@ -40,7 +41,7 @@ class _ProductSearchWebViewState extends State<ProductSearchWebView> {
                   child: SingleChildScrollView(
                     padding: const EdgeInsets.all(12),
                     child: Obx(() {
-                      final list = widget.control.productsList.value;
+                      final list = widget.control.pagination.list;
                       return StretchGrid(
                         crossAxisCount: _getCount(context),
                         children: List.generate(
@@ -56,6 +57,12 @@ class _ProductSearchWebViewState extends State<ProductSearchWebView> {
                   ),
                 ),
               ),
+              Obx(() {
+                if (!widget.control.pagination.isFetching.value) {
+                  return SizedBox();
+                }
+                return FetchingAnim();
+              }),
             ],
           ),
         ),

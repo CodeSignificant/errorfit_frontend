@@ -20,9 +20,9 @@ class OrdersTile extends StatelessWidget {
         decoration: Decorations.card,
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         child: Row(
-          spacing: 10,
+          spacing: 16,
           children: [
-            ImageLoader(url: model.previewUrl.autoUrl, width: 100, height: 100),
+            ImageLoader(url: model.previewUrl.autoUrl, width: 70, height: 100),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -30,7 +30,7 @@ class OrdersTile extends StatelessWidget {
                 children: [
                   Text(model.title, style: FontStyles.s14Primary6),
                   Text("Items: ${model.quantity}", style: FontStyles.s14Primary704),
-                  Text(model.status, style: FontStyles.s14Green4),
+                  Text(model.status.toTitleCase(), style: FontStyles.s14Primary704),
                 ],
               ),
             ),

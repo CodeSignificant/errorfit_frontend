@@ -1,4 +1,5 @@
 import 'package:error_fit/config/styles/app_colors.dart';
+import 'package:error_fit/core/anim/fetching_anim.dart';
 import 'package:error_fit/core/buttons/svg_icon_button.dart';
 import 'package:error_fit/core/resources/actions.dart';
 import 'package:error_fit/core/resources/stretch_grid.dart';
@@ -66,12 +67,13 @@ class _ProductsSearchMobileState extends State<ProductsSearchMobile> {
           child: LoadingView(
             controller: widget.control.loadingControl,
             child: SingleChildScrollView(
+              controller: widget.control.pagination.scrollController,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const SizedBox(height: 16,),
                   Obx(() {
-                    final list = widget.control.productsList.value;
+                    final list = widget.control.pagination.list;
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12.0),
                       child: StretchGrid(
@@ -94,6 +96,10 @@ class _ProductsSearchMobileState extends State<ProductsSearchMobile> {
             ),
           ),
         ),
+        Obx(() {
+          if (!widget.control.pagination.isFetching.value) return SizedBox();
+          return FetchingAnim();
+        }),
         SizedBox(height: kBottomBarHeight,)
       ],
     );

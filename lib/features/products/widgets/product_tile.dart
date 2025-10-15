@@ -49,7 +49,6 @@ class ProductTile extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: FontStyles.s20Black4),
                   Text(model.brand, style: FontStyles.s14Primary705),
-
                   const SizedBox(height: 10),
                   Row(
                     children: [
@@ -61,14 +60,17 @@ class ProductTile extends StatelessWidget {
                               children: [
                                 Text(
                                   model.mrpPrice.formatPrice,
-                                  style: FontStyles.s14Primary706.copyWith(
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: FontStyles.s12Primary704.copyWith(
                                     decoration: TextDecoration.lineThrough,
                                   ),
                                 ),
                                 const SizedBox(width: 6),
-                                Expanded(
+                                Flexible(
                                   child: Text(
                                     "${model.offer}% off",
+                                    maxLines: 1,
                                     style: FontStyles.s14Green6,
                                   ),
                                 ),

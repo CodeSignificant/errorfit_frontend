@@ -19,8 +19,8 @@ GenerateRoute get cartRoute => GenerateRoute("/cart");
 
 // ----------------------------------------------------------------------------- ORDERS
 GenerateRoute get ordersRoute => GenerateRoute("/orders");
-GenerateRoute get orderDetailsRoute => GenerateRoute("/order_details");
 GenerateRoute get placeOrderRoute => GenerateRoute("/place_order");
+GenerateRoute get orderDetailsRoute => GenerateRoute("/order_details");
 
 // -----------------------------------------------------------------------------PROFILE
 GenerateRoute get accountRoute => GenerateRoute("/account");

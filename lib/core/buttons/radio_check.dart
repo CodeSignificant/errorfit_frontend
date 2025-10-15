@@ -4,20 +4,20 @@ import 'package:flutter/material.dart';
 
 import 'svg_icon_button.dart';
 
-class RadioButton extends StatelessWidget {
+class RadioCheck extends StatelessWidget {
   final bool isActive;
   final Function(bool isActive) onClick;
   final double? size;
 
-  const RadioButton(
+  const RadioCheck(
       {super.key, required this.isActive, required this.onClick, this.size});
 
   @override
   Widget build(BuildContext context) {
     return SvgIconButton(
       size: size,
-      path: isActive ? "ic_radio_check" : "ic_radio_uncheck",
-      color: AppColors.primary,
+      path: isActive ? "ic_radio_tick" : "ic_radio_uncheck",
+      color: AppColors.primary70,
       onClick: () => onClick(!isActive),
     );
   }

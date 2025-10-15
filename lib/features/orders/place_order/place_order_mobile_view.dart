@@ -1,12 +1,12 @@
-import 'package:error_fit/config/extensions/string_extensions.dart';
+import 'package:error_fit/config/extensions/int_extensions.dart';
 import 'package:error_fit/config/styles/decorations.dart';
 import 'package:error_fit/config/styles/font_styles.dart';
 import 'package:error_fit/core/app_bars/title_appbar.dart';
 import 'package:error_fit/core/buttons/anim_button.dart';
 import 'package:error_fit/core/buttons/button.dart';
+import 'package:error_fit/core/buttons/radio_button.dart';
 import 'package:error_fit/core/widgets/loading_view.dart';
 import 'package:error_fit/core/widgets/shimmer_placeholder.dart';
-import 'package:error_fit/features/orders/models/place_order_item_model.dart';
 import 'package:error_fit/features/orders/place_order/place_order_controller.dart';
 import 'package:error_fit/features/orders/widgets/place_order_item_tile.dart';
 import 'package:flutter/material.dart';
@@ -74,6 +74,8 @@ class _PlaceOrderMobileViewState extends State<PlaceOrderMobileView> {
                     _couponApply(),
                     const SizedBox(height: 26),
                     _totalCalculation(),
+                    const SizedBox(height: 26),
+                    _paymentMode(),
                     const SizedBox(height: 26),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -149,43 +151,55 @@ class _PlaceOrderMobileViewState extends State<PlaceOrderMobileView> {
       decoration: Decorations.card,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       margin: const EdgeInsets.symmetric(horizontal: 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text("Payable Amount", style: FontStyles.s18Primary5),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              Expanded(
-                child: Text("Total Items: ", style: FontStyles.s14Primary704),
-              ),
-              Text("5", style: FontStyles.s14Primary5),
-            ],
-          ),
-          const SizedBox(height: 4),
-          Row(
-            children: [
-              Expanded(
-                child: Text("Total Amount: ", style: FontStyles.s14Primary704),
-              ),
-              Text("235645".formatPrice, style: FontStyles.s14Primary5),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Button(onClick: widget.control.onConfirmClick, text: "Confirm"),
-        ],
-      ),
+      child: Obx(() {
+        final calculations = widget.control.orderCalculation.value;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text("Payable Amount", style: FontStyles.s18Primary5),
+            const SizedBox(height: 10),
+
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                      "Total MRP: ", style: FontStyles.s14Primary704),
+                ),
+                Text((calculations?.totalMrpAmount ?? 0).formatPrice,
+                    style: FontStyles.s14Primary5.copyWith(decoration: TextDecoration.lineThrough)),
+              ],
+            ),
+            const SizedBox(height: 4),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                      "Payable Amount: ", style: FontStyles.s14Primary704),
+                ),
+                Text((calculations?.payableAmount ?? 0).formatPrice,
+                    style: FontStyles.s14Primary5),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Button(onClick: widget.control.onConfirmClick, text: "Confirm"),
+          ],
+        );
+      }),
     );
   }
 
   _itemsList() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: List.generate(
-        1,
-        (index) => PlaceOrderItemTile(model: PlaceOrderItemModel.initial()),
-      ),
-    );
+    return Obx(() {
+      final list = widget.control.orderCalculation.value?.products ?? [];
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: List.generate(
+          list.length,
+              (index) =>
+              PlaceOrderItemTile(model: list[index]),
+        ),
+      );
+    });
   }
 
   _couponApply() {
@@ -202,13 +216,15 @@ class _PlaceOrderMobileViewState extends State<PlaceOrderMobileView> {
         children: [
           Expanded(
             child: TextField(
+              controller: widget.control.couponController,
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: "Coupon Code",
               ),
             ),
           ),
-          Text("Apply", style: FontStyles.s14Primary7),
+          AnimButton(onClick: widget.control.onCouponApplyClick,
+              child: Text("Apply", style: FontStyles.s14Primary7)),
         ],
       ),
     );
@@ -219,63 +235,121 @@ class _PlaceOrderMobileViewState extends State<PlaceOrderMobileView> {
       decoration: Decorations.card,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       margin: const EdgeInsets.symmetric(horizontal: 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        spacing: 6,
-        children: [
-          Text("Detailed Bill", style: FontStyles.s18Primary5),
-          const SizedBox(height: 1),
-          Row(
-            children: [
-              Expanded(
-                child: Text("Total Items: ", style: FontStyles.s14Primary704),
-              ),
-              Text("5", style: FontStyles.s14Primary5),
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: Text("Total Amount: ", style: FontStyles.s14Primary704),
-              ),
-              Text("235645".formatPrice, style: FontStyles.s14Primary5),
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: Text("Delivery Fee: ", style: FontStyles.s14Primary704),
-              ),
-              Text("100".formatPrice, style: FontStyles.s14Primary5),
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: Text("Saved discount: ", style: FontStyles.s14Green4),
-              ),
-              Text("- ${"100".formatPrice}", style: FontStyles.s14Green4),
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: Text("Coupon discount: ", style: FontStyles.s14Green4),
-              ),
-              Text("- ${"500".formatPrice}", style: FontStyles.s14Green4),
-            ],
-          ),
-          const SizedBox(height: 1),
-          Row(
-            children: [
-              Expanded(
-                child: Text("Payable Amount: ", style: FontStyles.s16Primary7),
-              ),
-              Text("235045".formatPrice, style: FontStyles.s16Primary7),
-            ],
-          ),
-        ],
-      ),
+      child: Obx(() {
+        final calculations = widget.control.orderCalculation.value;
+        int deliveryFee = calculations?.deliveryFee ?? 0;
+        int couponAmount = calculations?.couponDiscount ?? 0;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          spacing: 6,
+          children: [
+            Text("Detailed Bill", style: FontStyles.s18Primary5),
+            const SizedBox(height: 1),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                      "Total MRP: ", style: FontStyles.s14Primary704),
+                ),
+                Text((calculations?.totalMrpAmount ?? 0).formatPrice,
+                    style: FontStyles.s14Primary5.copyWith(decoration: TextDecoration.lineThrough)),
+              ],
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                      "Total Amount: ", style: FontStyles.s14Primary704),
+                ),
+                Text((calculations?.totalAmount ?? 0).formatPrice,
+                    style: FontStyles.s14Primary5),
+              ],
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                      "Delivery Fee: ", style: FontStyles.s14Primary704),
+                ),
+                Text((deliveryFee == 0 ? 100 : deliveryFee).formatPrice,
+                    style: FontStyles.s14Primary5.copyWith(
+                        decoration: deliveryFee == 0 ? TextDecoration
+                            .lineThrough : null)),
+              ],
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: Text("Saved discount: ", style: FontStyles.s14Green4),
+                ),
+                Text("- ${(calculations?.totalDiscount ?? 0).formatPrice}",
+                    style: FontStyles.s14Green4),
+              ],
+            ),
+            if(couponAmount != 0)Row(
+              children: [
+                Expanded(
+                  child: Text("Coupon discount: ", style: FontStyles.s14Green4),
+                ),
+                Text("- ${couponAmount.formatPrice}",
+                    style: FontStyles.s14Green4),
+              ],
+            ),
+            const SizedBox(height: 1),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                      "Payable Amount: ", style: FontStyles.s16Primary7),
+                ),
+                Text((calculations?.payableAmount ?? 0).formatPrice,
+                    style: FontStyles.s16Primary7),
+              ],
+            ),
+          ],
+        );
+      }),
+    );
+  }
+
+  _paymentMode() {
+    return Container(
+      decoration: Decorations.card,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      margin: const EdgeInsets.symmetric(horizontal: 12),
+      child: Obx(() {
+        final selectedPaymentMode = widget.control.selectedPaymentMode.value;
+        return Column(
+          spacing: 6,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text("Payment Mode", style: FontStyles.s18Primary5),
+            const SizedBox(height: 1),
+            Row(
+              spacing: 4,
+              children: [
+                RadioButton(
+                  isActive: selectedPaymentMode == "ONLINE",
+                  onClick: (isActive) =>
+                      widget.control.onPaymentModeClick(mode: "ONLINE"),
+                  size: 24,),
+                const Expanded(child: Text("Online"))
+              ],
+            ),
+            Row(
+              spacing: 4,
+              children: [
+                RadioButton(isActive: selectedPaymentMode == "POD",
+                  onClick: (isActive) =>
+                      widget.control.onPaymentModeClick(mode: "POD"),
+                  size: 24,),
+                const Expanded(child: Text("Pay on Delivery"))
+              ],
+            )
+
+          ],
+        );
+      }),
     );
   }
 }
