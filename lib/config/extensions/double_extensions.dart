@@ -31,7 +31,7 @@ extension DoubleExtensions on double {
     final formatter = NumberFormat.currency(
       locale: 'en_IN',
       symbol: symbol,
-      decimalDigits: 2,
+      decimalDigits: 0,
     );
     return formatter.format(this);
   }
@@ -40,7 +40,7 @@ extension DoubleExtensions on double {
     final formatter = NumberFormat.currency(
       locale: 'en_IN',
       symbol: '₹',
-      decimalDigits: 2,
+      decimalDigits: 0,
     );
     return formatter.format(this);
   }

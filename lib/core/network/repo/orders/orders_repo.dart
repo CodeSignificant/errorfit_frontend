@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:error_fit/core/resources/pagination_model.dart';
+import 'package:error_fit/features/orders/models/order_calculate_model.dart';
 import 'package:error_fit/features/orders/models/orders_model.dart';
 
 import '../../../resources/actions.dart';
@@ -65,4 +66,29 @@ class OrdersRepo {
       return const DataFailed("Something went wrong");
     }
   }
+
+  static Future<DataResponse<OrderCalculateModel>> calculateOrders({
+    required String addressId,
+    String? coupon
+  }) async {
+    try {
+      final response = await SecureCall.post(
+        Uri.parse(ApiSheet.orders.calculateOrders),
+        body: jsonEncode({
+          "address_id": addressId,
+          "coupon": coupon??""
+        })
+      );
+      final res = jsonDecode(response.body);
+      if (!(res['status'] ?? false)) {
+        return DataFailed(res['message'] ?? "No response");
+      }
+      // final data = res['data'];
+      return DataSuccess(OrderCalculateModel.fromJson(res));
+    } catch (e) {
+      trace(e.toString());
+      return const DataFailed("Something went wrong");
+    }
+  }
+
 }

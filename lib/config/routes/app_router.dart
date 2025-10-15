@@ -6,6 +6,7 @@ import 'package:error_fit/features/home/landing/landing_page.dart';
 import 'package:error_fit/features/home/main/home_page.dart';
 import 'package:error_fit/features/home/splash/splash_page.dart';
 import 'package:error_fit/features/notifications/main/notifications_page.dart';
+import 'package:error_fit/features/orders/details/order_details_page.dart';
 import 'package:error_fit/features/orders/main/orders_page.dart';
 import 'package:error_fit/features/orders/place_order/place_order_page.dart';
 import 'package:error_fit/features/products/details/product_details_page.dart';
@@ -67,6 +68,11 @@ class AppRouter {
     GetPage(
       name: placeOrderRoute.route,
       page: () => PlaceOrderPage(),
+      middlewares: [AuthMiddleware()],
+    ),
+    GetPage(
+      name: orderDetailsRoute.key("id").route,
+      page: () => OrderDetailsPage(id: Get.parameters['id']??""),
       middlewares: [AuthMiddleware()],
     ),
 

@@ -72,6 +72,15 @@ extension IntExtensions on int {
       return floor().toString();
     }
   }
+  String get formatPrice {
+    final formatter = NumberFormat.currency(
+      locale: 'en_IN',
+      symbol: '₹',
+      decimalDigits: 2,
+    );
+    return formatter.format(this);
+  }
+
 
 
 }

@@ -1,14 +1,13 @@
-import 'package:error_fit/config/extensions/double_extensions.dart';
+import 'package:error_fit/config/extensions/int_extensions.dart';
 import 'package:error_fit/config/extensions/string_extensions.dart';
 import 'package:error_fit/config/styles/decorations.dart';
 import 'package:error_fit/config/styles/font_styles.dart';
 import 'package:error_fit/core/images/ImageLoader.dart';
-import 'package:error_fit/features/cart/models/cart_model.dart';
-import 'package:error_fit/features/orders/models/place_order_item_model.dart';
+import 'package:error_fit/features/orders/models/pre_order_model.dart';
 import 'package:flutter/material.dart';
 
 class PlaceOrderItemTile extends StatelessWidget {
-  final PlaceOrderItemModel model;
+  final PreOrderModel model;
 
   const PlaceOrderItemTile({super.key, required this.model});
 
@@ -20,7 +19,7 @@ class PlaceOrderItemTile extends StatelessWidget {
       decoration: Decorations.card,
       child: Row(
         children: [
-          ImageLoader(url: model.image.autoUrl, width: 120, height: 120),
+          ImageLoader(url: model.previewUrl.autoUrl, width: 120, height: 120),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
@@ -41,12 +40,34 @@ class PlaceOrderItemTile extends StatelessWidget {
                   spacing: 10,
                   children: [
                     Expanded(
-                      child: Text(
-                        "${model.count} Items",
-                        style: FontStyles.s14Primary704,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text(model.mrpPrice.formatPrice, style: FontStyles
+                                  .s12Primary704.copyWith(
+                                  decoration: TextDecoration.lineThrough)),
+                          Text(
+                              model.price.formatPrice,
+                              style: FontStyles.s12Primary704),
+                        ],
                       ),
                     ),
-                    Text(model.price.formatPrice, style: FontStyles.s20Black7),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text(
+                            "${model.items} Items",
+                            textAlign: TextAlign.end,
+                            style: FontStyles.s14Primary704,
+                          ),
+                          Text((model.price * model.items).formatPrice,
+                            textAlign: TextAlign.end,
+                            style: FontStyles.s16Primary7,
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ],

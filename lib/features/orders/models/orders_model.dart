@@ -41,71 +41,33 @@ class TrackingStatus {
   }
 }
 
-/// Model representing an order with tracking details
 class OrderModel {
   final String id;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final String authId;
-  final String productId;
-  final String addressId;
-  final String paymentId;
-  final String trackingId;
-  final String merchantId;
   final String title;
   final String previewUrl;
-  final int price;
   final int quantity;
 
   /// Observable properties for UI reactive updates
   final String status;
-  final DateTime statusDate;
-  final List<TrackingStatus> trackingJson;
+  // final DateTime statusDate;
+  // final List<TrackingStatus> trackingJson;
 
   OrderModel({
     required this.id,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.authId,
-    required this.productId,
-    required this.addressId,
-    required this.paymentId,
-    required this.trackingId,
-    required this.merchantId,
     required this.title,
     required this.previewUrl,
-    required this.price,
     required this.quantity,
-    required this.status,
-    required this.statusDate,
-    required this.trackingJson,
+    required this.status
   });
 
   /// Create an OrderModel instance from JSON map
   factory OrderModel.fromJson(Map<String, dynamic> json) {
     return OrderModel(
       id: json['id'] ?? '',
-      createdAt:
-          DateTime.tryParse(json['created_at']?.toString() ?? '') ??
-          DateTime.now(),
-      updatedAt:
-          DateTime.tryParse(json['updated_at']?.toString() ?? '') ??
-          DateTime.now(),
-      authId: json['auth_id'] ?? '',
-      productId: json['product_id'] ?? '',
-      addressId: json['address_id'] ?? '',
-      paymentId: json['payment_id'] ?? '',
-      trackingId: json['tracking_id'] ?? '',
-      merchantId: json['merchant_id'] ?? '',
       title: json['title'] ?? '',
       previewUrl: json['preview_url'] ?? '',
-      price: int.tryParse(json['price']?.toString() ?? '0') ?? 0,
-      quantity: int.tryParse(json['quantity']?.toString() ?? '0') ?? 1,
+      quantity: int.tryParse(json['count']?.toString() ?? '0') ?? 1,
       status: json['status'] ?? "Pending",
-      statusDate:
-          DateTime.tryParse(json['status_date']?.toString() ?? '') ??
-          DateTime.now(),
-      trackingJson: TrackingStatus.fromJsonList(json['tracking_json'] ?? []),
     );
   }
 
@@ -131,43 +93,20 @@ class OrderModel {
 
   /// Create a default initial OrderModel for testing or placeholder use
   factory OrderModel.initial() => OrderModel(
-    id: "test_order",
-    createdAt: DateTime.now(),
-    updatedAt: DateTime.now(),
-    authId: "auth_1",
-    productId: "prod_1",
-    addressId: "addr_1",
-    paymentId: "pay_1",
-    trackingId: "track_1",
-    merchantId: "merch_1",
-    title: "Sample Product",
-    previewUrl: "https://placehold.co/200x200",
-    price: 100,
+    id: "",
+    title: "",
+    previewUrl: "",
     quantity: 1,
     status: "New",
-    statusDate: DateTime.now(),
-    trackingJson: [TrackingStatus(status: "New", date: DateTime.now())],
   );
 
-  /// Convert OrderModel instance to JSON map
   Map<String, dynamic> toJson() {
     return {
       "id": id,
-      "created_at": createdAt.toIso8601String(),
-      "updated_at": updatedAt.toIso8601String(),
-      "auth_id": authId,
-      "product_id": productId,
-      "address_id": addressId,
-      "payment_id": paymentId,
-      "tracking_id": trackingId,
-      "merchant_id": merchantId,
       "title": title,
       "preview_url": previewUrl,
-      "price": price,
       "quantity": quantity,
-      "status": status,
-      "status_date": statusDate.toIso8601String(),
-      "tracking_json": trackingJson.map((e) => e.toJson()).toList(),
+      "status": status
     };
   }
 }

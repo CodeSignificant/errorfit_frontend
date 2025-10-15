@@ -48,13 +48,6 @@ extension StringExtensions on String {
     return '${this[0].toUpperCase()}${substring(1)}';
   }
 
-  String toTitleCase() {
-    if (isEmpty) {
-      return this;
-    }
-    return split(' ').map((word) => word.capitalizeFirst()).join(' ');
-  }
-
   String get formatPrice {
     if (isEmpty) return "NA";
 
@@ -115,4 +108,18 @@ extension StringExtensions on String {
       return this; // fallback to original string if parsing fails
     }
   }
+  String toTitleCase() {
+    if (isEmpty) return this;
+
+    // Replace underscores with spaces
+    String formatted = replaceAll('_', ' ').toLowerCase();
+
+    // Split into words and capitalize each
+    return formatted.split(' ').map((word) {
+      if (word.isEmpty) return word;
+      return word[0].toUpperCase() + word.substring(1);
+    }).join(' ');
+  }
+
+
 }

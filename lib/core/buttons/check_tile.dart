@@ -1,16 +1,15 @@
-import 'package:error_fit/config/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 
 import '../../config/styles/font_styles.dart';
 import '../images/svg_icon.dart';
 import 'anim_button.dart';
 
-class RadioTile extends StatelessWidget {
+class CheckTile extends StatelessWidget {
   final bool active;
   final String title;
   final VoidCallback onClick;
 
-  const RadioTile({
+  const CheckTile({
     super.key,
     required this.active,
     required this.title,
@@ -24,7 +23,7 @@ class RadioTile extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SvgIcon(path: active ? "ic_radio_check" : "ic_radio_uncheck", size: 15, color: AppColors.primary,),
+          SvgIcon(path: active ? "ic_check" : "ic_uncheck", size: 20,),
           const SizedBox(width: 8,),
           Text(title, style: FontStyles.s12Black4),
         ],

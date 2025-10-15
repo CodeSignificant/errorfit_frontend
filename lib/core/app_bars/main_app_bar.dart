@@ -64,11 +64,13 @@ class _MainAppBarState extends State<MainAppBar> {
 
   void _onAddressClick() async {
     Get.bottomSheet(SelectAddressSheet(
-      controller: selectAddressController, onAddNewClick: () async {
+      controller: selectAddressController,
+      onAddNewClick: () async {
       closeDialog();
       await delay();
       _addNewAddress();
-    }, onCompleted: (AddressModel model) async {
+    },
+      onCompleted: (AddressModel model) async {
       final result = await AddressRepo.updateDefault(id: model.id);
       if (result is DataSuccess) {
         Auth.setDefaultAddress(model.toJson());
