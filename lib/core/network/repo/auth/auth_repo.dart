@@ -67,6 +67,9 @@ class AuthRepo {
         body: jsonEncode(
             {"device": await getUniqueDeviceName(), "id_token": idToken}),
       );
+      if(response.statusCode != 200){
+        return DataFailed("Server Error");
+      }
       final res = jsonDecode(response.body);
       if (!(res['status'] ?? false)) {
         trace(response.body);

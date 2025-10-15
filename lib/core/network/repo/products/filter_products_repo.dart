@@ -26,24 +26,34 @@ class FilterProductsRepo {
       return const DataFailed("Something went wrong");
     }
   }
-
-  static Future<DataResponse<List<ProductModel>>> search(
-      {required String search}) async {
-    try {
-      final response = await http.post(
-        Uri.parse(ApiSheet.products.search),
-        body: jsonEncode({"search": search}),
-      );
-      final res = jsonDecode(response.body);
-      if (!(res['status'] ?? false)) {
-        return DataFailed(res['message'] ?? "No response");
-      }
-      return DataSuccess(ProductModel.fromJsonList(res['data'] ?? []));
-    } catch (e) {
-      trace(e.toString());
-      return const DataFailed("Something went wrong");
-    }
+  static Future<DataResponse<List<ProductModel>>> search({required String search}) async {
+    return await SecureCall.tryPost(
+      Uri.parse(ApiSheet.products.search),
+      body: jsonEncode({'search': search}),
+      onSuccess: (response, data) async {
+        final list = data['data'] ?? [];
+        return DataSuccess(ProductModel.fromJsonList(list));
+      },
+    );
   }
+
+  // static Future<DataResponse<List<ProductModel>>> search(
+  //     {required String search}) async {
+  //   try {
+  //     final response = await http.post(
+  //       Uri.parse(ApiSheet.products.search),
+  //       body: jsonEncode({"search": search}),
+  //     );
+  //     final res = jsonDecode(response.body);
+  //     if (!(res['status'] ?? false)) {
+  //       return DataFailed(res['message'] ?? "No response");
+  //     }
+  //     return DataSuccess(ProductModel.fromJsonList(res['data'] ?? []));
+  //   } catch (e) {
+  //     trace(e.toString());
+  //     return const DataFailed("Something went wrong");
+  //   }
+  // }
 
   static Future<DataResponse<ProductDetailsModel>> details(
       {required String id}) async {
