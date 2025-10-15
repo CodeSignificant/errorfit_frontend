@@ -69,70 +69,76 @@ class _SelectAddressSheetState extends State<SelectAddressSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: AlignmentGeometry.bottomCenter,
-      child: Container(
-        decoration: Decorations.sheet,
-        constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height * 0.8,
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SizedBox(height: 16),
-            SheetNob(),
-            const SizedBox(height: 10),
-            Text("Select Address", style: FontStyles.s18Primary5),
-            const SizedBox(height: 26),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Obx(() {
-                final list = widget.controller.list;
-                return Row(
-                  spacing: 10,
-                  children: [
-                    if (widget.controller.addressLoading.value)
-                      ...List.generate(
-                        2,
-                        (index) => ShimmerPlaceholder(width: 300, height: 120),
-                      ),
-                    if (!widget.controller.addressLoading.value)
-                      ...List.generate(
-                        list.length,
-                        (index) => _addressTile(model: list[index]),
-                      ),
-                    AnimButton(
-                      onClick: widget.onAddNewClick,
-                      child: Container(
-                        decoration: Decorations.card.copyWith(
-                          color: AppColors.primary25,
-                        ),
-                        width: 300,
-                        height: 120,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          spacing: 10,
-                          children: [
-                            Icon(Icons.add, color: AppColors.primary),
-                            Text(
-                              "Add New Address",
-                              textAlign: TextAlign.center,
-                              style: FontStyles.s14Primary5,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              }),
+    return GestureDetector(
+      onTap: () => closeDialog(),
+      child: Align(
+        alignment: AlignmentGeometry.bottomCenter,
+        child: GestureDetector(
+          onTap: () {},
+          child: Container(
+            decoration: Decorations.sheet,
+            constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height * 0.8,
             ),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SizedBox(height: 16),
+                SheetNob(),
+                const SizedBox(height: 10),
+                Text("Select Address", style: FontStyles.s18Primary5),
+                const SizedBox(height: 26),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Obx(() {
+                    final list = widget.controller.list;
+                    return Row(
+                      spacing: 10,
+                      children: [
+                        if (widget.controller.addressLoading.value)
+                          ...List.generate(
+                            2,
+                            (index) => ShimmerPlaceholder(width: 300, height: 140),
+                          ),
+                        if (!widget.controller.addressLoading.value)
+                          ...List.generate(
+                            list.length,
+                            (index) => _addressTile(model: list[index]),
+                          ),
+                        AnimButton(
+                          onClick: widget.onAddNewClick,
+                          child: Container(
+                            decoration: Decorations.card.copyWith(
+                              color: AppColors.primary25,
+                            ),
+                            width: 300,
+                            height: 140,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              spacing: 10,
+                              children: [
+                                Icon(Icons.add, color: AppColors.primary),
+                                Text(
+                                  "Add New Address",
+                                  textAlign: TextAlign.center,
+                                  style: FontStyles.s14Primary5,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  }),
+                ),
 
-            SizedBox(height: kBottomBarHeight + 16),
-          ],
+                SizedBox(height: kBottomBarHeight + 16),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -143,7 +149,9 @@ class _SelectAddressSheetState extends State<SelectAddressSheet> {
       onClick: () => _onAddressSelected(model: model),
       child: Container(
         decoration: Decorations.card,
+        height: 140,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        margin: const EdgeInsets.all(2),
         width: 300,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -156,8 +164,11 @@ class _SelectAddressSheetState extends State<SelectAddressSheet> {
             ),
             Text(
               "${model.address}, ${model.pincode}",
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
               style: FontStyles.s14Primary704,
             ),
+            const Spacer(),
           ],
         ),
       ),

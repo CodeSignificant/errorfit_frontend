@@ -71,7 +71,14 @@ class ProductsApi {
   // POST(id)
   String get details => "$_baseUrl/Public/ProductDetails.php";
 
+  // GET()
+  String get filterJson => "$_baseUrl/Public/get_filter_json.php";
+
+  // POST(search, filter)
+  String get searchFilter => "$_baseUrl/Public/search_products.php";
+
 }
+
 
 class ServicesApi {
   final String domain = Config.domain;
@@ -115,6 +122,9 @@ class OrdersApi {
 
   // GET(address_id, payment_mode, coupon) => Secure
   String get createOrder => "$_baseUrl/CreateOrder.php";
+
+  // GET(address_id, coupon) => Secure
+  String get calculateOrders => "$_baseUrl/OrderCalculation.php";
 }
 
 class UsersApi {

@@ -1,7 +1,10 @@
+import 'package:error_fit/config/services/auth.dart';
 import 'package:error_fit/core/network/repo/users/address_repo.dart';
 import 'package:error_fit/features/address/models/address_model.dart';
 import 'package:error_fit/features/address/widgets/edit_address_sheet.dart';
 import 'package:error_fit/features/address/widgets/select_address_sheet.dart';
+import 'package:error_fit/features/orders/models/order_calculate_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../../../config/routes/routers.dart';
@@ -11,24 +14,34 @@ import '../../../core/network/repo/orders/orders_repo.dart';
 import '../../../core/resources/actions.dart';
 import '../../../core/resources/data_response.dart';
 import '../../../core/widgets/loading_view.dart';
-import '../../cart/models/cart_model.dart';
 
 class PlaceOrderController extends GetxController {
   final paymentLoadingControl = LoadingViewController(initialLoading: false);
   final loadingControl = LoadingViewController();
   final addressController = SelectAddressController();
   final selectedAddress = AddressModel.initial().obs;
-  final _razorpay = RazorpayManager();
-  final cartList = <CartModel>[].obs;
+  Rxn<OrderCalculateModel> orderCalculation = Rxn(null);
+  final couponController = TextEditingController();
+  final selectedPaymentMode = "ONLINE".obs;
 
-  void init() {
-    _loadItems();
+  void init() async {
     _getDefaultAddress();
   }
 
-  void _loadItems() async {
-    await delay(milliSeconds: 1000);
-    loadingControl.setLoading(false);
+  void _calculateOrders() async {
+    loadingControl.setLoading(true);
+    final result = await OrdersRepo.calculateOrders(
+        addressId: selectedAddress.value.id,
+        coupon: couponController.text.trim());
+    if (result is DataFailed) {
+      loadingControl.setError(result.error);
+      return;
+    }
+    if (result is DataSuccess) {
+      orderCalculation.value = result.data!;
+      loadingControl.setLoading(false);
+      return;
+    }
   }
 
   void _getDefaultAddress() async {
@@ -39,6 +52,9 @@ class PlaceOrderController extends GetxController {
     }
     if (result is DataSuccess) {
       selectedAddress.value = result.data!;
+      _calculateOrders();
+      trace(selectedAddress.value.id);
+      trace(Auth.token);
       return;
     }
   }
@@ -52,23 +68,30 @@ class PlaceOrderController extends GetxController {
       return;
     }
     paymentLoadingControl.setLoading(true);
+
     final result = await OrdersRepo.createOrder(
       addressId: selectedAddress.value.id,
-      paymentMode: "ONLINE",
+      paymentMode: selectedPaymentMode.value,
+      coupon: couponController.text.trim()
+
     );
     if (result is DataFailed) {
       paymentLoadingControl.setLoading(false);
       Toast.failed(title: "Order Failed", message: result.error);
       return;
     }
-    _razorpay.init(
+    if((result.data?['payment_order_id']??"").toString().isEmpty){
+      if(selectedPaymentMode.value == "POD") ordersRoute.replace;
+      return;
+    }
+    final razorpay = RazorpayManager();
+    razorpay.init(
       onSuccess: (response) async {
         Toast.success(
           title: "Ordered successfully",
           message: "Order Placed Successfully, Thank you",
         );
         paymentLoadingControl.setLoading(false);
-        cartList.value = [];
         await delay();
         ordersRoute.replace;
       },
@@ -81,7 +104,6 @@ class PlaceOrderController extends GetxController {
         await delay(milliSeconds: 1000);
         ordersRoute.replace;
       },
-
       onError: (errors) async {
         Toast.failed(
           title: "Payment failed",
@@ -93,7 +115,7 @@ class PlaceOrderController extends GetxController {
         trace(errors.toString());
       },
     );
-    final paymentResult = await _razorpay.openCheckout(
+    final paymentResult = await razorpay.openCheckout(
       orderId: result.data?['payment_order_id'] ?? "",
     );
     if (paymentResult is DataFailed) {
@@ -113,16 +135,13 @@ class PlaceOrderController extends GetxController {
           _showAddressSheet();
         },
         onCompleted: (model) async {
-          if (model == null) {
-            return;
-          }
           selectedAddress.value = model;
           await delay();
           closeDialog();
         },
       ),
-      isScrollControlled: true,
-      isDismissible: true,
+      // isScrollControlled: true,
+      // isDismissible: true,
     );
   }
 
@@ -133,7 +152,35 @@ class PlaceOrderController extends GetxController {
           selectedAddress.value = model;
         },
       ),
-      isScrollControlled: true,
+      // isDismissible: true,
+      // isScrollControlled: true,
     );
   }
+
+  void onCouponApplyClick() async {
+    if (couponController.text.isEmpty || couponController.text
+        .trim()
+        .length != 8) {
+      Toast.failed(title: "Invalid Coupon", message: "Enter a valid coupon");
+      return;
+    }
+    // _calculateOrders();
+    final result = await OrdersRepo.calculateOrders(
+        addressId: selectedAddress.value.id,
+        coupon: couponController.text.trim());
+    if (result is DataFailed) {
+      loadingControl.setError(result.error);
+      return;
+    }
+    if (result is DataSuccess) {
+      orderCalculation.value = result.data!;
+      loadingControl.setLoading(false);
+      return;
+    }
+  }
+
+  onPaymentModeClick({required String mode}) {
+    selectedPaymentMode.value = mode;
+  }
+
 }

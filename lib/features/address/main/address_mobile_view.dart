@@ -34,10 +34,9 @@ class _AddressMobileViewState extends State<AddressMobileView> {
                 child: ListView.builder(
                   itemCount: list.length,
                   itemBuilder: (context, index) => Padding(
-                    padding: const EdgeInsets.only(
-                      left: 12,
-                      right: 12,
-                      bottom: 8.0,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 4,
                     ),
                     child: AddressTile(
                       model: list[index],
