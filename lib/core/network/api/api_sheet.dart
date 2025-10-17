@@ -118,7 +118,7 @@ class OrdersApi {
 
 
   // GET(?page) => Secure
-  String fetch(int page) => "$_baseUrl/Fetch.php?page=$page";
+  String fetch(int page) => "$_baseUrl/all_orders.php?page=$page";
 
   // GET(address_id, payment_mode, coupon) => Secure
   String get createOrder => "$_baseUrl/CreateOrder.php";
@@ -152,7 +152,7 @@ class WishlistApi {
   String get addNew => "$_baseUrl/Set.php";
 
   // GET() => Secure
-  String get fetch => "$_baseUrl/Fetch.php";
+  String fetch(int page) => "$_baseUrl/all_wishlist.php?page=$page";
 
 }
 

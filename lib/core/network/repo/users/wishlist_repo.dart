@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:error_fit/core/network/api/secure_call.dart';
+import 'package:error_fit/core/resources/pagination.dart';
 import 'package:error_fit/features/products/models/product_model.dart';
 
 import '../../../resources/actions.dart';
@@ -29,21 +30,33 @@ class WishlistRepo {
     }
   }
 
-  static Future<DataResponse> fetch() async {
-    try {
-      final response = await SecureCall.get(
-        Uri.parse(ApiSheet.wishlist.fetch),
+  static Future<DataResponse<PaginationModel<ProductModel>>> fetch(
+      {int page = 1}) async {
+    return await SecureCall.tryGet(
+      Uri.parse(ApiSheet.wishlist.fetch(page)),
+      onSuccess: (response, res) async {
+        return DataSuccess(
+          PaginationModel(
+            totalPages: int.tryParse(res['total_pages'].toString()) ?? 1,
+            currentPage: int.tryParse(res['current_page'].toString()) ?? 1,
+            items: ProductModel.fromJsonList(res['data'] ?? [], isLiked: true),
+          ),
       );
-      final res = jsonDecode(response.body);
-      if (!(res['status'] ?? false)) {
-        trace(response.body);
-        return DataFailed(res['message'] ?? "No response");
-      }
-      // final data = res['data'];
-      return DataSuccess(ProductModel.fromJsonList(res['data'], isLiked: true));
-    } catch (e) {
-      trace(e.toString());
-      return const DataFailed("Something went wrong");
-    }
+      },);
+    // try {
+    //   final response = await SecureCall.get(
+    //     Uri.parse(ApiSheet.wishlist.fetch),
+    //   );
+    //   final res = jsonDecode(response.body);
+    //   if (!(res['status'] ?? false)) {
+    //     trace(response.body);
+    //     return DataFailed(res['message'] ?? "No response");
+    //   }
+    //   // final data = res['data'];
+    //   return DataSuccess(ProductModel.fromJsonList(res['data'], isLiked: true));
+    // } catch (e) {
+    //   trace(e.toString());
+    //   return const DataFailed("Something went wrong");
+    // }
   }
 }

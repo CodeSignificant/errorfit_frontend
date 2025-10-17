@@ -1,3 +1,4 @@
+import 'package:error_fit/core/anim/fetching_anim.dart';
 import 'package:error_fit/core/app_bars/title_appbar.dart';
 import 'package:error_fit/core/resources/actions.dart';
 import 'package:error_fit/core/widgets/loading_view.dart';
@@ -26,10 +27,11 @@ class _WishlistMobileViewState extends State<WishlistMobileView> {
         TitleAppBar(title: "Wishlist"),
         Expanded(
           child: Obx(() {
-            final list = widget.control.productsList.value;
+            final list = widget.control.pagination.items;
             return LoadingView(
               controller: widget.control.loadingControl,
               child: SingleChildScrollView(
+                controller: widget.control.pagination.scrollController,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 12.0,
@@ -52,6 +54,12 @@ class _WishlistMobileViewState extends State<WishlistMobileView> {
             );
           }),
         ),
+        Obx(() {
+          if (!widget.control.pagination.isFetching.value) {
+            return SizedBox();
+          }
+          return FetchingAnim();
+        }),
         SizedBox(height: kBottomBarHeight),
       ],
     );
