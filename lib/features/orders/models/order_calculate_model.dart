@@ -19,15 +19,22 @@ class OrderCalculateModel {
   });
 
   factory OrderCalculateModel.fromJson(Map<String, dynamic> json) {
-      return OrderCalculateModel(
-        totalAmount: json['total_amount'] ?? 0,
-        deliveryFee: json['delivery_fee'] ?? 0,
-        couponDiscount: json['coupon_discount'] ?? 0,
-        payableAmount: json['payable_amount'] ?? 0,
-        totalMrpAmount: json['total_mrp_price'] ?? 0,
-        products: PreOrderModel.fromJsonList(json['products']),
-      );
+    int parseInt(dynamic value) {
+      if (value is int) return value;
+      if (value is String) return int.tryParse(value) ?? 0;
+      return 0;
+    }
+
+    return OrderCalculateModel(
+      totalAmount: parseInt(json['total_selling_price']),
+      deliveryFee: parseInt(json['delivery_fee']),
+      couponDiscount: parseInt(json['coupon_discount']),
+      payableAmount: parseInt(json['payable_amount']),
+      totalMrpAmount: parseInt(json['total_mrp_price']),
+      products: PreOrderModel.fromJsonList(json['products']),
+    );
   }
+
 
   int get totalDiscount{
     return totalMrpAmount-totalAmount;

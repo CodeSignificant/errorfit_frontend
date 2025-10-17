@@ -28,6 +28,19 @@ class PlaceOrderController extends GetxController {
     _getDefaultAddress();
   }
 
+  void _getDefaultAddress() async {
+    final result = await AddressRepo.fetchDefault();
+    if (result is DataFailed) {
+      Toast.failed(title: "Address Failed", message: "Unable to fetch address");
+      return;
+    }
+    if (result is DataSuccess) {
+      selectedAddress.value = result.data!;
+      _calculateOrders();
+      return;
+    }
+  }
+
   void _calculateOrders() async {
     loadingControl.setLoading(true);
     final result = await OrdersRepo.calculateOrders(
@@ -44,20 +57,6 @@ class PlaceOrderController extends GetxController {
     }
   }
 
-  void _getDefaultAddress() async {
-    final result = await AddressRepo.fetchDefault();
-    if (result is DataFailed) {
-      Toast.failed(title: "Address Failed", message: "Unable to fetch address");
-      return;
-    }
-    if (result is DataSuccess) {
-      selectedAddress.value = result.data!;
-      _calculateOrders();
-      trace(selectedAddress.value.id);
-      trace(Auth.token);
-      return;
-    }
-  }
 
   void onConfirmClick() async {
     if (selectedAddress.value.id.isEmpty) {
@@ -165,6 +164,7 @@ class PlaceOrderController extends GetxController {
       return;
     }
     // _calculateOrders();
+    loadingControl.setLoading(true);
     final result = await OrdersRepo.calculateOrders(
         addressId: selectedAddress.value.id,
         coupon: couponController.text.trim());
@@ -174,6 +174,7 @@ class PlaceOrderController extends GetxController {
     }
     if (result is DataSuccess) {
       orderCalculation.value = result.data!;
+
       loadingControl.setLoading(false);
       return;
     }

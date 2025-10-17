@@ -87,7 +87,7 @@ class SecureCall {
     } catch (e, s) {
       trace(e.toString());
       trace(s.toString());
-      return const DataFailed("Something went wrong") as DataResponse<T>;
+      return const DataFailed("Something went wrong");
     }
   }
 
@@ -146,7 +146,7 @@ class SecureCall {
   static Future<DataResponse<T>> tryGet<T>(
       Uri url, {
         Map<String, String>? headers,
-        required Future<DataResponse<T>> Function(http.Response response, dynamic data) onSuccess,
+        required Future<DataResponse<T>> Function(http.Response response, dynamic res) onSuccess,
       }) =>
       _tryRequest(() => get(url, headers: headers), onSuccess);
 
@@ -155,7 +155,7 @@ class SecureCall {
         Map<String, String>? headers,
         Object? body,
         Encoding? encoding,
-        required Future<DataResponse<T>> Function(http.Response response, dynamic data) onSuccess,
+        required Future<DataResponse<T>> Function(http.Response response, dynamic res) onSuccess,
       }) =>
       _tryRequest(() => post(url, headers: headers, body: body, encoding: encoding), onSuccess);
 
@@ -164,7 +164,7 @@ class SecureCall {
         Map<String, String>? headers,
         Object? body,
         Encoding? encoding,
-        required Future<DataResponse<T>> Function(http.Response response, dynamic data) onSuccess,
+        required Future<DataResponse<T>> Function(http.Response response, dynamic res) onSuccess,
       }) =>
       _tryRequest(() => put(url, headers: headers, body: body, encoding: encoding), onSuccess);
 
@@ -173,7 +173,7 @@ class SecureCall {
         Map<String, String>? headers,
         Object? body,
         Encoding? encoding,
-        required Future<DataResponse<T>> Function(http.Response response, dynamic data) onSuccess,
+        required Future<DataResponse<T>> Function(http.Response response, dynamic res) onSuccess,
       }) =>
       _tryRequest(() => delete(url, headers: headers, body: body, encoding: encoding), onSuccess);
 
@@ -185,7 +185,7 @@ class SecureCall {
         Map<String, String>? headers,
         Map<String, String>? body,
         String mimeType = 'jpeg',
-        required Future<DataResponse<T>> Function(http.Response response, dynamic data) onSuccess,
+        required Future<DataResponse<T>> Function(http.Response response, dynamic res) onSuccess,
       }) =>
       _tryRequest(
               () => uploadImage(url, keyName, file, fileName,

@@ -22,12 +22,19 @@ class PreOrderModel {
       title: json['title'] ?? '',
       brand: json['brand'] ?? '',
       size: json['size'] ?? '',
-      items: json['items'] ?? 0,
-      price: json['price'] ?? 0,
-      mrpPrice: json['mrp_price'] ?? 0,
+      items: json['quantity'] is int
+          ? json['quantity']
+          : int.tryParse(json['quantity'].toString()) ?? 0,
+      price: json['selling_price'] is int
+          ? json['selling_price']
+          : int.tryParse(json['selling_price'].toString()) ?? 0,
+      mrpPrice: json['mrp_price'] is int
+          ? json['mrp_price']
+          : int.tryParse(json['mrp_price'].toString()) ?? 0,
       previewUrl: json['preview_url'] ?? '',
     );
   }
+
 
 
 
